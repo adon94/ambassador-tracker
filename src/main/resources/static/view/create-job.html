@@ -1,0 +1,135 @@
+<div ng-if="empUser">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">New Event</h1>
+        </div>
+    </div>
+    <form class="form-horizontal" role="form" ng-submit="controller.createJob()">
+    <fieldset>
+        <!--<div class="form-group">-->
+            <!--<label class="col-md-4 control-label" for="input-1">Select File</label>-->
+            <!--<div class="col-md-4">-->
+                <!--<input type="file" id="input-1" name="selectedFile" class="file">-->
+                <!--<div class="input-group col-xs-12">-->
+                    <!--<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i></span>-->
+                    <!--<input type="text" class="form-control input-lg" disabled placeholder="Upload Image">-->
+                    <!--<span class="input-group-btn">-->
+                    <!--<button class="browse btn btn-primary input-lg" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>-->
+                <!--</span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="company">Client</label>
+            <div class="col-md-4">
+                <!--Maybe change "client" to "number of times used" or similar-->
+                <input uib-typeahead="company as company.name for company in controller.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0"
+                       ng-model="controller.companyItem" id="company" name="company" type="text" placeholder="Client"
+                       class="form-control input-md">
+
+                <!--<input class="form-control input-md" id="company" type="text" list="listOfClients">-->
+
+                <!--<datalist id="listOfClients">-->
+                    <!--<option ng-repeat="c in controller.clients | orderBy:'client'" value="{{c.name}}"></option>-->
+                <!--</datalist>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="location">Location</label>
+            <div class="col-md-4">
+                <input googleplace details="details1" options="options1" ng-model="controller.job.location" id="location" name="location" type="text" placeholder="Location" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="wage">Wage</label>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">€</span>
+                    <input ng-model="controller.job.wage" id="wage" name="wage" class="form-control" placeholder="0.00" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="requiredBoys">Required No. of Boys</label>
+            <div class="col-md-4">
+                <input ng-model="controller.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" placeholder="0" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="requiredGirls">Required No. of Girls</label>
+            <div class="col-md-4">
+                <input ng-model="controller.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" placeholder="0" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="startDate">Start</label>
+            <div class="col-md-4">
+                <div uib-timepicker ng-model="startTime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                <div class='input-group date' id='startDate'>
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt1" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+                <!--<input ng-model="controller.job.startDate" id="startDate" name="startDate" type="text" placeholder="Start" class="form-control input-md">-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="endDate">End</label>
+            <div class="col-md-4">
+                <div uib-timepicker ng-model="endTime" hour-step="hstep2" minute-step="mstep2" show-meridian="ismeridian"></div>
+                <div class='input-group date' id='endDate'>
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="invite-select">Invite BAs</label>
+            <div class="col-md-4">
+                <select ng-options="ba.firstName for ba in controller.bas track by ba.id" ng-model="controller.selected" id="invite-select" multiple>
+                </select>
+            </div>
+        </div>
+
+        <!-- Button for modal -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="invite-select">Invite BAs</label>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">
+                    Select
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End of modal-->
+
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="submitBtn"></label>
+            <div class="col-md-4">
+                <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+    </form>
+</div>

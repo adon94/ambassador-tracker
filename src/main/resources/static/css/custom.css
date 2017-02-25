@@ -1,0 +1,132 @@
+@import "sb-admin-2.less";
+
+/*file upload*/
+.file {
+    visibility: hidden;
+    position: absolute;
+}
+
+/*image upload and crop*/
+.cropArea {
+    background: #eee;
+    overflow: hidden;
+    width:500px;
+    height:350px;
+}
+form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+/*Custom navbar*/
+#custom-bootstrap-menu.navbar-default .navbar-brand {
+    color: rgba(255, 255, 255, 1);
+}
+#custom-bootstrap-menu.navbar-default {
+    font-size: 14px;
+    background-color: #16a085;
+    border-width: 1px;
+    border-radius: 4px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(255, 255, 255, 1);
+    background-color: #16a085;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(219, 219, 219, 1);
+    background-color: #006A55;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: #006A55;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #16a085;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #006A55;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #16a085;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #006A55;
+}
+
+/*navbar user stuff*/
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
+
+.fc th,
+.fc td,
+.fc hr,
+.fc thead,
+.fc tbody,
+.fc-row {
+    border-color: #ccc !important;
+    background: #fff !important;
+}
+
+.invitedEvent {
+    background-color: #337ab7;
+    color: white;
+}
+.acceptedEvent {
+    background-color: #449d44;
+    color: white;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+.calendar {
+    padding-bottom: 15px;
+}
+
+.navbar-brand {
+    font-size: 22px;
+}
+
+/*a.dropdown-toggle {*/
+    /*color: white;*/
+/*}*/
+/*.nav>li>a:focus, .nav>li>a:hover, .nav .open>a, .nav .open>a:focus, .nav .open>a:hover{*/
+    /*color: white;*/
+    /*background-color: #006A55;*/
+/*}*/
+
+/*.my-side-link:hover, my-side-link:focus {*/
+    /*color: white;*/
+    /*background-color: #006A55;*/
+/*}*/

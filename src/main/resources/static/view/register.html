@@ -1,0 +1,145 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Register</h1>
+    </div>
+</div>
+<form class="form-horizontal" role="form" ng-submit="controller.createUser()">
+    <fieldset>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="email">Email</label>
+            <div class="col-md-4">
+                <input ng-model="controller.user.email" id="email" name="email" type="email" placeholder="john@gmail.com" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="password">Password</label>
+            <div class="col-md-4">
+                <input ng-model="controller.user.password" id="password" name="password" type="password" placeholder="******" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="firstName">First Name</label>
+            <div class="col-md-4">
+                <input ng-model="controller.user.firstName" id="firstName" name="firstName" type="text" placeholder="John" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="lastName">Last Name</label>
+            <div class="col-md-4">
+                <input ng-model="controller.user.lastName" id="lastName" name="lastName" type="text" placeholder="Doe" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="phone">Phone</label>
+            <div class="col-md-4">
+                <input ng-model="controller.user.phone" id="phone" name="phone" type="tel" placeholder="0876543210" class="form-control input-md">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="radios">User Type</label>
+            <div class="col-md-4" ng-init="controller.user.userType=false">
+                <div class="btn-group" data-toggle="buttons">
+                    <label for="radios-0">
+                        <input type="radio" name="radios" id="radios-0" autocomplete="off" ng-model="controller.userType" ng-value="false" checked>
+                        Employee
+                    </label>
+                    <label for="radios-1">
+                        <input type="radio" name="radios" id="radios-1" autocomplete="off" ng-model="controller.userType" ng-value="true">
+                        Brand Ambassador
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div ng-show="controller.userType">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="dob">DOB</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.predob" id="dob" name="dob" type="date" placeholder="dd/MM/yyyy" class="form-control input-md">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="address">Address</label>
+                <div class="col-md-4">
+                    <input googleplace details="details1" options="options1" ng-model="controller.user.address" id="address" name="address" type="text" placeholder="123 Fakestreet, Co. Dublin." class="form-control input-md">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="radiosXY">Gender</label>
+                <div class="col-md-4" ng-init="controller.user.male=true">
+                    <label class="radio-inline" for="radios-X">
+                        <input type="radio" name="radiosXY" id="radios-X" ng-model="controller.user.male" ng-value="true">
+                        Male
+                    </label>
+                    <label class="radio-inline" for="radios-Y">
+                        <input type="radio" name="radiosXY" id="radios-Y" ng-model="controller.user.male" ng-value="false">
+                        Female
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="driving-status">Driving Status</label>
+                <div class="col-md-4" id="driving-status">
+                    <label class="checkbox-inline" for="fullLicence">
+                        <input type="checkbox" name="driving-status" id="fullLicence" ng-model="controller.user.fullLicence" value="true">
+                        Full Licence
+                    </label>
+                    <label class="checkbox-inline" for="carOwner">
+                        <input type="checkbox" name="driving-status" id="carOwner" ng-model="controller.user.carOwner" value="true">
+                        Own Car
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="height">Height</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.user.height" id="height" name="height" type="text" placeholder="5'10" class="form-control input-md">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="torso">Torso</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.user.torso" id="torso" name="torso" type="text" placeholder="36'" class="form-control input-md">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="waist">Waist</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.user.waist" id="waist" name="waist" type="text" placeholder="32'" class="form-control input-md">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="shoe">Shoe size</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.user.shoe" id="shoe" name="shoe" type="text" placeholder="9" class="form-control input-md">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="imgup">Profile Pic</label>
+            <div class="col-md-4">
+                <button class="btn btn-default" id="imgup" ngf-select ng-model="picFile" accept="image/*">Select Image</button>
+                <div>
+                    <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
+                        <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''"></img-crop>
+                    </div>
+                    <div>
+                        <img ng-src="{{croppedDataUrl}}" />
+                    </div>
+                </div>
+                <!--<button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>-->
+
+                <span class="progress" ng-show="progress >= 0">
+                    <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                </span>
+                <span ng-show="result">Upload Successful</span>
+                <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="submitBtn"></label>
+            <div class="col-md-4">
+                <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

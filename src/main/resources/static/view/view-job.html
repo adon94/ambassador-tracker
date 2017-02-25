@@ -1,0 +1,84 @@
+<div ng-if="authenticated">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>{{controller.job.company.name}}</h1>
+            <div ng-show="controller.curInvited">
+                <button class="btn btn-success">Accept</button>
+                <button class="btn btn-danger">Decline</button>
+            </div>
+            <small>Created by <a href="#">{{controller.job.employee.firstName}} {{controller.job.employee.lastName}}</a>
+                at {{controller.dateMade | date:"HH:mm 'on' MM/dd/yyyy"}}</small>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <address>{{controller.job.location}}</address>
+    <p>Rate: {{controller.job.wage | currency:"€"}}</p>
+    <h2>Brand Ambassadors</h2>
+
+    <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#accepted-row" aria-expanded="false" aria-controls="accepted-row">
+        Accepted <span class="badge">{{controller.job.accepted.length}}</span></button>
+    <div class="collapse" id="accepted-row">
+        <h2>Accepted</h2>
+        <div class="row">
+            <div ng-repeat="accepted in controller.job.accepted">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#/ba/view/{{accepted.id}}"><img src="static/resources/default-img.png" alt="..."></a>
+                        <div class="caption">
+                            <a href="#/ba/view/{{accepted.id}}"><h2>{{accepted.firstName}} {{accepted.lastName}}</h2></a>
+                            <p ng-show="controller.job.employee.id == controller.currentUser.id && controller.empUser">
+                                <a href="..." class="btn btn-primary" role="button">Move to Pending</a>
+                                <a href="..." class="btn btn-danger" role="button">Move to Declined</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <br ng-if="!(($index + 1) % 3)">
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#invited-row" aria-expanded="false" aria-controls="invited-row">
+        Pending <span class="badge">{{controller.job.invited.length}}</span></button>
+    <div class="collapse" id="invited-row">
+        <h2>Pending</h2>
+        <div class="row">
+            <div ng-repeat="invited in controller.job.invited">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#/ba/view/{{invited.id}}"><img src="static/resources/default-img.png" alt="..."></a>
+                        <div class="caption">
+                            <a href="#/ba/view/{{invited.id}}"><h2>{{invited.firstName}} {{invited.lastName}}</h2></a>
+                            <p ng-show="controller.job.employee.id == controller.currentUser.id && controller.empUser">
+                                <a href="..." class="btn btn-success" role="button">Move to Accepted</a>
+                                <a href="..." class="btn btn-danger" role="button">Move to Declined</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <br ng-if="!(($index + 1) % 3)">
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-danger" type="button" data-toggle="collapse" data-target="#declined-row" aria-expanded="false" aria-controls="declined-row">
+        Declined <span class="badge">{{controller.job.declined.length}}</span></button>
+    <div class="collapse" id="declined-row">
+        <h2>Declined</h2>
+        <div class="row">
+            <div ng-repeat="declined in controller.job.declined">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#/ba/view/{{declined.id}}"><img src="static/resources/default-img.png" alt="..."></a>
+                        <div class="caption">
+                            <a href="#/ba/view/{{declined.id}}"><h2>{{declined.firstName}} {{declined.lastName}}</h2></a>
+                            <p ng-show="controller.job.employee.id == controller.currentUser.id && controller.empUser">
+                                <a href="..." class="btn btn-default" role="button">Move to Pending</a>
+                                <a href="..." class="btn btn-danger" role="button">Move to Declined</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <br ng-if="!(($index + 1) % 3)">
+            </div>
+        </div>
+    </div>
+</div>

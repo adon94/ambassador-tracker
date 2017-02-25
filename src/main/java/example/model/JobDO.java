@@ -1,0 +1,171 @@
+package example.model;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "job")
+public class JobDO extends AbstractEntity {
+
+    @ManyToOne
+    private EmployeeDO employee;
+
+    private int requiredBoys;
+    private int requiredGirls;
+    private boolean open;
+
+    @ManyToOne(cascade=CascadeType.MERGE)//come back to this... maybe
+    private Company company;
+//    private String coverPic;
+    private String location;
+    private double wage;
+    private String startDate;
+    private String endDate;
+    private String createdAt;
+    private String updatedAt;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<BrandAmbassadorDO> invited;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<BrandAmbassadorDO> accepted;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    private List<BrandAmbassadorDO> declined;
+
+
+//    public JobDO(int id, int employee, int requiredBoys, int requiredGirls, boolean open,
+//                 String company, String coverPic, String location, double wage,
+//                 String startDate, String endDate) {
+//        this.id = id;
+//        this.employee = employee;
+//        this.requiredBoys = requiredBoys;
+//        this.requiredGirls = requiredGirls;
+//        this.open = open;
+//        this.company = company;
+//        this.coverPic = coverPic;
+//        this.location = location;
+//        this.wage = wage;
+//        this.startDate = startDate;
+//        this.endDate = endDate;
+//    }
+
+    public EmployeeDO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeDO employee) {
+        this.employee = employee;
+    }
+
+    public int getRequiredBoys() {
+        return requiredBoys;
+    }
+
+    public void setRequiredBoys(int requiredBoys) {
+        this.requiredBoys = requiredBoys;
+    }
+
+    public int getRequiredGirls() {
+        return requiredGirls;
+    }
+
+    public void setRequiredGirls(int requiredGirls) {
+        this.requiredGirls = requiredGirls;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        company.setClient(true);
+        this.company = company;
+    }
+
+//    public String getCoverPic() {
+//        return coverPic;
+//    }
+//
+//    public void setCoverPic(String coverPic) {
+//        this.coverPic = coverPic;
+//    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public double getWage() {
+        return wage;
+    }
+
+    public void setWage(double wage) {
+        this.wage = wage;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public List<BrandAmbassadorDO> getInvited() {
+        return invited;
+    }
+
+    public void setInvited(List<BrandAmbassadorDO> invited) {
+        this.invited = invited;
+    }
+
+    public List<BrandAmbassadorDO> getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(List<BrandAmbassadorDO> accepted) {
+        this.accepted = accepted;
+    }
+
+    public List<BrandAmbassadorDO> getDeclined() {
+        return declined;
+    }
+
+    public void setDeclined(List<BrandAmbassadorDO> declined) {
+        this.declined = declined;
+    }
+}
