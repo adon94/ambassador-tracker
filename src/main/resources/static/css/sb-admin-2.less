@@ -4,13 +4,14 @@
 // Global Styles
 
 body {
-  background-color: @gray-lightest;
+  //background-color: @gray-lightest;
+  background: linear-gradient(to left top, #34e89e, rgba(15, 52, 67, 0.86));
 }
 
 html,body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100%;
 }
 
 // Wrappers
@@ -22,7 +23,7 @@ html,body {
 
 #page-wrapper {
   padding: 0 15px;
-  min-height: 90%;
+  min-height: 100%;
   background-color: white;
 }
 
@@ -32,12 +33,18 @@ html,body {
     margin: 0 0 0 250px;
     padding: 0 30px;
     border-left: 1px solid darken(@gray-lightest, 6.5%);
+    min-height: 768px;
   }
 }
 
 // Navigation
 
 // --Topbar
+
+.navbar-default {
+  background-color: rgba(0, 0, 0, 0.3);
+  /* border-color: #e7e7e7; */
+}
 
 .navbar-top-links {
   margin-right: 0;
@@ -116,11 +123,25 @@ html,body {
 
 .sidebar ul li {
   border-bottom: 1px solid darken(@gray-lightest, 6.5%);
+  background-color: transparent;
   a {
     &.active {
-      background-color: @gray-lighter;
+      background-color: transparent;
     }
   }
+}
+
+.navbar-custom {
+  background-color: transparent;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+  text-decoration: none;
+  background-color: #00614c;
+}
+
+.nav>li>a {
+  color: white;
 }
 
 .sidebar .arrow {

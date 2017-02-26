@@ -38,7 +38,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="radios">User Type</label>
             <div class="col-md-4" ng-init="controller.user.userType=false">
-                <div class="btn-group" data-toggle="buttons">
+                <div class="btn btn-outline-group" data-toggle="buttons">
                     <label for="radios-0">
                         <input type="radio" name="radios" id="radios-0" autocomplete="off" ng-model="controller.userType" ng-value="false" checked>
                         Employee
@@ -117,7 +117,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="imgup">Profile Pic</label>
             <div class="col-md-4">
-                <button class="btn btn-default" id="imgup" ngf-select ng-model="picFile" accept="image/*">Select Image</button>
+                <button class="btn btn-outline btn-default" id="imgup" ngf-select ng-model="picFile" accept="image/*">Select Image</button>
                 <div>
                     <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
                         <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''"></img-crop>
@@ -138,7 +138,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label" for="submitBtn"></label>
             <div class="col-md-4">
-                <button type="submit" id="submitBtn" class="btn btn-primary">Submit</button>
+                <button type="submit" id="submitBtn" class="btn btn-outline btn-primary">Submit</button>
             </div>
         </div>
     </fieldset>

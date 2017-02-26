@@ -1,4 +1,4 @@
-angular.module('myApp').controller('job', function ($http, $scope, $filter, $location, $rootScope, $cookies, jobService) {
+angular.module('myApp').controller('job', function ($scope, $filter, $location, $rootScope, $cookies, baService, jobService) {
     var self = this;
     $scope.gPlace;
 
@@ -56,7 +56,7 @@ angular.module('myApp').controller('job', function ($http, $scope, $filter, $loc
 
         console.log(job);
 
-        $http.post("/job/create", job).then(function (response) {
+        jobService.createJob(job).then(function (response) {
             console.log(response);
             if(response.status == 200){
                 $location.path("/");
@@ -78,20 +78,39 @@ angular.module('myApp').controller('job', function ($http, $scope, $filter, $loc
     //     $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
     // });
 
-    // $http.get('/ba/all').then(function (response) {
-    //     self.bas = response.data;
-    // });
 
     // $scope.variableName = [];
 
 
 
-    jobService.getAllBas().then(function successCallback(response){
+    baService.getAllBas().then(function successCallback(response){
         self.bas = response.data;
         console.log(self.bas);
     });
 
-    $http.get('/company/all').then(function (response) {
+    jobService.getCompanies().then(function (response) {
         self.clients = response.data;
     });
+
+    self.acceptJob = function (job) {
+        console.log(job);
+        jobService.acceptJob(job).then(function (response) {
+            if(response.status == 200){
+                console.log("Success");
+            } else {
+                console.log(response.status);
+            }
+        });
+    };
+
+    self.declineJob = function (job) {
+        console.log(job);
+        jobService.declineJob(job).then(function (response) {
+            if(response.status == 200){
+                console.log("Success");
+            } else {
+                console.log(response.status);
+            }
+        });
+    }
 });

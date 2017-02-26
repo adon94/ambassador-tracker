@@ -1,4 +1,4 @@
-angular.module('myApp').controller('view-job', function ($http, $scope, $filter, $location, $routeParams, $rootScope, $cookies) {
+angular.module('myApp').controller('view-job', function ($http, $scope, $filter, $location, $routeParams, $rootScope, $cookies, jobService) {
 
     var self = this;
     var id = $routeParams.id;
@@ -40,7 +40,24 @@ angular.module('myApp').controller('view-job', function ($http, $scope, $filter,
             }
         }
 
+        self.acceptJob = function () {
+            jobService.acceptJob(self.job).then(function (response) {
+                if(response.status == 200){
+                    console.log("Success");
+                } else {
+                    console.log(response.status);
+                }
+            });
+        };
 
+        self.declineJob = function () {
+            jobService.declineJob(self.job).then(function (response) {
+                if(response.status == 200){
+                    console.log("Success");
+                } else {
+                    console.log(response.status);
+                }
+            });
+        }
     });
-
 });

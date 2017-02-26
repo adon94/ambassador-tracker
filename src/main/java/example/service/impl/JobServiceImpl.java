@@ -109,4 +109,22 @@ public class JobServiceImpl implements JobService {
         jobDO.setAccepted(updatedAccepted);
         return jobDAO.save(jobDO);
     }
+
+    @Override
+    @Transactional
+    public JobDO updateToDeclined(JobDO jobDO, Long invitedId) throws Exception {
+        System.out.println("Invited BAs are: "+jobDO.getInvited());
+        List<BrandAmbassadorDO> updatedInvited = jobDO.getInvited();
+
+        List<BrandAmbassadorDO> updatedDeclined = jobDO.getAccepted();
+        for(int i = 0; i < updatedInvited.size(); i++){
+            if (updatedInvited.get(i).getId().equals(invitedId)){
+                updatedDeclined.add(updatedInvited.get(i));
+                updatedInvited.remove(updatedInvited.get(i));
+            }
+        }
+        jobDO.setInvited(updatedInvited);
+        jobDO.setDeclined(updatedDeclined);
+        return jobDAO.save(jobDO);
+    }
 }

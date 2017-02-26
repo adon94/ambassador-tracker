@@ -53,6 +53,15 @@ public class JobController {
         return this.jobService.updateToAccepted(jobDO, id);
     }
 
+    @RequestMapping(value="/decline/{id}", method= RequestMethod.POST)
+    public @ResponseBody
+    JobDO updateToDeclined(@RequestBody JobDO jobDO, @PathVariable("id") Long id) throws Exception {
+        BrandAmbassadorDO invited = new BrandAmbassadorDO();
+        System.out.println("Title is: " + jobDO.getCompany());
+        invited.setId(id);
+        return this.jobService.updateToDeclined(jobDO, id);
+    }
+
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public @ResponseBody
     JobDO getJob(@PathVariable("id") Long id) throws Exception {

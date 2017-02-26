@@ -59,7 +59,18 @@ angular.module('myApp').controller('view-ba', function ($http, $scope, $filter, 
 
     self.acceptJob = function (job) {
         console.log(job);
-        $http.post('/job/accept/' + self.ba.id, job).then(function (response) {
+        jobService.acceptJob(job).then(function (response) {
+            if(response.status == 200){
+                console.log("Success");
+            } else {
+                console.log(response.status);
+            }
+        });
+    };
+
+    self.declineJob = function (job) {
+        console.log(job);
+        jobService.declineJob(job).then(function (response) {
             if(response.status == 200){
                 console.log("Success");
             } else {

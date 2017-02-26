@@ -16,4 +16,5 @@ public interface JobService {
     List<JobDO> findByDeclinedId(Long id) throws Exception;
     List<JobDO> findByEmployeeId(Long id) throws Exception;
     JobDO updateToAccepted(JobDO job, Long invitedId) throws Exception;
+    JobDO updateToDeclined(JobDO job, Long invitedId) throws Exception;
 }

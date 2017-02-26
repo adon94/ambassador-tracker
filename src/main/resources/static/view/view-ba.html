@@ -22,10 +22,10 @@
                         <p>Created by {{inv.employee.firstName}} {{inv.employee.lastName}}
                             <br>Starting at {{inv.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                         <p>
-                            <a href="#/job/view/{{inv.id}}" class="btn btn-primary" role="button">View</a>
+                            <a href="#/job/view/{{inv.id}}" class="btn btn-outline btn-primary" role="button">View</a>
                         <!--if user is ba also-->
-                            <button ng-show="currentUser.id == controller.ba.id" ng-click="controller.acceptJob(inv)" class="btn btn-success">Accept</button>
-                            <a ng-show="currentUser.id == controller.ba.id" href="#/job/view/{{inv.id}}" class="btn btn-danger" role="button">Decline</a>
+                            <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>
+                            <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>
                         </p>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                         <p>Created by {{upc.employee.firstName}} {{upc.employee.lastName}}
                             <br>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                         <p>
-                            <a href="#/job/view/{{upc.id}}" class="btn btn-primary" role="button">View</a>
+                            <a href="#/job/view/{{upc.id}}" class="btn btn-outline btn-primary" role="button">View</a>
                         </p>
                     </div>
                 </div>
