@@ -1,4 +1,4 @@
-angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUpload', 'ngImgCrop', 'ngCookies' ])
+angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUpload', 'ngImgCrop', 'ngCookies', 'moment-picker' ])
     .config(function($routeProvider, $locationProvider) {
 
         $locationProvider.hashPrefix('');
@@ -37,6 +37,11 @@ angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUploa
         .when('/user/new', {
         templateUrl : 'view/register.html',
         controller : 'user',
+        controllerAs: 'controller'
+    })
+        .when('/ba/wages', {
+        templateUrl : 'view/wages.html',
+        controller : 'wages',
         controllerAs: 'controller'
     })
         .otherwise('/');

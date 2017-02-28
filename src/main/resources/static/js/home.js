@@ -53,10 +53,13 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
     $scope.viewBa = function (id) {
         $location.path("/ba/view/" + id);
     };
-    var invited = [];
+
+    let today = new Date();
+    let invited = [];
     $scope.invitedEvents = [];
-    var accepted= [];
+    let accepted= [];
     $scope.acceptedEvents= [];
+    $scope.pastAcceptedEvents= [];
 
     if (!$rootScope.empUser && $rootScope.authenticated) {
         $http.get('/job/invited/' + id).then(function (response) {
@@ -69,14 +72,16 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
                 // console.log(key + ': ' + );
                 invited[key].startDate = new Date(value.startDate);
 
-                $scope.invitedEvents.push({
-                    title: invited[key].company.name,
-                    start: invited[key].startDate,
-                    className: 'invitedEvent',
-                    url: '/#/job/view/' + invited[key].id
-                    // backgroundColor: "#ff374b",
-                    // stick: true
-                })
+                if(invited[key].startDate > today) {
+                    $scope.invitedEvents.push({
+                        title: invited[key].company.name,
+                        start: invited[key].startDate,
+                        className: 'invitedEvent',
+                        url: '/#/job/view/' + invited[key].id
+                        // backgroundColor: "#ff374b",
+                        // stick: true
+                    })
+                }
             });
         });
 
@@ -88,12 +93,21 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
 
                 accepted[key].startDate = new Date(value.startDate);
 
-                $scope.acceptedEvents.push({
-                    title: accepted[key].company.name,
-                    start: accepted[key].startDate,
-                    className: 'acceptedEvent',
-                    url: '/#/job/view/' + accepted[key].id
-                })
+                if(accepted[key].startDate > today) {
+                    $scope.acceptedEvents.push({
+                        title: accepted[key].company.name,
+                        start: accepted[key].startDate,
+                        className: 'acceptedEvent',
+                        url: '/#/job/view/' + accepted[key].id
+                    })
+                } else {
+                    $scope.pastAcceptedEvents.push({
+                        title: accepted[key].company.name,
+                        start: accepted[key].startDate,
+                        className: 'pastAcceptedEvent',
+                        url: '/#/job/view/' + accepted[key].id
+                    })
+                }
             });
         });
     }
@@ -132,15 +146,15 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
         ];
 
     $scope.invEvents = {
-        // backgroundColor: '#3122ff',
-        // textColor: 'white',
         events: $scope.invitedEvents
     };
 
     $scope.accEvents = {
-        color: '#31a02a',
-        textColor: 'white',
         events: $scope.acceptedEvents
+    };
+
+    $scope.pastAccEvents = {
+        events: $scope.pastAcceptedEvents
     };
     // }
     /* event source that calls a function on every view switch */
@@ -210,7 +224,7 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
     $scope.uiConfig = {
         calendar:{
             height: 550,
-            editable: true,
+            editable: false,
             header:{
                 left: 'title',
                 center: '',
@@ -235,5 +249,5 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
         }
     };
     /* event sources array*/
-    $scope.eventSources = [$scope.invEvents, $scope.accEvents];
+    $scope.eventSources = [$scope.invEvents, $scope.accEvents, $scope.pastAccEvents];
 });

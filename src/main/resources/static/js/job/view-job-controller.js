@@ -17,6 +17,8 @@ angular.module('myApp').controller('view-job', function ($http, $scope, $filter,
     $http.get('/job/view/'+id).then(function (response) {
         self.job = response.data;
         self.dateMade = new Date(self.job.createdAt);
+        self.job.startDate = new Date(self.job.startDate);
+        self.job.endDate = new Date(self.job.endDate);
 
         if(!self.empUser && self.currentUser != null){
             angular.forEach(self.job.invited, function(value) {

@@ -6,12 +6,14 @@
                 <button ng-show="controller.curInvited" ng-click="controller.declineJob()" class="btn btn-outline btn-danger">Decline</button>
             </h1>
             <small>Created by <a href="#">{{controller.job.employee.firstName}} {{controller.job.employee.lastName}}</a>
-            at {{controller.dateMade | date:"HH:mm 'on' MM/dd/yyyy"}}</small>
+            at {{controller.dateMade | date:"HH:mm 'on' dd/MM/yyyy"}}</small>
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <address>{{controller.job.location}}</address>
+    <p>{{controller.job.location}}</p>
     <p>Rate: {{controller.job.wage | currency:"€"}}</p>
+    <p>Starts at {{controller.job.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+    <p>Ends at {{controller.job.endDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
     <h2>Brand Ambassadors</h2>
 
     <button class="btn btn-outline btn-success" type="button" data-toggle="collapse" data-target="#accepted-row" aria-expanded="false" aria-controls="accepted-row">

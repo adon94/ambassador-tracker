@@ -14,6 +14,7 @@
     <link rel="stylesheet/less" type="text/css" href="css/variables.less">
     <link rel="stylesheet/less" type="text/css" href="css/mixins.less">
     <link rel="stylesheet/less" type="text/css" href="css/sb-admin-2.less">
+    <link href="resources/angular-moment-picker.min.css" rel="stylesheet">
 </head>
 
 <body ng-cloak class="ng-cloak">
@@ -233,7 +234,7 @@
                             <a href="#/ba/view/{{currentUser.id}}"><i class="fa fa-user fa-fw"></i> My Profile</a>
                         </li>
                         <li ng-if="!empUser">
-                            <a href="#/"><i class="fa fa-money fa-fw"></i> My Wages</a>
+                            <a href="#/ba/wages"><i class="fa fa-money fa-fw"></i> My Wages</a>
                         </li>
                         <li ng-if="!empUser">
                             <a href="#/"><i class="fa fa-history fa-fw"></i> Past Events</a>
@@ -278,6 +279,9 @@
 <script src="resources/img-upload/ng-img-crop.js"></script>
 <script src="resources/calendar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+<!--Moment picker-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+<script src="resources/angular-moment-picker.min.js"></script>
 
 <!--JS Files-->
 <script src="js/app.js"></script>
@@ -291,6 +295,7 @@
 <script src="js/job/view-job-controller.js"></script>
 <script src="js/view-ba-controller.js"></script>
 <script src="js/view-emp-controller.js"></script>
+<script src="js/wages.js"></script>
 </body>
 
 </html>

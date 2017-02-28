@@ -87,22 +87,29 @@ form .progress {
     font-size: 87px;
 }
 
-.fc th,
-.fc td,
-.fc hr,
-.fc thead,
-.fc tbody,
-.fc-row {
-    border-color: #ccc !important;
-    background: #fff !important;
-}
+/*.fc th,*/
+/*.fc td,*/
+/*.fc hr,*/
+/*.fc thead,*/
+/*.fc tbody,*/
+/*.fc-row {*/
+    /*border-color: #ccc !important;*/
+    /*background: #fff !important;*/
+/*}*/
 
 .invitedEvent {
     background-color: #337ab7;
+    border: 1px solid #2b6296;
     color: white;
 }
 .acceptedEvent {
     background-color: #449d44;
+    border: 1px solid #2d602d;
+    color: white;
+}
+.pastAcceptedEvent {
+    background-color: #A3D9A3;
+    border: 1px solid #449d44;
     color: white;
 }
 
