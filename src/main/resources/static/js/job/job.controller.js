@@ -1,5 +1,5 @@
-angular.module('myApp').controller('job', function ($scope, $filter, $location, $rootScope, $cookies, baService, jobService) {
-    var self = this;
+angular.module('myApp').controller('job', function ($scope, $filter, filterFilter, $location, $rootScope, $cookies, baService, jobService) {
+    let self = this;
     $scope.gPlace;
 
     $rootScope.authenticated = $cookies.get('authenticated');
@@ -30,23 +30,20 @@ angular.module('myApp').controller('job', function ($scope, $filter, $location, 
     $scope.mstep2 = 1;
 
     self.selected = [];
-    // var employee = {
-    //     "id": 1
-    // };
-
-    // var job = this.job;
-    // this.job.employee = employee;
-    // var job = self.job;
     self.job = {};
 
     self.createJob = function () {
-        var job = self.job;
-        job.startDate = myFormat($scope.dt1, $scope.startTime);
-        job.endDate = myFormat($scope.dt2, $scope.endTime);
+        let job = self.job;
+        if(self.startMoment != undefined && self.endMoment != undefined) {
+            job.startDate = self.startMoment._d;
+            job.endDate = self.endMoment._d;
+        }
         job.employee = {
             "id": $rootScope.currentUser.id
         };
-        job.invited = self.selected;
+        // job.invited = self.selected;
+        job.invited = filterFilter(self.bas, { selected: true });
+        console.log(job.invited);
         if(Object.prototype.toString.call(self.companyItem) == '[object String]'){
             job.company = {};
             job.company.name = self.companyItem;
@@ -54,7 +51,8 @@ angular.module('myApp').controller('job', function ($scope, $filter, $location, 
             job.company = self.companyItem;
         }
 
-        console.log(job);
+        // console.log(self.startMoment._d);
+        // console.log(self.endMoment._d);
 
         jobService.createJob(job).then(function (response) {
             console.log(response);
@@ -62,12 +60,6 @@ angular.module('myApp').controller('job', function ($scope, $filter, $location, 
                 $location.path("/");
             }
         });
-    };
-
-    var myFormat = function (date, time) {
-        var newDate = $filter('date')(date,'yyyy-MM-dd');
-        var newTime = $filter('date')(time,'HH:mm:ss');
-        return newDate + " " + newTime;
     };
 
     // $(document).on('click', '.browse', function(){
@@ -85,6 +77,11 @@ angular.module('myApp').controller('job', function ($scope, $filter, $location, 
 
     baService.getAllBas().then(function successCallback(response){
         self.bas = response.data;
+
+        angular.forEach(self.bas, function (value, key) {
+            self.bas[key].selected = false;
+        });
+
         console.log(self.bas);
     });
 
