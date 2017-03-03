@@ -6,7 +6,8 @@
                     <div class="card-up">
                         <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
                     </div>
-                    <div class="avatar"><img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg" class="rounded-circle img-responsive" alt="Sample avatar image.">
+                    <div class="avatar hoverable">
+                        <img ng-src="{{controller.ba.imageUrl}}" class="rounded-circle img-responsive" alt="Sample avatar image.">
                     </div>
                     <div class="card-block">
                         <div class="flex-center">
@@ -27,22 +28,25 @@
         <div class="col-md-6">
             <nav class="navbar navbar-dark bg-primary">
                 <div class="flex-center">
-                    <p class="navbar-brand" href="#">Pending</p>
+                    <p class="navbar-brand" href="#">Pending ({{controller.invited.length}})</p>
                 </div>
             </nav>
-            <div ng-repeat="inv in controller.invited | orderBy:'-id'">
+            <div ng-repeat="inv in controller.invited | orderBy:'-id'" id="card-{{inv.id}}">
                 <div class="card-wrapper">
                     <div class="card">
-                        <a href="#/job/view/{{inv.id}}"><img ng-src="{{inv.company.imageUrl}}" alt="..."></a>
+                        <div class="view hm-zoom">
+                            <a href="#/job/view/{{inv.id}}">
+                                <img class="img-fluid" ng-src="{{inv.company.imageUrl}}" alt="...">
+                            </a>
+                        </div>
                         <div class="card-block">
                             <a href="#/job/view/{{inv.id}}"><h2>{{inv.company.name}}</h2></a>
-                            <p>Created by {{inv.employee.firstName}} {{inv.employee.lastName}}</p>
+                            <footer class="blockquote-footer">Created by <a href="#/emp/view/{{inv.employee.id}}">{{inv.employee.firstName}} {{inv.employee.lastName}}</a></footer>
                             <p>Starting at {{inv.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                             <p>
                                 <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>
                                 <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>
                                 <a href="#/job/view/{{inv.id}}" class="btn btn-outline btn-primary" role="button">View</a>
-                                <!--if user is ba also-->
                             </p>
                         </div>
                     </div>
@@ -53,16 +57,20 @@
         <div class="col-md-3">
             <nav class="navbar navbar-dark bg-success">
                 <div class="flex-center">
-                    <p class="navbar-brand" href="#">Upcoming</p>
+                    <p class="navbar-brand" href="#">Upcoming ({{controller.upcoming.length}})</p>
                 </div>
             </nav>
             <div ng-repeat="upc in controller.upcoming">
                 <div class="card-wrapper">
                     <div class="card">
-                        <a href="#/job/view/{{upc.id}}"><img ng-src="{{upc.company.imageUrl}}" alt="..."></a>
+                        <div class="view hm-zoom">
+                            <a href="#/job/view/{{upc.id}}">
+                                <img ng-src="{{upc.company.imageUrl}}" alt="...">
+                            </a>
+                        </div>
                         <div class="card-block">
                             <a href="#/job/view/{{upc.id}}"><h2>{{upc.company.name}}</h2></a>
-                            <p>Created by {{upc.employee.firstName}} {{upc.employee.lastName}}</p>
+                            <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{upc.employee.firstName}} {{upc.employee.lastName}}</a></footer>
                             <p>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                             <p>
                                 <a href="#/job/view/{{upc.id}}" class="btn btn-outline btn-primary" role="button">View</a>

@@ -14,6 +14,9 @@ public class AbstractUser extends AbstractEntity {
     @Column(unique=true)
     private String email;
 
+    @Column(name = "image_url", columnDefinition = "varchar(255) default 'http://yeslk.com/images/OIP-Mcca04340db0ea021035ee612b3eebc00o0.jpg'")
+    private String imageUrl;
+
     public String getFirstName() {
         return firstName;
     }
@@ -52,5 +55,13 @@ public class AbstractUser extends AbstractEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

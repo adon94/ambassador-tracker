@@ -1,4 +1,4 @@
-angular.module('myApp').controller('view-ba', function ($http, $scope, $filter, $location, $routeParams, $rootScope, $cookies) {
+angular.module('myApp').controller('view-ba', function ($http, $timeout, $scope, $filter, $location, $routeParams, $rootScope, $cookies) {
 
     var self = this;
     var id = $routeParams.id;
@@ -59,23 +59,38 @@ angular.module('myApp').controller('view-ba', function ($http, $scope, $filter, 
 
     self.acceptJob = function (job) {
         console.log(job);
-        jobService.acceptJob(job).then(function (response) {
-            if(response.status == 200){
-                console.log("Success");
-            } else {
-                console.log(response.status);
-            }
+        let myEl = angular.element( document.querySelector( '#card-'+job.id ) );
+        console.log(myEl);
+        myEl.addClass('animated bounceOutRight');
+        myEl.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+            function() {
+                myEl.remove();
         });
+        // $('#yourElement').addClass('animated bounceOutLeft');
+        // jobService.acceptJob(job).then(function (response) {
+        //     if(response.status == 200){
+        //         console.log("Success");
+        //     } else {
+        //         console.log(response.status);
+        //     }
+        // });
     };
 
     self.declineJob = function (job) {
         console.log(job);
-        jobService.declineJob(job).then(function (response) {
-            if(response.status == 200){
-                console.log("Success");
-            } else {
-                console.log(response.status);
-            }
-        });
+        let myEl = angular.element( document.querySelector( '#card-'+job.id ) );
+        console.log(myEl);
+        myEl.addClass('animated bounceOutLeft');
+        myEl.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+            function() {
+                myEl.remove();
+            });
+        // jobService.declineJob(job).then(function (response) {
+        //     if(response.status == 200){
+        //         console.log("Success");
+        //     } else {
+        //         console.log(response.status);
+        //     }
+        // });
     }
 });
