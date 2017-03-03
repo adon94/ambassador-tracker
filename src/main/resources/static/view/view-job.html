@@ -1,43 +1,55 @@
 <div ng-if="authenticated">
+    <section class="section mb-4">
     <div class="row">
-        <div class="col-lg-12">
-            <h1>{{controller.job.company.name}}
-                <button ng-show="controller.curInvited" ng-click="controller.acceptJob()" class="btn btn-outline btn-success">Accept</button>
-                <button ng-show="controller.curInvited" ng-click="controller.declineJob()" class="btn btn-outline btn-danger">Decline</button>
-            </h1>
-            <small>Created by <a href="#">{{controller.job.employee.firstName}} {{controller.job.employee.lastName}}</a>
-            at {{controller.dateMade | date:"HH:mm 'on' dd/MM/yyyy"}}</small>
+        <div class="col-md-5">
+            <div class="jumbotron">
+                <h1 class="h1-responsive">{{controller.job.company.name}}
+                    <button ng-show="controller.curInvited" ng-click="controller.acceptJob()" class="btn btn-outline btn-success">Accept</button>
+                    <button ng-show="controller.curInvited" ng-click="controller.declineJob()" class="btn btn-outline btn-danger">Decline</button>
+                </h1>
+                <hr class="my-2">
+                <small>Created by <a href="#">{{controller.job.employee.firstName}} {{controller.job.employee.lastName}}</a>
+                at {{controller.dateMade | date:"HH:mm 'on' dd/MM/yyyy"}}</small>
+                <p>{{controller.job.location}}</p>
+                <p>Rate: {{controller.job.wage | currency:"€"}}</p>
+                <p>Starts at {{controller.job.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                <p>Ends at {{controller.job.endDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                <!-- /.col-lg-12 -->
+            </div>
         </div>
-        <!-- /.col-lg-12 -->
-    </div>
-    <p>{{controller.job.location}}</p>
-    <p>Rate: {{controller.job.wage | currency:"€"}}</p>
-    <p>Starts at {{controller.job.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-    <p>Ends at {{controller.job.endDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-    <h2>Brand Ambassadors</h2>
+        <div class="col-md-7">
+            <!--Google map-->
+            <div id="map-container" class="z-depth-1-half map-container" style="height: 400px">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9528.872273066447!2d-6.27396105!3d53.3393525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48670e9e1f574bf9%3A0x5b3f9c5138831a0!2sDIT+Aungier+Street!5e0!3m2!1sen!2sie!4v1488458615687" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
 
-    <button class="btn btn-outline btn-success" type="button" data-toggle="collapse" data-target="#accepted-row" aria-expanded="false" aria-controls="accepted-row">
-        Accepted <span class="badge">{{controller.job.accepted.length}}</span></button>
-    <div class="collapse" id="accepted-row">
-        <h2>Accepted</h2>
+        </div>
+    </div>
+    <h2>Brand Ambassadors</h2>
+        <h2>Accepted <span class="badge">{{controller.job.accepted.length}}</span></h2>
         <div class="row">
             <div ng-repeat="accepted in controller.job.accepted">
                 <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                        <a href="#/ba/view/{{accepted.id}}"><img src="static/resources/default-img.png" alt="..."></a>
-                        <div class="caption">
-                            <a href="#/ba/view/{{accepted.id}}"><h2>{{accepted.firstName}} {{accepted.lastName}}</h2></a>
-                            <p ng-show="controller.job.employee.id == controller.currentUser.id && controller.empUser">
-                                <a href="..." class="btn btn-outline btn-primary" role="button">Move to Pending</a>
-                                <a href="..." class="btn btn-outline btn-danger" role="button">Move to Declined</a>
-                            </p>
+                    <div class="card-wrapper">
+                        <div class="card">
+                            <div class="card-up">
+                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
+                            </div>
+                            <div class="avatar"><img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%289%29.jpg" class="rounded-circle img-responsive" alt="Sample avatar image.">
+                            </div>
+                            <div class="card-block">
+                                <a href="#/ba/view/{{accepted.id}}"><h4>{{accepted.firstName}} {{accepted.lastName}}</h4></a>
+                                <p ng-show="controller.job.employee.id == controller.currentUser.id && controller.empUser">
+                                    <a href="..." class="btn btn-outline btn-primary" role="button">Move to Pending</a>
+                                    <a href="..." class="btn btn-outline btn-danger" role="button">Move to Declined</a>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <br ng-if="!(($index + 1) % 3)">
             </div>
         </div>
-    </div>
     <button class="btn btn-outline btn-primary" type="button" data-toggle="collapse" data-target="#invited-row" aria-expanded="false" aria-controls="invited-row">
         Pending <span class="badge">{{controller.job.invited.length}}</span></button>
     <div class="collapse" id="invited-row">
@@ -82,4 +94,5 @@
             </div>
         </div>
     </div>
+    </section>
 </div>

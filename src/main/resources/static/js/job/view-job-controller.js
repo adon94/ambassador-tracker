@@ -14,6 +14,7 @@ angular.module('myApp').controller('view-job', function ($http, $scope, $filter,
     self.curAccepted = false;
     self.curDeclined = false;
 
+
     $http.get('/job/view/'+id).then(function (response) {
         self.job = response.data;
         self.dateMade = new Date(self.job.createdAt);

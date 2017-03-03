@@ -51,6 +51,7 @@ angular.module('myApp').controller('job', function ($scope, $filter, filterFilte
             job.company = self.companyItem;
         }
 
+        job.company.imageUrl = self.companyImageUrl;
         // console.log(self.startMoment._d);
         // console.log(self.endMoment._d);
 

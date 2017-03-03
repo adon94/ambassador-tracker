@@ -4,18 +4,20 @@
 <head>
     <meta charset="utf-8" />
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7/css/font-awesome.min.css">-->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="resources/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />-->
+    <!--<link rel="stylesheet" href="resources/bootstrap.min.css" />-->
     <link rel="stylesheet" href="resources/img-upload/ng-img-crop.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="/node_modules/fullcalendar/dist/fullcalendar.min.css"/>
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link href="/node_modules/mdbootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!--<link rel="stylesheet" href="/node_modules/fullcalendar/dist/fullcalendar.print.min.css"/>-->
     <link rel="stylesheet" href="css/custom.css" />
     <link rel="stylesheet/less" type="text/css" href="css/variables.less">
     <link rel="stylesheet/less" type="text/css" href="css/mixins.less">
     <link rel="stylesheet/less" type="text/css" href="css/sb-admin-2.less">
     <link href="resources/angular-moment-picker.min.css" rel="stylesheet">
-    <!--<link href="/node_modules/mdbootstrap/css/mdb.min.css" rel="stylesheet">-->
+    <link href="/node_modules/mdbootstrap/css/mdb.min.css" rel="stylesheet">
 </head>
 
 <body ng-cloak class="ng-cloak">
@@ -38,7 +40,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                                <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+                                <i class="fa fa-envelope fa-fw"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-messages">
                                 <li>
@@ -89,7 +91,7 @@
                         <!-- /.dropdown -->
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                                <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                                <i class="fa fa-bell fa-fw"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li>
@@ -149,7 +151,7 @@
                         <!-- /.dropdown -->
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="">
-                                <i class="fa fa-user fa-fw"></i> {{currentUser.firstName}} <i class="fa fa-caret-down"></i>
+                                <i class="fa fa-user fa-fw"></i> {{currentUser.firstName}}
                             </a>
                             <ul class="dropdown-menu dropdown-user">
                                 <li ng-if="empUser"><a href="#/emp/view/{{currentUser.id}}"><i class="fa fa-user fa-fw"></i> My Profile</a>
@@ -217,17 +219,6 @@
             <div class="sidebar-nav navbar-collapse">
                 <div ng-if="authenticated">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
                         <li>
                             <a href="/#"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                         </li>
@@ -270,7 +261,7 @@
 <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/node_modules/moment/min/moment.min.js"></script>
 <script src="/node_modules/fullcalendar/dist/fullcalendar.min.js"></script>
-<!--<script src="/node_modules/mdbootstrap/js/mdb.min.js"></script>-->
+<script src="/node_modules/mdbootstrap/js/mdb.min.js"></script>
 
 <!--Other-->
 <script src="https://use.fontawesome.com/0d188512fc.js"></script>

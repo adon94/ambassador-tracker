@@ -1,164 +1,169 @@
 <div ng-if="empUser">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">New Event</h1>
-        </div>
-    </div>
-    <form class="form-horizontal" role="form" ng-submit="controller.createJob()">
-    <fieldset>
-        <!--<div class="form-group">-->
-            <!--<label class="col-md-4 control-label" for="input-1">Select File</label>-->
-            <!--<div class="col-md-4">-->
-                <!--<input type="file" id="input-1" name="selectedFile" class="file">-->
-                <!--<div class="input-group col-xs-12">-->
-                    <!--<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i></span>-->
-                    <!--<input type="text" class="form-control input-lg" disabled placeholder="Upload Image">-->
-                    <!--<span class="input-group-btn">-->
-                    <!--<button class="browse btn btn-primary input-lg" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>-->
-                <!--</span>-->
+    <div class="jumbotron">
+        <h1 class="h1-responsive">New Event</h1>
+        <hr class="my-2">
+        <form class="form-horizontal" role="form" ng-submit="controller.createJob()">
+        <fieldset>
+            <!--<div class="form-group">-->
+                <!--<label class="col-md-4 control-label" for="input-1">Select File</label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<input type="file" id="input-1" name="selectedFile" class="file">-->
+                    <!--<div class="input-group col-xs-12">-->
+                        <!--<span class="input-group-addon"><i class="glyphicon glyphicon-file"></i></span>-->
+                        <!--<input type="text" class="form-control input-lg" disabled placeholder="Upload Image">-->
+                        <!--<span class="input-group-btn">-->
+                        <!--<button class="browse btn btn-primary input-lg" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>-->
+                    <!--</span>-->
+                    <!--</div>-->
                 <!--</div>-->
             <!--</div>-->
-        <!--</div>-->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="company">Client</label>
-            <div class="col-md-4">
-                <!--Maybe change "client" to "number of times used" or similar-->
-                <input uib-typeahead="company as company.name for company in controller.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0"
-                       ng-model="controller.companyItem" id="company" name="company" type="text" placeholder="Client"
-                       class="form-control input-md">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="company">Client</label>
+                <div class="col-md-4">
+                    <!--Maybe change "client" to "number of times used" or similar-->
+                    <input uib-typeahead="company as company.name for company in controller.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="0"
+                           ng-model="controller.companyItem" id="company" name="company" type="text" placeholder="Client"
+                           class="form-control input-md">
 
-                <!--<input class="form-control input-md" id="company" type="text" list="listOfClients">-->
+                    <!--<input class="form-control input-md" id="company" type="text" list="listOfClients">-->
 
-                <!--<datalist id="listOfClients">-->
-                    <!--<option ng-repeat="c in controller.clients | orderBy:'client'" value="{{c.name}}"></option>-->
-                <!--</datalist>-->
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="location">Location</label>
-            <div class="col-md-4">
-                <input googleplace details="details1" options="options1" ng-model="controller.job.location" id="location" name="location" type="text" placeholder="Location" class="form-control input-md">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="wage">Wage</label>
-            <div class="col-md-4">
-                <div class="input-group">
-                    <span class="input-group-addon">€</span>
-                    <input ng-model="controller.job.wage" id="wage" name="wage" class="form-control" placeholder="0.00" type="text">
+                    <!--<datalist id="listOfClients">-->
+                        <!--<option ng-repeat="c in controller.clients | orderBy:'client'" value="{{c.name}}"></option>-->
+                    <!--</datalist>-->
                 </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="requiredBoys">Required No. of Boys</label>
-            <div class="col-md-4">
-                <input ng-model="controller.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" placeholder="0" class="form-control input-md">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="imageUrl">Image Url</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.companyImageUrl" id="imageUrl" name="imageUrl" type="text" placeholder="http://www.website.com/image.jpg" class="form-control input-md">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="requiredGirls">Required No. of Girls</label>
-            <div class="col-md-4">
-                <input ng-model="controller.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" placeholder="0" class="form-control input-md">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="location">Location</label>
+                <div class="col-md-4">
+                    <input googleplace details="details1" options="options1" ng-model="controller.job.location" id="location" name="location" type="text" placeholder="Location" class="form-control input-md">
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="wage">Wage</label>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">€</span>
+                        <input ng-model="controller.job.wage" id="wage" name="wage" class="form-control" placeholder="0.00" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="requiredBoys">Required No. of Boys</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" placeholder="0" class="form-control input-md">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="requiredGirls">Required No. of Girls</label>
+                <div class="col-md-4">
+                    <input ng-model="controller.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" placeholder="0" class="form-control input-md">
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="startMoment">Starts</label>
-            <div class="col-md-4">
-                <input id="startMoment"
-                       class="form-control"
-                       placeholder="Select date & time"
-                       moment-picker="controller.startMoment"
-                       locale="en-gb"
-                       format="LL LT"
-                       max-view="hour"
-                       start-view="month"
-                       autoclose="true"
-                       ng-model="controller.startMoment"
-                       ng-model-options="{ updateOn: 'blur' }">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="startMoment">Starts</label>
+                <div class="col-md-4">
+                    <input id="startMoment"
+                           class="form-control"
+                           placeholder="Select date & time"
+                           moment-picker="controller.startMoment"
+                           locale="en-gb"
+                           format="LL LT"
+                           max-view="hour"
+                           start-view="month"
+                           autoclose="true"
+                           ng-model="controller.startMoment"
+                           ng-model-options="{ updateOn: 'blur' }">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="endMoment">Ends</label>
-            <div class="col-md-4">
-                <input id="endMoment"
-                       class="form-control"
-                       placeholder="Select date & time"
-                       moment-picker="controller.endMoment"
-                       locale="en-gb"
-                       format="LL LT"
-                       max-view="hour"
-                       start-view="month"
-                       autoclose="true"
-                       ng-model="controller.endMoment"
-                       ng-model-options="{ updateOn: 'blur' }">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="endMoment">Ends</label>
+                <div class="col-md-4">
+                    <input id="endMoment"
+                           class="form-control"
+                           placeholder="Select date & time"
+                           moment-picker="controller.endMoment"
+                           locale="en-gb"
+                           format="LL LT"
+                           max-view="hour"
+                           start-view="month"
+                           autoclose="true"
+                           ng-model="controller.endMoment"
+                           ng-model-options="{ updateOn: 'blur' }">
+                </div>
             </div>
-        </div>
-        <!--<div class="form-group">-->
-            <!--<label class="col-md-4 control-label" for="invite-select">Invite BAs</label>-->
-            <!--<div class="col-md-4">-->
-                <!--<select ng-options="ba.firstName for ba in controller.bas track by ba.id" ng-model="controller.selected" id="invite-select" multiple>-->
-                <!--</select>-->
+            <!--<div class="form-group">-->
+                <!--<label class="col-md-4 control-label" for="invite-select">Invite BAs</label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<select ng-options="ba.firstName for ba in controller.bas track by ba.id" ng-model="controller.selected" id="invite-select" multiple>-->
+                    <!--</select>-->
+                <!--</div>-->
             <!--</div>-->
-        <!--</div>-->
 
-        <!-- Button for modal -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="invite-select">Invite BAs</label>
-            <div class="col-md-4">
-                <button type="button" id="invite-select" class="btn btn-outline btn-default btn-lg" data-toggle="modal" data-target="#myModal">
-                    Select
-                </button>
+            <!-- Button for modal -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="invite-select">Invite BAs</label>
+                <div class="col-md-4">
+                    <button type="button" id="invite-select" class="btn btn-outline btn-default btn-lg" data-toggle="modal" data-target="#myModal">
+                        Select
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Brand Ambassadors</h4>
-                    </div>
-                    <div class="modal-body">
-
-                        <div class="table-responsive">
-                            <table width="100%" class="table table-striped table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Availability</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="ba in controller.bas | orderBy:'firstName'">
-                                    <td><input type="checkbox" value="{{ba.id}}" ng-model="ba.selected"></td>
-                                    <td><a href="#/ba/view/{{ba.id}}" target="_blank">{{ba.firstName}} {{ba.lastName}}</a></td>
-                                    <td style="color: #31a02a;">Available</td>
-                                </tr>
-                                </tbody>
-                            </table>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Brand Ambassadors</h4>
                         </div>
+                        <div class="modal-body">
+
+                            <div class="table-responsive">
+                                <table width="100%" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th>Availability</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="ba in controller.bas | orderBy:'firstName'">
+                                        <td><input type="checkbox" value="{{ba.id}}" ng-model="ba.selected"></td>
+                                        <td><a href="#/ba/view/{{ba.id}}" target="_blank">{{ba.firstName}} {{ba.lastName}}</a></td>
+                                        <td style="color: #31a02a;">Available</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
 
 
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline btn-primary" data-dismiss="modal">Save changes</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline btn-primary" data-dismiss="modal">Save changes</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--End of modal-->
+            <!--End of modal-->
 
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="submitBtn"></label>
-            <div class="col-md-4">
-                <button type="submit" id="submitBtn" class="btn btn-outline btn-primary">Submit</button>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="submitBtn"></label>
+                <div class="col-md-4">
+                    <button type="submit" id="submitBtn" class="btn btn-outline btn-primary">Submit</button>
+                </div>
             </div>
-        </div>
-    </fieldset>
-    </form>
+        </fieldset>
+        </form>
+    </div>
 </div>
