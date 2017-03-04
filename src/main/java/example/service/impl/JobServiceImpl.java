@@ -19,6 +19,7 @@ import java.util.List;
 public class JobServiceImpl implements JobService {
 
     private final JobDAO jobDAO;
+    private final static String defaultImgUrl = "http://whats-theword.com/wp-content/themes/gonzo/images/no-image-featured-image.png";
 
     @Autowired
     public JobServiceImpl(JobDAO jobDAO) {
@@ -39,6 +40,13 @@ public class JobServiceImpl implements JobService {
         Timestamp timestamp = new Timestamp(date.getTime());
         jobDO.setCreatedAt(timestamp.toString());
         jobDO.setUpdatedAt(timestamp.toString());
+
+        if (jobDO.getCompany().getImageUrl() == null && jobDO.getCompany().getId() > 0) {
+            Company existing = companyDAO.findOne(jobDO.getCompany().getId());
+            jobDO.getCompany().setImageUrl(existing.getImageUrl());
+        } else if (jobDO.getCompany().getImageUrl() == null){
+            jobDO.getCompany().setImageUrl(defaultImgUrl);
+        }
 
         jobDO.getCompany().setClient(true);
 

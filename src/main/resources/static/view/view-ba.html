@@ -60,7 +60,7 @@
                     <p class="navbar-brand" href="#">Upcoming ({{controller.upcoming.length}})</p>
                 </div>
             </nav>
-            <div ng-repeat="upc in controller.upcoming">
+            <div ng-repeat="upc in controller.upcoming | orderBy:'-id'">
                 <div class="card-wrapper">
                     <div class="card">
                         <div class="view hm-zoom">

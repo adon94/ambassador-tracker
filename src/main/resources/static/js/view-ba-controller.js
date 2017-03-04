@@ -1,4 +1,4 @@
-angular.module('myApp').controller('view-ba', function ($http, $timeout, $scope, $filter, $location, $routeParams, $rootScope, $cookies) {
+angular.module('myApp').controller('view-ba', function ($http, jobService, $timeout, $scope, $filter, $location, $routeParams, $rootScope, $cookies) {
 
     var self = this;
     var id = $routeParams.id;
@@ -19,33 +19,40 @@ angular.module('myApp').controller('view-ba', function ($http, $timeout, $scope,
         return Math.abs(ageDate.getUTCFullYear() - 1970);
     };
 
-    $http.get('/job/invited/'+id).then(function (response) {
-        self.invited = response.data;
-        // for (inv in self.invited){
-        //     inv.startDate = new Date(inv.startDate);
-        // }
-        angular.forEach(self.invited, function(value, key) {
-            // console.log(key + ': ' + );
-            self.invited[key].startDate = new Date(value.startDate)
-        });
-    });
-
     self.upcoming = [];
 
-    $http.get('/job/accepted/'+id).then(function (response) {
-        self.accepted = response.data;
+    $scope.refresh = function(){
 
-        angular.forEach(self.accepted, function(value, key) {
-
-            self.accepted[key].startDate = new Date(value.startDate);
-
-            if(self.accepted[key].startDate - Date.now() > 0){
-                console.log(self.accepted[key].client);
-                self.upcoming.push(self.accepted[key]);
-            }
-
+        jobService.getInvitedJobs(id).then(function (response) {
+            self.invited = response.data;
+            // for (inv in self.invited){
+            //     inv.startDate = new Date(inv.startDate);
+            // }
+            angular.forEach(self.invited, function(value, key) {
+                // console.log(key + ': ' + );
+                self.invited[key].startDate = new Date(value.startDate)
+            });
         });
-    });
+
+        self.upcoming = [];
+
+        jobService.getAcceptedJobs(id).then(function (response) {
+            self.accepted = response.data;
+
+            angular.forEach(self.accepted, function(value, key) {
+
+                self.accepted[key].startDate = new Date(value.startDate);
+
+                if(self.accepted[key].startDate - Date.now() > 0){
+                    console.log(self.accepted[key].client);
+                    self.upcoming.push(self.accepted[key]);
+                }
+
+            });
+        });
+    };
+
+    $scope.refresh();
 
     $http.get('/job/declined/'+id).then(function (response) {
 
@@ -59,21 +66,20 @@ angular.module('myApp').controller('view-ba', function ($http, $timeout, $scope,
 
     self.acceptJob = function (job) {
         console.log(job);
-        let myEl = angular.element( document.querySelector( '#card-'+job.id ) );
-        console.log(myEl);
-        myEl.addClass('animated bounceOutRight');
-        myEl.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-            function() {
-                myEl.remove();
+        jobService.acceptJob(job).then(function successCallback(response){
+            if(response.status == 200){
+                let myEl = angular.element( document.querySelector( '#card-'+job.id ) );
+                console.log(myEl);
+                myEl.addClass('animated bounceOutRight');
+                myEl.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+                    function() {
+                        // myEl.remove();
+                        $scope.refresh();
+                    });
+            } else {
+                console.log(response.status);
+            }
         });
-        // $('#yourElement').addClass('animated bounceOutLeft');
-        // jobService.acceptJob(job).then(function (response) {
-        //     if(response.status == 200){
-        //         console.log("Success");
-        //     } else {
-        //         console.log(response.status);
-        //     }
-        // });
     };
 
     self.declineJob = function (job) {

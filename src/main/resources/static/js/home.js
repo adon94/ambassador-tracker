@@ -110,6 +110,8 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
                 }
             });
         });
+    } else if ($rootScope.empUser && $rootScope.authenticated) {
+        //get employee's events
     }
 
     var date = new Date();
