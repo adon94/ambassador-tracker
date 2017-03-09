@@ -41,7 +41,14 @@ angular.module('myApp').factory('jobService', function($http, $rootScope){
 
         getDeclinedJobs : function (id) {
             return $http.get('/job/declined/'+id);
+        },
+
+        getEmployeesJobs : function (id) {
+            return $http.get('/job/employee/'+id);
+        },
+
+        getOverlappingJobs : function (job) {
+            return $http.post('/job/overlap', job);
         }
     }
-
 });

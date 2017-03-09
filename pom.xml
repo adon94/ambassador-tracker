@@ -50,6 +50,7 @@
             <artifactId>jsoup</artifactId>
             <version>1.8.3</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -57,8 +58,20 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <addResources>true</addResources>
+                </configuration>
             </plugin>
         </plugins>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 
     <repositories>

@@ -98,19 +98,24 @@ form .progress {
 /*}*/
 
 .invitedEvent {
-    background-color: #337ab7;
-    border: 1px solid #2b6296;
+    background-color: #F44336;
+    border: 1px solid #F44336;
     color: white;
 }
 .acceptedEvent {
     background-color: #449d44;
-    border: 1px solid #2d602d;
+    border: 1px solid #449d44;
     color: white;
 }
 .pastAcceptedEvent {
     background-color: #A3D9A3;
-    border: 1px solid #449d44;
+    border: 1px solid #A3D9A3;
     color: white;
+}
+.gCalEvent {
+    background-color: #2196F3;
+    border: 1px solid #2196F3;
+    color: white !important;
 }
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
@@ -129,6 +134,28 @@ form .progress {
 .navbar-brand:focus, .navbar-brand:hover {
     color: white;
 }
+
+/* basic positioning */
+.legend {
+    list-style: none;
+}
+.legend li {
+    float: left;
+    margin-right: 10px;
+}
+.legend span {
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin: 5px 4px 2px 2px;
+    border: solid 1px white;
+}
+/* your colors */
+.legend .gCal { background-color: #2196F3; }
+.legend .upc { background-color: #449d44; }
+.legend .past { background-color: #A3D9A3; }
+.legend .pending { background-color: #F44336; }
+
 
 /*a.dropdown-toggle {*/
     /*color: white;*/

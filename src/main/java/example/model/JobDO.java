@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NamedNativeQuery(
+        name = "JobDO.findOverlap",
+        query = "SELECT id FROM job WHERE DATEDIFF(start_date, ?1) = 0 AND start_date < ?2 AND ?1 < end_date"
+)
 @Table(name = "job")
 public class JobDO extends AbstractEntity {
 
@@ -16,7 +20,6 @@ public class JobDO extends AbstractEntity {
 
     @ManyToOne(cascade=CascadeType.MERGE)//come back to this... maybe
     private Company company;
-//    private String coverPic;
     private String location;
     private double wage;
     private String startDate;

@@ -43,7 +43,6 @@ angular.module('myApp').controller('job', function ($scope, $filter, filterFilte
         };
         // job.invited = self.selected;
         job.invited = filterFilter(self.bas, { selected: true });
-        console.log(job.invited);
         if(Object.prototype.toString.call(self.companyItem) == '[object String]'){
             job.company = {};
             job.company.name = self.companyItem;
@@ -52,11 +51,8 @@ angular.module('myApp').controller('job', function ($scope, $filter, filterFilte
         }
 
         job.company.imageUrl = self.companyImageUrl;
-        // console.log(self.startMoment._d);
-        // console.log(self.endMoment._d);
 
         jobService.createJob(job).then(function (response) {
-            console.log(response);
             if(response.status == 200){
                 $location.path("/");
             }
@@ -82,33 +78,59 @@ angular.module('myApp').controller('job', function ($scope, $filter, filterFilte
         angular.forEach(self.bas, function (value, key) {
             self.bas[key].selected = false;
         });
-
-        console.log(self.bas);
     });
 
     jobService.getCompanies().then(function (response) {
         self.clients = response.data;
     });
 
-    self.acceptJob = function (job) {
-        console.log(job);
-        jobService.acceptJob(job).then(function (response) {
-            if(response.status == 200){
-                console.log("Success");
-            } else {
-                console.log(response.status);
-            }
-        });
-    };
+    self.getOverlappingJobs = function () {
 
-    self.declineJob = function (job) {
-        console.log(job);
-        jobService.declineJob(job).then(function (response) {
-            if(response.status == 200){
-                console.log("Success");
-            } else {
-                console.log(response.status);
-            }
+        self.baList = self.bas;
+
+        let job = {};
+        job.startDate = self.startMoment._d;
+        job.endDate = self.endMoment._d;
+        let overlappingJobs = [];
+        let unavailableBAs = [];
+
+        jobService.getOverlappingJobs(job).then(function (response) {
+            overlappingJobs = response.data;
+            console.log(overlappingJobs);
+
+            angular.forEach(overlappingJobs, function (value, key) {
+                console.log(overlappingJobs[key].accepted);
+                console.log("In first loop");
+                angular.forEach(overlappingJobs[key].accepted, function (value2, key2) {
+                    if (unavailableBAs.indexOf(value2) == -1){
+                        value2.workingFor = value.company;
+                        value2.jobId = value.id;
+                        unavailableBAs.push(value2)
+                    }
+                });
+            });
+
+            angular.forEach(self.baList, function (value, key) {
+                self.baList[key].available = true;
+                self.baList[key].workingFor = null;
+                self.baList[key].jobId = null;
+                angular.forEach(unavailableBAs, function (value2, key2){
+                    if (value2.id == value.id){
+                        self.baList[key].available = false;
+                        self.baList[key].workingFor = value2.workingFor;
+                    }
+                });
+            });
+
+            // self.bas = self.bas.concat(unavailableBAs);
         });
+
+        // angular.forEach(self.bas, function (value3, key3) {
+        //     if (value3.id == value2.id){
+        //         self.bas[key3].available = false;
+        //         self.bas[key3].workingFor = value.employee;
+        //         console.log("Unavailable")
+        //     }
+        // });
     }
 });

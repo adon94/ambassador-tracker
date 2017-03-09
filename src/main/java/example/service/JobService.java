@@ -15,6 +15,7 @@ public interface JobService {
     List<JobDO> findByAcceptedId(Long id) throws Exception;
     List<JobDO> findByDeclinedId(Long id) throws Exception;
     List<JobDO> findByEmployeeId(Long id) throws Exception;
+    List<JobDO> findOverlappers(String startDate1, String endDate1) throws Exception;
     JobDO updateToAccepted(JobDO job, Long invitedId) throws Exception;
     JobDO updateToDeclined(JobDO job, Long invitedId) throws Exception;
 }

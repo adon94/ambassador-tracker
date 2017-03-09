@@ -8,7 +8,7 @@
                     <button ng-show="controller.curInvited" ng-click="controller.acceptJob()" class="btn btn-outline btn-success">Accept</button>
                     <button ng-show="controller.curInvited" ng-click="controller.declineJob()" class="btn btn-outline btn-danger">Decline</button>
                     <hr class="my-2">
-                    <p><small>Created by <a href="#">{{controller.job.employee.firstName}} {{controller.job.employee.lastName}}</a>
+                    <p><small>Created by <a href="#/emp/view/{{controller.job.employee.id}}">{{controller.job.employee.firstName}} {{controller.job.employee.lastName}}</a>
                         at {{controller.dateMade | date:"HH:mm 'on' dd/MM/yyyy"}}</small></p>
                     <p>{{controller.job.location}}</p>
                     <p>Rate: {{controller.job.wage | currency:"€"}}</p>

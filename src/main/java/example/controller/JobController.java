@@ -122,4 +122,12 @@ public class JobController {
         List<JobDO> jobs = this.jobService.findByEmployeeId(id);
         return jobs;
     }
+
+    @RequestMapping(value = "/overlap", method = RequestMethod.POST)
+    public @ResponseBody
+    List<JobDO> findByEmployeeId(@RequestBody JobDO job) throws Exception {
+
+        List<JobDO> jobs = this.jobService.findOverlappers(job.getStartDate(), job.getEndDate());
+        return jobs;
+    }
 }

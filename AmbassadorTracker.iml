@@ -23,6 +23,7 @@
     <orderEntry type="library" exported="" name="angular-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="node-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="angular-route-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="angular-cookies-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-rest:1.4.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:1.4.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:1.4.3.RELEASE" level="project" />
@@ -85,6 +86,5 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.40" level="project" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.8.3" level="project" />
-    <orderEntry type="library" name="angular-cookies-DefinitelyTyped" level="application" />
   </component>
 </module>

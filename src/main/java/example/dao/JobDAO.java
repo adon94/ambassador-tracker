@@ -1,6 +1,5 @@
 package example.dao;
 
-import example.model.Company;
 import example.model.JobDO;
 import org.springframework.data.repository.CrudRepository;
 
@@ -17,4 +16,5 @@ public interface JobDAO extends CrudRepository<JobDO, Long> {
     List<JobDO> findByAcceptedId(Long accepted_id);
     List<JobDO> findByDeclinedId(Long declined_id);
     List<JobDO> findByEmployeeId(Long employee_id);
+    List<JobDO> findOverlap(String startDate1, String endDate1);
 }

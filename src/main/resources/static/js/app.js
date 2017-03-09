@@ -44,6 +44,16 @@ angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUploa
         controller : 'wages',
         controllerAs: 'controller'
     })
+        .when('/settings', {
+        templateUrl : 'view/settings.html',
+        controller : 'settings',
+        controllerAs: 'controller'
+    })
+        .when('/expenses', {
+        templateUrl : 'view/expenses.html',
+        controller : 'expenses',
+        controllerAs: 'controller'
+    })
         .otherwise('/');
 
 });

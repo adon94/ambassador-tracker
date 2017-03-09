@@ -6,12 +6,24 @@ import example.model.BrandAmbassadorDO;
 import example.model.Company;
 import example.model.JobDO;
 import example.service.JobService;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionBuilder;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -134,5 +146,26 @@ public class JobServiceImpl implements JobService {
         jobDO.setInvited(updatedInvited);
         jobDO.setDeclined(updatedDeclined);
         return jobDAO.save(jobDO);
+    }
+
+    @Override
+    @Transactional
+    public List<JobDO> findOverlappers(String startDate1, String endDate1) throws Exception {
+
+        List list = jobDAO.findOverlap(startDate1, endDate1);
+
+        return findMultiple(list);
+    }
+
+
+    private List<JobDO> findMultiple(List ids) {
+        List<Long> idList = new ArrayList<>();
+        System.out.print(ids);
+        for (Object id : ids){
+            String s = String.valueOf(id);
+            idList.add(Long.parseLong(s));
+        }
+
+        return (List<JobDO>) jobDAO.findAll(idList);
     }
 }

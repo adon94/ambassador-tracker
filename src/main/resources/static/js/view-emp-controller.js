@@ -1,7 +1,7 @@
-angular.module('myApp').controller('view-emp', function ($http, $scope, $filter, $location, $routeParams, $cookies, $rootScope) {
+angular.module('myApp').controller('view-emp', function ($http, jobService, $scope, $filter, $location, $routeParams, $cookies, $rootScope) {
 
-    var self = this;
-    var id = $routeParams.id;
+    let self = this;
+    let id = $routeParams.id;
 
     $rootScope.authenticated = $cookies.get('authenticated');
     $rootScope.empUser = ($cookies.get('empUser') === 'true');
@@ -12,8 +12,9 @@ angular.module('myApp').controller('view-emp', function ($http, $scope, $filter,
     });
 
     self.upcoming = [];
+    self.past = [];
 
-    $http.get('/job/employee/'+id).then(function (response) {
+    jobService.getEmployeesJobs(id).then(function (response) {
         self.created = response.data;
 
         angular.forEach(self.created, function(value, key) {
@@ -23,6 +24,8 @@ angular.module('myApp').controller('view-emp', function ($http, $scope, $filter,
             if(self.created[key].startDate - Date.now() > 0){
                 console.log(self.created[key].company.name);
                 self.upcoming.push(self.created[key]);
+            } else {
+                self.past.push(self.created[key]);
             }
         });
     });

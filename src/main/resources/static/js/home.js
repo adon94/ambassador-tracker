@@ -1,8 +1,13 @@
-angular.module('myApp').controller('home', function($scope, $http, $rootScope, $location, $cookies, $compile, uiCalendarConfig) {
-    var self = this;
+angular.module('myApp').controller('home', function($scope, $http, $rootScope, jobService, $location, $cookies, $compile, uiCalendarConfig) {
+    let self = this;
     $rootScope.authenticated = $cookies.get('authenticated');
 
-    var id;
+    let id;
+
+    let CLIENT_ID = '1009962031783-q0gk1vg0u75t51m5iphhqi4a15883t39.apps.googleusercontent.com';
+    let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+    let SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+    $scope.gEvents = [];
 
     if ($rootScope.authenticated) {
 
@@ -22,6 +27,70 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
             self.jobs = response.data;
         });
     }
+
+    function initClient() {
+        gapi.client.init({
+            discoveryDocs: DISCOVERY_DOCS,
+            clientId: CLIENT_ID,
+            scope: SCOPES
+        }).then(function () {
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+            // $cookies.put('gapi', JSON.stringify(gapi));
+
+            // Handle the initial sign-in state.
+            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+    }
+
+    function updateSigninStatus(isSignedIn) {
+        console.log("updateSigninStatus");
+        if (isSignedIn) {
+            console.log("SIGNED IN");
+            gapi.client.calendar.events.list({
+                'calendarId': 'primary',
+                'timeMin': (new Date()).toISOString(),
+                'showDeleted': false,
+                'singleEvents': true,
+                'maxResults': 10,
+                'orderBy': 'startTime'
+            }).then(function (response) {
+                let events = response.result.items;
+                $scope.gEvents = [];
+
+                if (events.length > 0) {
+                    for (i = 0; i < events.length; i++) {
+                        let event = events[i];
+                        let when = event.start.dateTime;
+                        if (!when) {
+                            when = event.start.date;
+                        }
+                        // appendPre(event.summary + ' (' + when + ')');
+
+                        let eventItem = {
+                            title: event.summary,
+                            start: when,
+                            className: 'gCalEvent'
+                        };
+                        console.log(eventItem);
+                        $scope.gEvents.push(eventItem);
+                    }
+
+                    $scope.googleEvents = {
+                        events: $scope.gEvents
+                    };
+
+                    $scope.addRemoveEventSource($scope.eventSources, $scope.googleEvents);
+                } else {
+                    console.log('No upcoming events found.');
+                }
+            });
+        } else {
+            console.log("NOT SIGNED IN");
+            gapi.auth2.getAuthInstance().signIn();
+        }
+    }
+
 
     $scope.deleteJob = function (id) {
         $http.get('/job/remove/'+id).then(function(response) {
@@ -110,8 +179,60 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
                 }
             });
         });
+
+        $scope.invEvents = {
+            events: $scope.invitedEvents
+        };
+
+        $scope.accEvents = {
+            events: $scope.acceptedEvents
+        };
+
+        $scope.pastAccEvents = {
+            events: $scope.pastAcceptedEvents
+        };
+
+        $scope.eventSources = [$scope.invEvents, $scope.accEvents, $scope.pastAccEvents];
+
     } else if ($rootScope.empUser && $rootScope.authenticated) {
-        //get employee's events
+
+        let past = [];
+        let upcoming = [];
+
+        jobService.getEmployeesJobs(id).then(function (response) {
+            let created = response.data;
+
+            angular.forEach(created, function(value, key) {
+
+                created[key].startDate = new Date(value.startDate);
+
+                let eventItem = {
+                    title: created[key].company.name,
+                    start: created[key].startDate,
+                    className: 'pastAcceptedEvent',
+                    url: '/#/job/view/' + created[key].id
+                };
+
+                if(created[key].startDate - Date.now() < 0){
+                    past.push(eventItem);
+                } else {
+                    eventItem.className = 'acceptedEvent';
+                    upcoming.push(eventItem);
+                }
+            });
+        });
+
+        $scope.pastEvents = {
+            events: past
+        };
+
+        $scope.upcomingEvents = {
+            events: upcoming
+        };
+
+        $scope.eventSources = [$scope.pastEvents, $scope.upcomingEvents];
+
+        gapi.load('client:auth2', initClient);
     }
 
     var date = new Date();
@@ -146,18 +267,6 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
             {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
             {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
         ];
-
-    $scope.invEvents = {
-        events: $scope.invitedEvents
-    };
-
-    $scope.accEvents = {
-        events: $scope.acceptedEvents
-    };
-
-    $scope.pastAccEvents = {
-        events: $scope.pastAcceptedEvents
-    };
     // }
     /* event source that calls a function on every view switch */
     $scope.eventsF = function (start, end, timezone, callback) {
@@ -190,7 +299,7 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
             }
         });
         if(canAdd === 0){
-            sources.push(source);
+            uiCalendarConfig.calendars.myCalendar.fullCalendar( 'addEventSource', source );
         }
     };
     /* add custom event*/
@@ -225,6 +334,7 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
     /* config object */
     $scope.uiConfig = {
         calendar:{
+            timeFormat:'HH:mm',
             height: 550,
             editable: false,
             header:{
@@ -238,18 +348,5 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, $
             eventRender: $scope.eventRender
         }
     };
-
-    $scope.changeLang = function() {
-        if($scope.changeTo === 'Hungarian'){
-            $scope.uiConfig.calendar.dayNames = ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"];
-            $scope.uiConfig.calendar.dayNamesShort = ["Vas", "Hét", "Kedd", "Sze", "Csüt", "Pén", "Szo"];
-            $scope.changeTo= 'English';
-        } else {
-            $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            $scope.changeTo = 'Hungarian';
-        }
-    };
     /* event sources array*/
-    $scope.eventSources = [$scope.invEvents, $scope.accEvents, $scope.pastAccEvents];
 });

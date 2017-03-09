@@ -24,6 +24,10 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <div class="card-wrapper">
+                <button class="btn btn-default" style="width: 100%; margin: 0;" ng-if="empUser">+ Add To List</button>
+            </div>
         </div>
         <div class="col-md-6">
             <nav class="navbar navbar-dark bg-primary">
@@ -31,6 +35,14 @@
                     <p class="navbar-brand" href="#">Pending ({{controller.invited.length}})</p>
                 </div>
             </nav>
+            <div ng-if="controller.invited.length == 0">
+                <div class="no-items number">
+                    0
+                </div>
+                <div class="no-items">
+                    Pending Events
+                </div>
+            </div>
             <div ng-repeat="inv in controller.invited | orderBy:'-id'" id="card-{{inv.id}}">
                 <div class="card-wrapper">
                     <div class="card">
@@ -60,6 +72,14 @@
                     <p class="navbar-brand" href="#">Upcoming ({{controller.upcoming.length}})</p>
                 </div>
             </nav>
+            <div ng-if="controller.upcoming.length == 0">
+                <div class="no-items number" style="font-size: 50px">
+                    0
+                </div>
+                <div class="no-items" style="font-size: 30px">
+                    Upcoming Events
+                </div>
+            </div>
             <div ng-repeat="upc in controller.upcoming | orderBy:'-id'">
                 <div class="card-wrapper">
                     <div class="card">
