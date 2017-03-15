@@ -2,7 +2,7 @@
 <project version="4">
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$/src/main/resources" libraries="{ambassador-tracker/src/main/resources/node_modules}" />
-    <file url="PROJECT" libraries="{ambassador-tracker/src/main/resources/node_modules, angular-DefinitelyTyped, angular-cookies-DefinitelyTyped, angular-route-DefinitelyTyped}" />
+    <file url="PROJECT" libraries="{ambassador-tracker/src/main/resources/node_modules, angular-DefinitelyTyped, angular-cookies-DefinitelyTyped, angular-resource-DefinitelyTyped, bootstrap-DefinitelyTyped}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
   </component>
 </project>

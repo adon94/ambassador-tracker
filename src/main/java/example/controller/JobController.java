@@ -23,21 +23,10 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @RequestMapping(value = "/jobs", method = RequestMethod.GET)
-    public String listPersons(Model model) throws Exception {
-        model.addAttribute("home", new JobDO());
-        model.addAttribute("listJobs", this.jobService.getAll());
-        return "home";
-    }
-
 //    @CrossOrigin
     @RequestMapping(value="/create", method= RequestMethod.POST)
     public @ResponseBody
     JobDO createJob(@RequestBody JobDO job) throws Exception {
-        System.out.println("Creating Job "+job.getCompany());
-        System.out.println("Creating Job "+job.getRequiredBoys());
-        System.out.println("Creating Job "+job.getRequiredGirls());
-        System.out.println("Creating Job "+job.getWage());
 
         this.jobService.create(job);
 

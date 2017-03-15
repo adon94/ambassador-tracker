@@ -1,11 +1,12 @@
 
-<div class="jumbotron">
+<div class="card card-block">
     <h1 class="h1-responsive">My Wages</h1>
     <hr class="my-2">
 
     <div class="row">
         <div class="col-lg-12">
             <div class="md-form">
+                <i class="fa fa-calendar prefix"></i>
                 <input placeholder="{{date}}"
                        moment-picker="date"
                        format="MMMM-YYYY"
@@ -38,11 +39,15 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><b>{{monthWages | currency:"€"}}</b></td>
+                        <td><b>{{selectedMonthWages | currency:"€"}}</b></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+</div>
+<br>
+<div class="card card-block">
+    <canvas id="myChart"></canvas>
 </div>

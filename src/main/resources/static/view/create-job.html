@@ -59,24 +59,23 @@
                 <span class="input-group-addon">€</span>
                 <input ng-model="controller.job.wage" id="wage" name="wage" class="form-control" type="text">
                 <span class="input-group-addon">.00</span>
-                <label for="wage" style="margin-left: 3rem;">Wage</label>
+                <label for="wage" style="margin-left: 3rem;">Base wage</label>
             </div>
             <div class="md-form">
                 <i class="fa fa-male prefix"></i>
                 <input ng-model="controller.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" class="form-control">
-                <label for="requiredBoys">Required No. of Boys</label>
+                <label for="requiredBoys">Minimum no. of boys</label>
             </div>
             <div class="md-form">
                 <i class="fa fa-female prefix"></i>
                 <input ng-model="controller.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" class="form-control">
-                <label for="requiredGirls">Required No. of Girls</label>
+                <label for="requiredGirls">Minimum no. of girls</label>
             </div>
             <div class="md-form">
                 <i class="fa fa-hourglass-start prefix"></i>
                 <input id="startMoment"
                        placeholder="Starts at..."
                        class="form-control"
-                       style="margin-left: 3rem; width: calc(100% - 3rem)"
                        moment-picker="controller.startMoment"
                        locale="en-gb"
                        format="LL LT"
@@ -92,7 +91,6 @@
                 <input id="endMoment"
                        placeholder="Ends at..."
                        class="form-control"
-                       style="margin-left: 3rem; width: calc(100% - 3rem)"
                        moment-picker="controller.endMoment"
                        locale="en-gb"
                        format="LL LT"

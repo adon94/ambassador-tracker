@@ -1,7 +1,7 @@
 angular.module('myApp').controller('view-ba', function ($http, jobService, $timeout, $scope, $filter, $location, $routeParams, $rootScope, $cookies) {
 
-    var self = this;
-    var id = $routeParams.id;
+    let self = this;
+    let id = $routeParams.id;
 
     $rootScope.authenticated = $cookies.get('authenticated');
     $rootScope.empUser = ($cookies.get('empUser') === 'true');
@@ -13,15 +13,15 @@ angular.module('myApp').controller('view-ba', function ($http, jobService, $time
         self.age = calculateAge(self.ba.dob);
     });
 
-    var calculateAge = function(birthday) { // birthday is a date
-        var ageDifMs = Date.now() - new Date(birthday);
-        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    let calculateAge = function(birthday) { // birthday is a date
+        let ageDifMs = Date.now() - new Date(birthday);
+        let ageDate = new Date(ageDifMs); // miliseconds from epoch
         return Math.abs(ageDate.getUTCFullYear() - 1970);
     };
 
     self.upcoming = [];
 
-    $scope.refresh = function(){
+    $scope.refresh = function() {
 
         jobService.getInvitedJobs(id).then(function (response) {
             self.invited = response.data;
@@ -50,19 +50,19 @@ angular.module('myApp').controller('view-ba', function ($http, jobService, $time
 
             });
         });
+
+        jobService.getDeclinedJobs(id).then(function (response) {
+
+            self.declined = response.data;
+
+            angular.forEach(self.declined, function(value, key) {
+
+                self.declined[key].startDate = new Date(value.startDate)
+            });
+        });
     };
 
     $scope.refresh();
-
-    $http.get('/job/declined/'+id).then(function (response) {
-
-        self.declined = response.data;
-
-        angular.forEach(self.declined, function(value, key) {
-
-            self.declined[key].startDate = new Date(value.startDate)
-        });
-    });
 
     self.acceptJob = function (job) {
         console.log(job);
@@ -83,20 +83,24 @@ angular.module('myApp').controller('view-ba', function ($http, jobService, $time
     };
 
     self.declineJob = function (job) {
-        console.log(job);
-        let myEl = angular.element( document.querySelector( '#card-'+job.id ) );
-        console.log(myEl);
-        myEl.addClass('animated bounceOutLeft');
-        myEl.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-            function() {
-                myEl.remove();
-            });
-        // jobService.declineJob(job).then(function (response) {
-        //     if(response.status == 200){
-        //         console.log("Success");
-        //     } else {
-        //         console.log(response.status);
-        //     }
-        // });
+        jobService.declineJob(job).then(function (response) {
+            if(response.status == 200){
+                let myEl = angular.element( document.querySelector( '#card-'+job.id ) );
+                console.log(myEl);
+                myEl.addClass('animated bounceOutLeft');
+                myEl.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+                    function() {
+                        $scope.refresh();
+                    });
+            } else {
+                console.log(response.status);
+            }
+        });
+    };
+
+    if($rootScope.empUser) {
+        $http.get("/baList/" + id).then(function (response) {
+            self.baLists = response.data;
+        });
     }
 });

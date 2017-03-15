@@ -5,12 +5,10 @@
                 <div class="card-up">
                     <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
                 </div>
-                <div class="avatar hoverable">
-                    <img ng-src="{{controller.emp.imageUrl}}" class="rounded-circle img-responsive" alt="Sample avatar image.">
-                </div>
+                <div class="avatar hoverable" ng-style="{'background-image':'url('+controller.emp.imageUrl+')'}"></div>
                 <div class="card-block">
                     <div class="flex-center">
-                        <h2>{{controller.emp.firstName}} {{controller.emp.lastName}}</h2>
+                        <h2 class="text-center">{{controller.emp.firstName}} {{controller.emp.lastName}}</h2>
                     </div>
                     <hr class="my-2">
                     <a href="mailto:{{controller.emp.email}}">{{controller.emp.email}}</a>
@@ -24,6 +22,14 @@
                 <p class="navbar-brand">Upcoming ({{controller.upcoming.length}})</p>
             </div>
         </nav>
+        <div ng-if="controller.upcoming.length == 0">
+            <div class="no-items number">
+                0
+            </div>
+            <div class="no-items">
+                Upcoming Events
+            </div>
+        </div>
         <div ng-repeat="upc in controller.upcoming | orderBy:'-id' | limitTo:3">
             <div class="card-wrapper">
                 <div class="card">
@@ -56,6 +62,14 @@
                 <p class="navbar-brand">Past ({{controller.past.length}})</p>
             </div>
         </nav>
+        <div ng-if="controller.past.length == 0">
+            <div class="no-items number" style="font-size: 50px">
+                0
+            </div>
+            <div class="no-items" style="font-size: 30px">
+                Past Events
+            </div>
+        </div>
         <div ng-repeat="past in controller.past | orderBy:'-id' | limitTo:5">
             <div class="card-wrapper">
                 <div class="card">

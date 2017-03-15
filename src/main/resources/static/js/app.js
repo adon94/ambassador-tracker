@@ -34,7 +34,7 @@ angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUploa
         controller : 'view-emp',
         controllerAs: 'controller'
     })
-        .when('/user/new', {
+        .when('/register', {
         templateUrl : 'view/register.html',
         controller : 'user',
         controllerAs: 'controller'
@@ -52,6 +52,11 @@ angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUploa
         .when('/expenses', {
         templateUrl : 'view/expenses.html',
         controller : 'expenses',
+        controllerAs: 'controller'
+    })
+        .when('/messages', {
+        templateUrl : 'view/messages.html',
+        controller : 'messages',
         controllerAs: 'controller'
     })
         .otherwise('/');

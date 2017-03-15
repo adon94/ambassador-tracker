@@ -1,6 +1,6 @@
 angular.module('myApp').controller('user', function ($http, $scope, $filter, $location, $rootScope, $cookies) {
-    var self = this;
-    var user = {};
+    let self = this;
+    let user = {};
     self.userType = false;
 
     $rootScope.authenticated = $cookies.get('authenticated');
@@ -8,17 +8,18 @@ angular.module('myApp').controller('user', function ($http, $scope, $filter, $lo
     // $rootScope.currentUser = JSON.parse($cookies.get('currentUser'));
 
     self.createUser = function () {
-        var url = "/employee/create";
+        let url = "/employee/create";
 
         user.password = self.user.password;
         user.email = self.user.email;
         user.firstName = self.user.firstName;
         user.lastName = self.user.lastName;
         user.phone = self.user.phone;
+        user.imageUrl = self.user.imageUrl;
 
         if(self.userType){
             url = "/ba/create";
-            user.dob = dobFormat(self.predob);
+            user.dob = self.user.dob._d;
             user.address = self.user.address;
             user.male = self.user.male;
             user.fullLicence = self.user.fullLicence;
@@ -27,7 +28,6 @@ angular.module('myApp').controller('user', function ($http, $scope, $filter, $lo
             user.torso = self.user.torso;
             user.waist = self.user.waist;
             user.shoe = self.user.shoe;
-            // user.profilePic = Upload.dataUrltoBlob($scope.croppedDataUrl, name);
         }
         console.log(user);
         console.log(url);
@@ -40,10 +40,6 @@ angular.module('myApp').controller('user', function ($http, $scope, $filter, $lo
                 $rootScope.authenticated = true;
             }
         });
-    };
-
-    var dobFormat = function (date) {
-        return $filter('date')(date,'yyyy-MM-dd');
     };
 
     // $scope.upload = function (dataUrl, name) {

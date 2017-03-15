@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="AmbassadorTracker:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ambassador-tracker-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="AmbassadorTracker:war exploded" />
+    </root>
+  </artifact>
+</component>

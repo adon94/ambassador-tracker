@@ -6,27 +6,26 @@
                     <div class="card-up">
                         <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
                     </div>
-                    <div class="avatar hoverable">
-                        <img ng-src="{{controller.ba.imageUrl}}" class="rounded-circle img-responsive" alt="Sample avatar image.">
-                    </div>
+                    <div class="avatar hoverable" ng-style="{'background-image':'url('+controller.ba.imageUrl+')'}"></div>
                     <div class="card-block">
                         <div class="flex-center">
-                            <h2>{{controller.ba.firstName}} {{controller.ba.lastName}}</h2>
+                            <h2 class="text-center">{{controller.ba.firstName}} {{controller.ba.lastName}}</h2>
                         </div>
                         <hr class="my-2">
-                        <a href="mailto:{{controller.ba.email}}">{{controller.ba.email}}</a>
-                        <address>{{controller.ba.address}}</address>
-                        <p>DOB: {{controller.ba.dob | date:"dd/MM/yyyy"}} ({{controller.age}} years old)</p>
-                        <p>Height: {{controller.ba.height}}</p>
-                        <p>Torso: {{controller.ba.torso}}</p>
-                        <p>Waist: {{controller.ba.waist}}</p>
-                        <p>Shoe: {{controller.ba.shoe}}</p>
+                        <p class="text-center">{{controller.ba.address}}</p>
+                        <p class="text-center"><a href="mailto:{{controller.ba.email}}">{{controller.ba.email}}</a></p>
+                        <p class="text-center">{{controller.ba.phone}}</p>
+                        <p class="text-center">{{controller.ba.dob | date:"dd/MM/yyyy"}} ({{controller.age}} years old)</p>
+                        <!--<p>Height: {{controller.ba.height}}</p>-->
+                        <!--<p>Torso: {{controller.ba.torso}}</p>-->
+                        <!--<p>Waist: {{controller.ba.waist}}</p>-->
+                        <!--<p>Shoe: {{controller.ba.shoe}}</p>-->
                     </div>
                 </div>
             </div>
             <br>
             <div class="card-wrapper">
-                <button class="btn btn-default" style="width: 100%; margin: 0;" ng-if="empUser">+ Add To List</button>
+                <button class="btn btn-default" style="width: 100%; margin: 0" ng-if="empUser" data-toggle="modal" data-target="#myModal">+ Add To List</button>
             </div>
         </div>
         <div class="col-md-6">
@@ -100,6 +99,43 @@
                 </div>
                 <br>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!--Content-->
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="myModalLabel">Add to list</h4>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="btn btn-default" style="width: 100%"><i class="fa fa-plus-square"></i> Create new list</button>
+                            <hr class="my-2">
+                        </div>
+                        <div class="col-12">
+                            <h4 class="text-center">Your lists</h4>
+                        </div>
+                        <ul class="col-12">
+                            <li ng-repeat="baList in controller.baLists">
+                                <a>
+                                    <p>{{baList.title}}</p>
+                                    <footer class="blockquote-footer">{{baList.ambassadors.length}} Brand Ambassadors</footer>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!--/.Content-->
         </div>
     </div>
 </div>

@@ -2,7 +2,9 @@
     <div class="row">
         <div class="col-md-3">
             <div class="card">
-                <img ng-src="{{controller.job.company.imageUrl}}" alt="...">
+                <div class="view hm-zoom">
+                    <img ng-src="{{controller.job.company.imageUrl}}" alt="...">
+                </div>
                 <div class="card-block">
                     <h1 class="h1-responsive">{{controller.job.company.name}}</h1>
                     <button ng-show="controller.curInvited" ng-click="controller.acceptJob()" class="btn btn-outline btn-success">Accept</button>
@@ -25,16 +27,23 @@
                     <p class="navbar-brand" href="#">Accepted</p>
                 </div>
             </nav>
+            <div ng-if="controller.job.accepted.length == 0">
+                <div class="no-items number" style="font-size: 50px">
+                    0
+                </div>
+                <div class="no-items" style="font-size: 30px">
+                    Accepted BAs
+                </div>
+            </div>
             <div ng-repeat="accepted in controller.job.accepted">
                 <div class="card">
                     <div class="card-up">
                         <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
                     </div>
-                    <div class="avatar"><img ng-src="{{accepted.imageUrl}}" class="rounded-circle img-responsive" alt="Sample avatar image.">
-                    </div>
+                    <div class="avatar hoverable" ng-style="{'background-image':'url('+accepted.imageUrl+')'}"></div>
                     <div class="card-block">
                         <div class="flex-center">
-                            <a href="#/ba/view/{{accepted.id}}"><h2>{{accepted.firstName}} {{accepted.lastName}}</h2></a>
+                            <a href="#/ba/view/{{accepted.id}}"><h2 class="text-center">{{accepted.firstName}} {{accepted.lastName}}</h2></a>
                         </div>
                     </div>
                 </div>
@@ -47,16 +56,23 @@
                     <p class="navbar-brand" href="#">Pending</p>
                 </div>
             </nav>
+            <div ng-if="controller.job.invited.length == 0">
+                <div class="no-items number" style="font-size: 50px">
+                    0
+                </div>
+                <div class="no-items" style="font-size: 30px">
+                    Pending BAs
+                </div>
+            </div>
             <div ng-repeat="invited in controller.job.invited">
                 <div class="card">
                     <div class="card-up">
                         <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
                     </div>
-                    <div class="avatar"><img ng-src="{{invited.imageUrl}}" class="rounded-circle img-responsive" alt="Sample avatar image.">
-                    </div>
+                    <div class="avatar hoverable" ng-style="{'background-image':'url('+invited.imageUrl+')'}"></div>
                     <div class="card-block">
                         <div class="flex-center">
-                            <a href="#/ba/view/{{invited.id}}"><h2>{{invited.firstName}} {{invited.lastName}}</h2></a>
+                            <a href="#/ba/view/{{invited.id}}"><h2 class="text-center">{{invited.firstName}} {{invited.lastName}}</h2></a>
                         </div>
                     </div>
                 </div>
@@ -69,16 +85,23 @@
                     <p class="navbar-brand" href="#">Declined</p>
                 </div>
             </nav>
+            <div ng-if="controller.job.declined.length == 0">
+                <div class="no-items number" style="font-size: 50px">
+                    0
+                </div>
+                <div class="no-items" style="font-size: 30px">
+                    Declined BAs
+                </div>
+            </div>
             <div ng-repeat="declined in controller.job.declined">
                 <div class="card">
                     <div class="card-up">
                         <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
                     </div>
-                    <div class="avatar"><img ng-src="{{declined.imageUrl}}" class="rounded-circle img-responsive" alt="Sample avatar image.">
-                    </div>
+                    <div class="avatar hoverable" ng-style="{'background-image':'url('+declined.imageUrl+')'}"></div>
                     <div class="card-block">
                         <div class="flex-center">
-                            <a href="#/ba/view/{{declined.id}}"><h2>{{declined.firstName}} {{declined.lastName}}</h2></a>
+                            <a href="#/ba/view/{{declined.id}}"><h2 class="text-center">{{declined.firstName}} {{declined.lastName}}</h2></a>
                         </div>
                     </div>
                 </div>

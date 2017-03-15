@@ -87,7 +87,8 @@ angular.module('myApp').controller('home', function($scope, $http, $rootScope, j
             });
         } else {
             console.log("NOT SIGNED IN");
-            gapi.auth2.getAuthInstance().signIn();
+            //----------Sign in prompt------------
+            // gapi.auth2.getAuthInstance().signIn();
         }
     }
 
