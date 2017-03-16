@@ -1,4 +1,4 @@
-angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUpload', 'ngImgCrop', 'ngCookies', 'moment-picker' ])
+angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUpload', 'ngImgCrop', 'ngCookies', 'moment-picker', 'firebase' ])
     .config(function($routeProvider, $locationProvider) {
 
         $locationProvider.hashPrefix('');
@@ -61,4 +61,20 @@ angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUploa
     })
         .otherwise('/');
 
+        const messaging = firebase.messaging();
+
+        messaging.requestPermission()
+            .then(function () {
+                console.log("All good");
+                return messaging.getToken();
+            })
+            .then(function (token) {
+                console.log(token);
+            })
+            .catch(function (err) {
+                console.log("Error occured: "+err);
+            });
+        messaging.onMessage(function (payload) {
+            console.log("onMessage: " + payload)
+        });
 });
