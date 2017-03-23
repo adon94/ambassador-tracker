@@ -1,71 +1,111 @@
-<!--<div class="alert alert-danger" ng-show="error">-->
-    <!--There was a problem logging in. Please try again.-->
-<!--</div>-->
-<!--<div class="row">-->
-    <!--<div class="col-lg-12">-->
-        <!--<h1 class="page-header">Login</h1>-->
+<!--<main class="mt-5">-->
+    <!--<div class="container">-->
+        <!--<div class="flex-center">-->
+            <!--<div class="col-md-4">-->
+                <!--<div class="card">-->
+                    <!--<div class="card-block">-->
+                        <!--&lt;!&ndash;Header&ndash;&gt;-->
+                        <!--<div class="text-center">-->
+                            <!--<h3><i class="fa fa-lock"></i> Login:</h3>-->
+                            <!--<hr class="mt-2 mb-2">-->
+                        <!--</div>-->
+
+                        <!--<form ng-submit="controller.login()">-->
+                            <!--&lt;!&ndash;Body&ndash;&gt;-->
+                            <!--<div class="md-form">-->
+                                <!--<i class="fa fa-envelope prefix"></i>-->
+                                <!--<input type="text" id="form2" class="form-control" ng-model="controller.credentials.email">-->
+                                <!--<label for="form2">Your email</label>-->
+                            <!--</div>-->
+
+                            <!--<div class="md-form">-->
+                                <!--<i class="fa fa-lock prefix"></i>-->
+                                <!--<input type="password" id="form4" class="form-control" ng-model="controller.credentials.password">-->
+                                <!--<label for="form4">Your password</label>-->
+                            <!--</div>-->
+
+                            <!--<div class="text-center">-->
+                                <!--<input type="submit" value="login" class="btn btn-deep-purple"/>-->
+                            <!--</div>-->
+                        <!--</form>-->
+
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;Footer&ndash;&gt;-->
+                    <!--<div class="modal-footer">-->
+                        <!--<div class="options">-->
+                            <!--<p>Not a member? <a href="#/register">Sign Up</a></p>-->
+                            <!--<p>Forgot <a href="#">Password?</a></p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     <!--</div>-->
-<!--</div>-->
-<!--<form class="form-horizontal" role="form" ng-submit="controller.login()">-->
-    <!--<fieldset>-->
-        <!--<div class="form-group">-->
-            <!--<label class="col-md-4 control-label" for="email">Email</label>-->
-            <!--<div class="col-md-4">-->
-                <!--<input ng-model="controller.credentials.email" id="email" name="email" type="email" class="form-control input-md">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label class="col-md-4 control-label" for="password">Password</label>-->
-            <!--<div class="col-md-4">-->
-                <!--<input ng-model="controller.credentials.password" id="password" name="password" type="password" class="form-control input-md">-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-            <!--<label class="col-md-4 control-label" for="loginBtn"></label>-->
-            <!--<div class="col-md-4">-->
-                <!--<button type="submit" id="loginBtn" class="btn btn-outline btn-primary">Submit</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</fieldset>-->
-<!--</form>-->
-<div class="flex-center">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-block">
-                <!--Header-->
-                <div class="text-center">
-                    <h3><i class="fa fa-lock"></i> Login:</h3>
-                    <hr class="mt-2 mb-2">
+<!--</main>-->
+
+
+<div ng-include="'partial/nav.html'"></div>
+<div class="on-top">
+    <div class="row">
+        <div class="col-7"></div>
+        <div class="col-5">
+            <div class="card card-block login-card">
+                <div class="row flex-center">
+                    <form class="form-inline" ng-submit="controller.login()">
+                        <div class="form-group">
+                            <label class="sr-only" for="exampleInputEmail3">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email" ng-model="controller.credentials.email">
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="exampleInputPassword3" data-error="wrong" data-success="right">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password" ng-model="controller.credentials.password">
+                        </div>
+                        <button type="submit" class="btn btn-elegant">Sign in</button>
+                    </form>
                 </div>
-
-                <form ng-submit="controller.login()">
-                    <!--Body-->
-                    <div class="md-form">
-                        <i class="fa fa-envelope prefix"></i>
-                        <input type="text" id="form2" class="form-control" ng-model="controller.credentials.email">
-                        <label for="form2">Your email</label>
-                    </div>
-
-                    <div class="md-form">
-                        <i class="fa fa-lock prefix"></i>
-                        <input type="password" id="form4" class="form-control" ng-model="controller.credentials.password">
-                        <label for="form4">Your password</label>
-                    </div>
-
+            </div>
+        </div>
+        <div class="col-7"></div>
+        <div class="col-5">
+            <div class="card login-card">
+                <div class="card-block">
                     <div class="text-center">
-                        <input type="submit" value="login" class="btn btn-deep-purple"/>
+                        <h3>Sign Up</h3>
+                        <hr class="mt-2 mb-2">
                     </div>
-                </form>
-
-            </div>
-
-            <!--Footer-->
-            <div class="modal-footer">
-                <div class="options">
-                    <p>Not a member? <a href="#/register">Sign Up</a></p>
-                    <p>Forgot <a href="#">Password?</a></p>
+                    <form class="row" ng-submit="ctrl.createUser()">
+                        <div class="form-group col-6">
+                            <label class="sr-only" for="form1">Your name</label>
+                            <input type="text" id="form1" class="form-control" placeholder="Your name" ng-model="ctrl.new.name">
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="sr-only" for="form2">Your email</label>
+                            <input type="text" id="form2" class="form-control" placeholder="Your email" ng-model="ctrl.new.email">
+                        </div>
+                        <br>
+                        <div class="form-group col-6">
+                            <label class="sr-only" for="form3">Your password</label>
+                            <input type="password" id="form3" class="form-control" placeholder="Your password" ng-model="ctrl.new.password">
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="sr-only" for="form4">Re-enter password</label>
+                            <input type="password" id="form4" class="form-control" placeholder="Re-enter password" ng-model="ctrl.newPassword2">
+                        </div>
+                        <br>
+                        <div class="col-12 flex-center">
+                            <button type="submit" class="btn btn-elegant">Sign Up</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="carousel-example-1" class="carousel slide" data-ride="carousel" data-interval="10000">
+    <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
         </div>
     </div>
 </div>

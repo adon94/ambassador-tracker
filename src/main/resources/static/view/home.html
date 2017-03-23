@@ -1,172 +1,18 @@
-<div ng-if="authenticated" ng-cloak>
-    <!--<div class="jumbotron">-->
-        <!--<h1 class="h1-responsive">Dashboard</h1>-->
-        <!--<hr class="my-2">-->
-        <!--&lt;!&ndash; /.row &ndash;&gt;-->
-        <!--<div class="lead">-->
-            <!--<div class="row">-->
-                <!--<div class="col-lg-3 col-md-6">-->
-                    <!--<div class="panel panel-green">-->
-                        <!--<div class="panel-heading">-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-xs-3">-->
-                                    <!--<i class="fa fa-check-circle fa-5x"></i>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-9 text-right">-->
-                                    <!--<div ng-if="!empUser" class="huge">{{acceptedEvents.length}}</div>-->
-                                    <!--<div ng-if="empUser" class="huge">{{upcomingEvents.events.length}}</div>-->
-                                    <!--<div>Upcoming</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<a ng-if="!empUser" href="#/ba/view/{{currentUser.id}}">-->
-                            <!--<div class="panel-footer">-->
-                                <!--<span class="pull-left">View Details</span>-->
-                                <!--<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
-                                <!--<div class="clearfix"></div>-->
-                            <!--</div>-->
-                        <!--</a>-->
-                        <!--<a ng-if="empUser" href="#/emp/view/{{currentUser.id}}">-->
-                            <!--<div class="panel-footer">-->
-                                <!--<span class="pull-left">View Details</span>-->
-                                <!--<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
-                                <!--<div class="clearfix"></div>-->
-                            <!--</div>-->
-                        <!--</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-lg-3 col-md-6">-->
-                    <!--<div class="panel panel-primary">-->
-                        <!--<div class="panel-heading">-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-xs-3">-->
-                                    <!--<i class="fa fa-clock-o fa-5x"></i>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-9 text-right">-->
-                                    <!--<div class="huge">{{invitedEvents.length}}</div>-->
-                                    <!--<div>Pending</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<a href="#/ba/view/{{currentUser.id}}">-->
-                            <!--<div class="panel-footer">-->
-                                <!--<span class="pull-left">View Details</span>-->
-                                <!--<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
-                                <!--<div class="clearfix"></div>-->
-                            <!--</div>-->
-                        <!--</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-lg-3 col-md-6">-->
-                    <!--<div class="panel panel-yellow">-->
-                        <!--<div class="panel-heading">-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-xs-3">-->
-                                    <!--<i class="fa fa-comments fa-5x"></i>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-9 text-right">-->
-                                    <!--<div class="huge">4</div>-->
-                                    <!--<div>Messages</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<a href="#">-->
-                            <!--<div class="panel-footer">-->
-                                <!--<span class="pull-left">View Details</span>-->
-                                <!--<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
-                                <!--<div class="clearfix"></div>-->
-                            <!--</div>-->
-                        <!--</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<div class="col-lg-3 col-md-6">-->
-                    <!--<div class="panel panel-red">-->
-                        <!--<div class="panel-heading">-->
-                            <!--<div class="row">-->
-                                <!--<div class="col-xs-3">-->
-                                    <!--<i class="fa fa-bell fa-5x"></i>-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-9 text-right">-->
-                                    <!--<div class="huge">{{controller.employees.length + controller.bas.length}}</div>-->
-                                    <!--<div>Notifications</div>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<a href="#">-->
-                            <!--<div class="panel-footer">-->
-                                <!--<span class="pull-left">View Details</span>-->
-                                <!--<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>-->
-                                <!--<div class="clearfix"></div>-->
-                            <!--</div>-->
-                        <!--</a>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-    <!--Panel-->
-    <div class="card">
-        <div class="card-header info-color white-text">
-            <ul class="legend">
-                <li><span class="gCal"></span> Google Calendar Event</li>
-                <li><span class="upc"></span> Upcoming Event</li>
-                <li><span class="past"></span> Past Event</li>
-                <li><span class="pending"></span> Pending Event</li>
-            </ul>
-        </div>
-        <div class="card-block">
-            <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" calendar="myCalendar"></div>
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-5">
+    <div class="container">
+        <div class="card">
+            <div class="card-header teal-blue white-text">
+                <ul class="legend">
+                    <li><span class="gCal"></span> Google Calendar Event</li>
+                    <li><span class="upc"></span> Upcoming Event</li>
+                    <li><span class="past"></span> Past Event</li>
+                    <li><span class="pending"></span> Pending Event</li>
+                </ul>
+            </div>
+            <div class="card-block">
+                <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" calendar="myCalendar"></div>
+            </div>
         </div>
     </div>
-
-    <!--<h1 ng-show="authenticated">Events</h1>-->
-    <!--<div ng-show="authenticated" ng-repeat="job in controller.jobs">-->
-        <!--<div class="row" id="job-row{{job.id}}">-->
-            <!--<div class="col-sm-6 col-md-4">-->
-                <!--<div class="thumbnail">-->
-                    <!--<div class="caption">-->
-                        <!--<p>Client: {{job.company.name}}</p>-->
-                        <!--<p>Location: {{job.location}}</p>-->
-                        <!--<p>Rate: {{job.wage | currency:"€"}}</p>-->
-                        <!--<button class="btn btn-primary" ng-click="viewJob(job.id)">View</button>-->
-                        <!--<button class="btn btn-danger" ng-click="deleteJob(job.id)">Delete</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<h1 ng-show="authenticated">Employees</h1>-->
-    <!--<div ng-show="authenticated" ng-repeat="employee in controller.employees">-->
-        <!--<div class="row" id="emp-row{{employee.id}}">-->
-            <!--<div class="col-sm-6 col-md-4">-->
-                <!--<div class="thumbnail">-->
-                    <!--<div class="caption">-->
-                        <!--<p>Employee: {{employee.firstName}} {{employee.lastName}}</p>-->
-                        <!--<p>Email: {{employee.email}}</p>-->
-                        <!--<button class="btn btn-danger" ng-click="deleteEmp(employee.id)">Delete</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<h1 ng-show="authenticated">Brand Ambassadors</h1>-->
-    <!--<div ng-show="authenticated" ng-repeat="ba in controller.bas">-->
-        <!--<div class="row" id="ba-row{{ba.id}}">-->
-            <!--<div class="col-sm-6 col-md-4">-->
-                <!--<div class="thumbnail">-->
-                    <!--<div class="caption">-->
-                        <!--<p>BA: {{ba.firstName}} {{ba.lastName}}</p>-->
-                        <!--<p>Email: {{ba.email}}</p>-->
-                        <!--<button class="btn btn-primary" ng-click="viewBa(ba.id)">View</button>-->
-                        <!--<button class="btn btn-danger" ng-click="deleteBa(ba.id)">Delete</button>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-</div>
-<div ng-show="!authenticated">
-    <a href="/#/login">Login to see data</a>
-</div>
+</main>

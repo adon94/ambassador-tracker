@@ -1,13 +1,13 @@
 angular.module('myApp').controller('navigation', function($rootScope, $http, $location, $route, $cookies) {
 
-        var self = this;
+        let self = this;
 
         self.tab = function(route) {
             return $route.current && route === $route.current.controller;
         };
 
-        var authenticate = function(credentials, callback) {
-            // var headers = credentials ? {
+        let authenticate = function(credentials, callback) {
+            // let headers = credentials ? {
             //         authorization : "Basic "
             //         + btoa(credentials.username + ":"
             //             + credentials.password)

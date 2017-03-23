@@ -1,0 +1,144 @@
+html,
+body,
+.view {
+    height: 100%;
+}
+
+body {
+    background-color: #eee;
+}
+
+.carousel,
+.carousel-item,
+.active {
+    height: 100%;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+.carousel-item:nth-child(1) {
+    background-image: url("https://static.pexels.com/photos/1852/dawn-landscape-mountains-nature.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.on-top {
+    margin-top: 100px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1050;
+    width: 95%;
+}
+
+.login-card {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+.nav-vectr {
+    background: #34495e;
+}
+.teal-blue {
+    background-color: #33658A;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+.invitedEvent {
+    background-color: #F44336;
+    border: 1px solid #F44336;
+    color: white;
+}
+.acceptedEvent {
+    background-color: #449d44;
+    border: 1px solid #449d44;
+    color: white;
+}
+.pastAcceptedEvent {
+    background-color: #A3D9A3;
+    border: 1px solid #A3D9A3;
+    color: white;
+}
+.gCalEvent {
+    background-color: #2196F3;
+    border: 1px solid #2196F3;
+    color: white !important;
+}
+
+.legend .gCal { background-color: #2196F3; }
+.legend .upc { background-color: #449d44; }
+.legend .past { background-color: #A3D9A3; }
+.legend .pending { background-color: #F44336; }
+
+.legend {
+    list-style: none;
+}
+.legend li {
+    float: left;
+    margin-right: 10px;
+}
+.legend span {
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin: 5px 4px 2px 2px;
+    border: solid 1px white;
+}
+
+.calendar {
+    padding-bottom: 15px;
+}
+
+.avatar {
+    border-radius: 50%;
+    display: block;
+    height: 120px;
+    margin: -65px auto 0;
+    width: 120px;
+    background-size: cover;
+    background-position: center;
+}
+
+.fc-view-container {
+    background-image: url(http://www.ilikewallpaper.net/iphone-panoramic-wallpapers/download/15749/Island--iphone-panoramic-wallpaper-ilikewallpaper_com.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.fc-view {
+    background-color: rgba(255, 255, 255, 0.478431);
+}
+
+.fc-unthemed td.fc-today {
+    background: rgba(252, 248, 227, 0.4);
+}
+
+.fc-head {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.no-items {
+    color: #606060;
+    text-align: center;
+    font-size: 50px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 18%;
+}
+
+.number {
+    font-size: 80px;
+    margin-bottom: -20%;
+}
+
+.moment-picker .moment-picker-input {
+    padding-left: 5px;
+}
+
+.md-form .moment-picker {
+    margin-left: 3rem;
+}

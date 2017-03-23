@@ -1,118 +1,102 @@
-<div class="row">
-    <div class="col-md-3">
-        <div class="card-wrapper">
-            <div class="card">
-                <div class="card-up">
-                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card-wrapper">
+                    <div class="card">
+                        <div class="card-up">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
+                        </div>
+                        <div class="avatar hoverable" ng-style="{'background-image':'url('+controller.emp.imageUrl+')'}"></div>
+                        <div class="card-block">
+                            <div class="flex-center">
+                                <h2 class="text-center">{{controller.emp.firstName}} {{controller.emp.lastName}}</h2>
+                            </div>
+                            <hr class="my-2">
+                            <a href="mailto:{{controller.emp.email}}">{{controller.emp.email}}</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="avatar hoverable" ng-style="{'background-image':'url('+controller.emp.imageUrl+')'}"></div>
-                <div class="card-block">
+            </div>
+            <div class="col-md-6">
+                <nav class="navbar navbar-dark bg-success">
                     <div class="flex-center">
-                        <h2 class="text-center">{{controller.emp.firstName}} {{controller.emp.lastName}}</h2>
+                        <p class="navbar-brand">Upcoming ({{controller.upcoming.length}})</p>
                     </div>
-                    <hr class="my-2">
-                    <a href="mailto:{{controller.emp.email}}">{{controller.emp.email}}</a>
+                </nav>
+                <div ng-if="controller.upcoming.length == 0">
+                    <div class="no-items number">
+                        0
+                    </div>
+                    <div class="no-items">
+                        Upcoming Events
+                    </div>
+                </div>
+                <div ng-repeat="upc in controller.upcoming | orderBy:'-id' | limitTo:3">
+                    <div class="card-wrapper">
+                        <div class="card">
+                            <div class="view hm-zoom">
+                                <a href="#/job/view/{{upc.id}}">
+                                    <img class="img-fluid" ng-src="{{upc.company.imageUrl}}" alt="...">
+                                </a>
+                            </div>
+                            <div class="card-block">
+                                <a href="#/job/view/{{upc.id}}"><h2>{{upc.company.name}}</h2></a>
+                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{upc.employee.firstName}} {{upc.employee.lastName}}</a></footer>
+                                <p>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                                <p>
+                                    <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>-->
+                                    <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>-->
+                                    <a href="#/job/view/{{upc.id}}" class="btn btn-outline btn-primary" role="button">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button ng-if="controller.upcoming.length > 3" class="btn btn-default">View All</button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <nav class="navbar navbar-dark bg-primary">
+                    <div class="flex-center">
+                        <p class="navbar-brand">Past ({{controller.past.length}})</p>
+                    </div>
+                </nav>
+                <div ng-if="controller.past.length == 0">
+                    <div class="no-items number" style="font-size: 50px">
+                        0
+                    </div>
+                    <div class="no-items" style="font-size: 30px">
+                        Past Events
+                    </div>
+                </div>
+                <div ng-repeat="past in controller.past | orderBy:'-id' | limitTo:5">
+                    <div class="card-wrapper">
+                        <div class="card">
+                            <div class="view hm-zoom">
+                                <a href="#/job/view/{{past.id}}">
+                                    <img class="img-fluid" ng-src="{{past.company.imageUrl}}" alt="...">
+                                </a>
+                            </div>
+                            <div class="card-block">
+                                <a href="#/job/view/{{past.id}}"><h2>{{past.company.name}}</h2></a>
+                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{past.employee.firstName}} {{past.employee.lastName}}</a></footer>
+                                <p>Started at {{past.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                                <p>
+                                    <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>-->
+                                    <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>-->
+                                    <a href="#/job/view/{{past.id}}" class="btn btn-outline btn-primary" role="button">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button ng-if="controller.past.length > 5" class="btn btn-default">View All</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <nav class="navbar navbar-dark bg-success">
-            <div class="flex-center">
-                <p class="navbar-brand">Upcoming ({{controller.upcoming.length}})</p>
-            </div>
-        </nav>
-        <div ng-if="controller.upcoming.length == 0">
-            <div class="no-items number">
-                0
-            </div>
-            <div class="no-items">
-                Upcoming Events
-            </div>
-        </div>
-        <div ng-repeat="upc in controller.upcoming | orderBy:'-id' | limitTo:3">
-            <div class="card-wrapper">
-                <div class="card">
-                    <div class="view hm-zoom">
-                        <a href="#/job/view/{{upc.id}}">
-                            <img class="img-fluid" ng-src="{{upc.company.imageUrl}}" alt="...">
-                        </a>
-                    </div>
-                    <div class="card-block">
-                        <a href="#/job/view/{{upc.id}}"><h2>{{upc.company.name}}</h2></a>
-                        <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{upc.employee.firstName}} {{upc.employee.lastName}}</a></footer>
-                        <p>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-                        <p>
-                            <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>-->
-                            <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>-->
-                            <a href="#/job/view/{{upc.id}}" class="btn btn-outline btn-primary" role="button">View</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class="text-center">
-            <button ng-if="controller.upcoming.length > 3" class="btn btn-default">View All</button>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <nav class="navbar navbar-dark bg-primary">
-            <div class="flex-center">
-                <p class="navbar-brand">Past ({{controller.past.length}})</p>
-            </div>
-        </nav>
-        <div ng-if="controller.past.length == 0">
-            <div class="no-items number" style="font-size: 50px">
-                0
-            </div>
-            <div class="no-items" style="font-size: 30px">
-                Past Events
-            </div>
-        </div>
-        <div ng-repeat="past in controller.past | orderBy:'-id' | limitTo:5">
-            <div class="card-wrapper">
-                <div class="card">
-                    <div class="view hm-zoom">
-                        <a href="#/job/view/{{past.id}}">
-                            <img class="img-fluid" ng-src="{{past.company.imageUrl}}" alt="...">
-                        </a>
-                    </div>
-                    <div class="card-block">
-                        <a href="#/job/view/{{past.id}}"><h2>{{past.company.name}}</h2></a>
-                        <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{past.employee.firstName}} {{past.employee.lastName}}</a></footer>
-                        <p>Started at {{past.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-                        <p>
-                            <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>-->
-                            <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>-->
-                            <a href="#/job/view/{{past.id}}" class="btn btn-outline btn-primary" role="button">View</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <br>
-        </div>
-        <div class="text-center">
-            <button ng-if="controller.past.length > 5" class="btn btn-default">View All</button>
-        </div>
-    </div>
-    <!--<h2>Upcoming Events</h2>-->
-    <!--<div class="row">-->
-        <!--<div ng-repeat="upc in controller.upcoming">-->
-            <!--<div class="col-sm-6 col-md-4">-->
-                <!--<div class="thumbnail">-->
-                    <!--<a href="#/job/view/{{upc.id}}"><img src="static/resources/default-img.png" alt="..."></a>-->
-                    <!--<div class="caption">-->
-                        <!--<a href="#/job/view/{{upc.id}}"><h2>{{upc.title}}</h2></a>-->
-                        <!--<p>Created by {{upc.employee.firstName}} {{upc.employee.lastName}}-->
-                            <!--<br>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>-->
-                        <!--<p>-->
-                            <!--<a href="#/job/view/{{upc.id}}" class="btn btn-outline btn-primary" role="button">View</a>-->
-                        <!--</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<br ng-if="!(($index + 1) % 3)">-->
-        <!--</div>-->
-    <!--</div>-->
-</div>
+</main>

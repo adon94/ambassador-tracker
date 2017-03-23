@@ -1,4 +1,4 @@
-angular.module('myApp', [ 'ngRoute', 'ui.bootstrap', 'ui.calendar', 'ngFileUpload', 'ngImgCrop', 'ngCookies', 'moment-picker', 'firebase' ])
+angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker', 'firebase' ])
     .config(function($routeProvider, $locationProvider) {
 
         $locationProvider.hashPrefix('');

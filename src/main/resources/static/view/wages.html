@@ -1,53 +1,56 @@
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-5">
+    <div class="container">
+        <div class="card card-block">
+            <h1 class="h1-responsive">My Wages</h1>
+            <hr class="my-2">
 
-<div class="card card-block">
-    <h1 class="h1-responsive">My Wages</h1>
-    <hr class="my-2">
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="md-form">
-                <i class="fa fa-calendar prefix"></i>
-                <input placeholder="{{date}}"
-                       moment-picker="date"
-                       format="MMMM-YYYY"
-                       autoclose="true"
-                       change="onDateChange()"
-                       ng-model="date"
-                       ng-model-options="{ updateOn: 'blur' }">
-            </div>
-            <div class="table-responsive">
-                <table width="100%" class="table">
-                    <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Client</th>
-                        <th>Hours</th>
-                        <th>Rate</th>
-                        <th>Pay</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="job in thisMonth">
-                        <td>{{job.startDate | date:"dd/MM/yyyy"}}</td>
-                        <td><a href="#/job/view/{{job.id}}">{{job.company.name}}</a></td>
-                        <td>{{job.eventHours}}</td>
-                        <td>{{job.wage | currency:"€"}}</td>
-                        <td>{{job.eventWages | currency:"€"}}</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><b>{{selectedMonthWages | currency:"€"}}</b></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="md-form">
+                        <i class="fa fa-calendar prefix"></i>
+                        <input placeholder="{{date}}"
+                               moment-picker="date"
+                               format="MMMM-YYYY"
+                               autoclose="true"
+                               change="onDateChange()"
+                               ng-model="date"
+                               ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                    <div class="table-responsive">
+                        <table width="100%" class="table">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Hours</th>
+                                <th>Rate</th>
+                                <th>Pay</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="job in thisMonth">
+                                <td>{{job.startDate | date:"dd/MM/yyyy"}}</td>
+                                <td><a href="#/job/view/{{job.id}}">{{job.company.name}}</a></td>
+                                <td>{{job.eventHours}}</td>
+                                <td>{{job.wage | currency:"€"}}</td>
+                                <td>{{job.eventWages | currency:"€"}}</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><b>{{selectedMonthWages | currency:"€"}}</b></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="card card-block">
+            <canvas id="myChart"></canvas>
+        </div>
     </div>
-</div>
-<br>
-<div class="card card-block">
-    <canvas id="myChart"></canvas>
-</div>
+</main>

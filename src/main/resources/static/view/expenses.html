@@ -1,17 +1,22 @@
-<div class="card card-block">
-    <form action="/charge" method="post" id="payment-form">
-        <div class="form-row">
-            <label for="card-element">
-                Credit or debit card
-            </label>
-            <div id="card-element">
-                <!-- a Stripe Element will be inserted here. -->
-            </div>
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-5">
+    <div class="container">
+        <div class="card card-block">
+            <form action="/charge" method="post" id="payment-form">
+                <div class="form-row">
+                    <label for="card-element">
+                        Credit or debit card
+                    </label>
+                    <div id="card-element">
+                        <!-- a Stripe Element will be inserted here. -->
+                    </div>
 
-            <!-- Used to display Element errors -->
-            <div id="card-errors"></div>
+                    <!-- Used to display Element errors -->
+                    <div id="card-errors"></div>
+                </div>
+
+                <button class="btn badge-primary">Submit Payment</button>
+            </form>
         </div>
-
-        <button class="btn badge-primary">Submit Payment</button>
-    </form>
-</div>
+    </div>
+</main>

@@ -1,113 +1,118 @@
-<div class="flex-center">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-block">
-                <!--Header-->
-                <div class="text-center">
-                    <h3><i class="fa fa-user-plus"></i> Register:</h3>
-                    <hr class="mt-2 mb-2">
-                </div>
-                <form role="form" ng-submit="controller.createUser()">
-                        <div class="md-form">
-                            <i class="fa fa-envelope prefix"></i>
-                            <input ng-model="controller.user.email" id="email" name="email" type="email" class="form-control input-md">
-                            <label for="email">Email</label>
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-5">
+    <div class="container">
+        <div class="flex-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-block">
+                        <!--Header-->
+                        <div class="text-center">
+                            <h3><i class="fa fa-user-plus"></i> Register:</h3>
+                            <hr class="mt-2 mb-2">
                         </div>
+                        <form role="form" ng-submit="controller.createUser()">
+                            <div class="md-form">
+                                <i class="fa fa-envelope prefix"></i>
+                                <input ng-model="controller.user.email" id="email" name="email" type="email" class="form-control input-md">
+                                <label for="email">Email</label>
+                            </div>
 
-                        <div class="md-form">
-                            <i class="fa fa-lock prefix"></i>
-                            <input ng-model="controller.user.password" id="password" name="password" type="password" class="form-control input-md">
-                            <label for="password">Password</label>
-                        </div>
-                        <div class="md-form">
-                            <i class="fa fa-user prefix"></i>
-                            <input ng-model="controller.user.firstName" id="firstName" name="firstName" type="text" class="form-control input-md">
-                            <label for="firstName">First Name</label>
-                        </div>
-                        <div class="md-form">
-                            <i class="fa fa-user prefix"></i>
-                            <input ng-model="controller.user.lastName" id="lastName" name="lastName" type="text" class="form-control input-md">
-                            <label for="lastName">Last Name</label>
-                        </div>
-                        <div class="md-form">
-                            <i class="fa fa-phone prefix"></i>
-                            <input ng-model="controller.user.phone" id="phone" name="phone" type="tel" class="form-control input-md">
-                            <label for="phone">Phone</label>
-                        </div>
-                        <fieldset class="form-group">
-                            <div ng-init="controller.user.userType=false">
-                                <input type="radio" name="radios" id="radios-0" autocomplete="off" ng-model="controller.userType" ng-value="false" checked>
-                                <label for="radios-0">Employee </label>
-                                <input type="radio" name="radios" id="radios-1" autocomplete="off" ng-model="controller.userType" ng-value="true">
-                                <label for="radios-1">Brand Ambassador </label>
-                            </div>
-                        </fieldset>
-                        <div ng-show="controller.userType">
                             <div class="md-form">
-                                <i class="fa fa-calendar prefix"></i>
-                                <input id="dob"
-                                       placeholder="Date of Birth"
-                                       class="form-control"
-                                       moment-picker="controller.user.dob"
-                                       locale="en-gb"
-                                       format="LL"
-                                       max-view="month"
-                                       start-view="decade"
-                                       autoclose="true"
-                                       ng-model="controller.user.dob"
-                                       ng-model-options="{ updateOn: 'blur' }"
-                                       aria-label="Starts at">
+                                <i class="fa fa-lock prefix"></i>
+                                <input ng-model="controller.user.password" id="password" name="password" type="password" class="form-control input-md">
+                                <label for="password">Password</label>
                             </div>
                             <div class="md-form">
-                                <i class="fa fa-home prefix"></i>
-                                <input googleplace details="details1" options="options1" ng-model="controller.user.address" id="address" name="address" type="text" placeholder="" class="form-control input-md">
-                                <label for="address">Address</label>
+                                <i class="fa fa-user prefix"></i>
+                                <input ng-model="controller.user.firstName" id="firstName" name="firstName" type="text" class="form-control input-md">
+                                <label for="firstName">First Name</label>
+                            </div>
+                            <div class="md-form">
+                                <i class="fa fa-user prefix"></i>
+                                <input ng-model="controller.user.lastName" id="lastName" name="lastName" type="text" class="form-control input-md">
+                                <label for="lastName">Last Name</label>
+                            </div>
+                            <div class="md-form">
+                                <i class="fa fa-phone prefix"></i>
+                                <input ng-model="controller.user.phone" id="phone" name="phone" type="tel" class="form-control input-md">
+                                <label for="phone">Phone</label>
                             </div>
                             <fieldset class="form-group">
-                                <div ng-init="controller.user.male=true">
-                                    <input type="radio" name="radiosXY" id="radios-X" ng-model="controller.user.male" ng-value="true">
-                                    <label for="radios-X">Male </label>
-                                    <input type="radio" name="radiosXY" id="radios-Y" ng-model="controller.user.male" ng-value="false">
-                                    <label for="radios-Y">Female </label>
+                                <div ng-init="controller.user.userType=false">
+                                    <input type="radio" name="radios" id="radios-0" autocomplete="off" ng-model="controller.userType" ng-value="false" checked>
+                                    <label for="radios-0">Employee </label>
+                                    <input type="radio" name="radios" id="radios-1" autocomplete="off" ng-model="controller.userType" ng-value="true">
+                                    <label for="radios-1">Brand Ambassador </label>
                                 </div>
                             </fieldset>
-                            <fieldset class="form-group">
-                                <input type="checkbox" name="driving-status" id="fullLicence" ng-model="controller.user.fullLicence" value="true">
-                                <label for="fullLicence">
+                            <div ng-show="controller.userType">
+                                <div class="md-form">
+                                    <i class="fa fa-calendar prefix"></i>
+                                    <input id="dob"
+                                           placeholder="Date of Birth"
+                                           class="form-control"
+                                           moment-picker="controller.user.dob"
+                                           locale="en-gb"
+                                           format="LL"
+                                           max-view="month"
+                                           start-view="decade"
+                                           autoclose="true"
+                                           ng-model="controller.user.dob"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           aria-label="Starts at">
+                                </div>
+                                <div class="md-form">
+                                    <i class="fa fa-home prefix"></i>
+                                    <input googleplace details="details1" options="options1" ng-model="controller.user.address" id="address" name="address" type="text" placeholder="" class="form-control input-md">
+                                    <label for="address">Address</label>
+                                </div>
+                                <fieldset class="form-group">
+                                    <div ng-init="controller.user.male=true">
+                                        <input type="radio" name="radiosXY" id="radios-X" ng-model="controller.user.male" ng-value="true">
+                                        <label for="radios-X">Male </label>
+                                        <input type="radio" name="radiosXY" id="radios-Y" ng-model="controller.user.male" ng-value="false">
+                                        <label for="radios-Y">Female </label>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="form-group">
+                                    <input type="checkbox" name="driving-status" id="fullLicence" ng-model="controller.user.fullLicence" value="true">
+                                    <label for="fullLicence">
                                         Full Licence </label>
-                                <input type="checkbox" name="driving-status" id="carOwner" ng-model="controller.user.carOwner" value="true">
-                                <label for="carOwner">Own Car </label>
-                            </fieldset>
-                            <div class="md-form">
-                                <input ng-model="controller.user.height" id="height" name="height" type="text" class="form-control input-md">
-                                <label for="height">Height</label>
+                                    <input type="checkbox" name="driving-status" id="carOwner" ng-model="controller.user.carOwner" value="true">
+                                    <label for="carOwner">Own Car </label>
+                                </fieldset>
+                                <div class="md-form">
+                                    <input ng-model="controller.user.height" id="height" name="height" type="text" class="form-control input-md">
+                                    <label for="height">Height</label>
+                                </div>
+                                <div class="md-form">
+                                    <input ng-model="controller.user.torso" id="torso" name="torso" type="text" class="form-control input-md">
+                                    <label for="torso">Torso</label>
+                                </div>
+                                <div class="md-form">
+                                    <input ng-model="controller.user.waist" id="waist" name="waist" type="text" class="form-control input-md">
+                                    <label for="waist">Waist</label>
+                                </div>
+                                <div class="md-form">
+                                    <input ng-model="controller.user.shoe" id="shoe" name="shoe" type="text" class="form-control input-md">
+                                    <label for="shoe">Shoe size</label>
+                                </div>
                             </div>
                             <div class="md-form">
-                                <input ng-model="controller.user.torso" id="torso" name="torso" type="text" class="form-control input-md">
-                                <label for="torso">Torso</label>
+                                <i class="fa fa-picture-o prefix"></i>
+                                <input ng-model="controller.user.imageUrl" id="imageUrl" name="imageUrl" type="text" class="form-control input-md">
+                                <label for="imageUrl">Profile Image URL</label>
+                            </div>
+                            <div>
+                                <img ng-src="{{controller.user.imageUrl}}">
                             </div>
                             <div class="md-form">
-                                <input ng-model="controller.user.waist" id="waist" name="waist" type="text" class="form-control input-md">
-                                <label for="waist">Waist</label>
+                                <button type="submit" id="submitBtn" class="btn btn-outline btn-primary">Submit</button>
                             </div>
-                            <div class="md-form">
-                                <input ng-model="controller.user.shoe" id="shoe" name="shoe" type="text" class="form-control input-md">
-                                <label for="shoe">Shoe size</label>
-                            </div>
-                        </div>
-                        <div class="md-form">
-                            <i class="fa fa-picture-o prefix"></i>
-                            <input ng-model="controller.user.imageUrl" id="imageUrl" name="imageUrl" type="text" class="form-control input-md">
-                            <label for="imageUrl">Profile Image URL</label>
-                        </div>
-                        <div>
-                            <img ng-src="{{controller.user.imageUrl}}">
-                        </div>
-                        <div class="md-form">
-                            <button type="submit" id="submitBtn" class="btn btn-outline btn-primary">Submit</button>
-                        </div>
-                </form>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</main>

@@ -1,141 +1,142 @@
-<div ng-if="authenticated">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card-wrapper">
-                <div class="card">
-                    <div class="card-up">
-                        <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
-                    </div>
-                    <div class="avatar hoverable" ng-style="{'background-image':'url('+controller.ba.imageUrl+')'}"></div>
-                    <div class="card-block">
-                        <div class="flex-center">
-                            <h2 class="text-center">{{controller.ba.firstName}} {{controller.ba.lastName}}</h2>
-                        </div>
-                        <hr class="my-2">
-                        <p class="text-center">{{controller.ba.address}}</p>
-                        <p class="text-center"><a href="mailto:{{controller.ba.email}}">{{controller.ba.email}}</a></p>
-                        <p class="text-center">{{controller.ba.phone}}</p>
-                        <p class="text-center">{{controller.ba.dob | date:"dd/MM/yyyy"}} ({{controller.age}} years old)</p>
-                        <!--<p>Height: {{controller.ba.height}}</p>-->
-                        <!--<p>Torso: {{controller.ba.torso}}</p>-->
-                        <!--<p>Waist: {{controller.ba.waist}}</p>-->
-                        <!--<p>Shoe: {{controller.ba.shoe}}</p>-->
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="card-wrapper">
-                <button class="btn btn-default" style="width: 100%; margin: 0" ng-if="empUser" data-toggle="modal" data-target="#myModal">+ Add To List</button>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <nav class="navbar navbar-dark bg-primary">
-                <div class="flex-center">
-                    <p class="navbar-brand" href="#">Pending ({{controller.invited.length}})</p>
-                </div>
-            </nav>
-            <div ng-if="controller.invited.length == 0">
-                <div class="no-items number">
-                    0
-                </div>
-                <div class="no-items">
-                    Pending Events
-                </div>
-            </div>
-            <div ng-repeat="inv in controller.invited | orderBy:'-id'" id="card-{{inv.id}}">
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
                 <div class="card-wrapper">
                     <div class="card">
-                        <div class="view hm-zoom">
-                            <a href="#/job/view/{{inv.id}}">
-                                <img class="img-fluid" ng-src="{{inv.company.imageUrl}}" alt="...">
-                            </a>
+                        <div class="card-up">
+                            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg" class="img-fluid" alt="Image with a photo of clouds.">
                         </div>
+                        <div class="avatar hoverable" ng-style="{'background-image':'url('+controller.ba.imageUrl+')'}"></div>
                         <div class="card-block">
-                            <a href="#/job/view/{{inv.id}}"><h2>{{inv.company.name}}</h2></a>
-                            <footer class="blockquote-footer">Created by <a href="#/emp/view/{{inv.employee.id}}">{{inv.employee.firstName}} {{inv.employee.lastName}}</a></footer>
-                            <p>Starting at {{inv.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-                            <p>
-                                <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>
-                                <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>
-                                <a href="#/job/view/{{inv.id}}" class="btn btn-outline btn-primary" role="button">View</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <nav class="navbar navbar-dark bg-success">
-                <div class="flex-center">
-                    <p class="navbar-brand" href="#">Upcoming ({{controller.upcoming.length}})</p>
-                </div>
-            </nav>
-            <div ng-if="controller.upcoming.length == 0">
-                <div class="no-items number" style="font-size: 50px">
-                    0
-                </div>
-                <div class="no-items" style="font-size: 30px">
-                    Upcoming Events
-                </div>
-            </div>
-            <div ng-repeat="upc in controller.upcoming | orderBy:'-id'">
-                <div class="card-wrapper">
-                    <div class="card">
-                        <div class="view hm-zoom">
-                            <a href="#/job/view/{{upc.id}}">
-                                <img ng-src="{{upc.company.imageUrl}}" alt="...">
-                            </a>
-                        </div>
-                        <div class="card-block">
-                            <a href="#/job/view/{{upc.id}}"><h2>{{upc.company.name}}</h2></a>
-                            <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{upc.employee.firstName}} {{upc.employee.lastName}}</a></footer>
-                            <p>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-                            <p>
-                                <a href="#/job/view/{{upc.id}}" class="btn btn-outline btn-primary" role="button">View</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <!--Content-->
-            <div class="modal-content">
-                <!--Header-->
-                <div class="modal-header">
-                    <h4 class="modal-title w-100" id="myModalLabel">Add to list</h4>
-                </div>
-                <!--Body-->
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-12">
-                            <button class="btn btn-default" style="width: 100%"><i class="fa fa-plus-square"></i> Create new list</button>
+                            <div class="flex-center">
+                                <h2 class="text-center">{{controller.ba.firstName}} {{controller.ba.lastName}}</h2>
+                            </div>
                             <hr class="my-2">
+                            <p class="text-center">{{controller.ba.address}}</p>
+                            <p class="text-center"><a href="mailto:{{controller.ba.email}}">{{controller.ba.email}}</a></p>
+                            <p class="text-center">{{controller.ba.phone}}</p>
+                            <p class="text-center">{{controller.ba.dob | date:"dd/MM/yyyy"}} ({{controller.age}} years old)</p>
+                            <!--<p>Height: {{controller.ba.height}}</p>-->
+                            <!--<p>Torso: {{controller.ba.torso}}</p>-->
+                            <!--<p>Waist: {{controller.ba.waist}}</p>-->
+                            <!--<p>Shoe: {{controller.ba.shoe}}</p>-->
                         </div>
-                        <div class="col-12">
-                            <h4 class="text-center">Your lists</h4>
-                        </div>
-                        <ul class="col-12">
-                            <li ng-repeat="baList in controller.baLists">
-                                <a>
-                                    <p>{{baList.title}}</p>
-                                    <footer class="blockquote-footer">{{baList.ambassadors.length}} Brand Ambassadors</footer>
-                                </a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
-                <!--Footer-->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <br>
+                <div class="card-wrapper">
+                    <button class="btn btn-default" style="width: 100%; margin: 0" ng-if="empUser" data-toggle="modal" data-target="#myModal">+ Add To List</button>
                 </div>
             </div>
-            <!--/.Content-->
+            <div class="col-md-6">
+                <nav class="navbar navbar-dark bg-primary">
+                    <div class="flex-center">
+                        <p class="navbar-brand" href="#">Pending ({{controller.invited.length}})</p>
+                    </div>
+                </nav>
+                <div ng-if="controller.invited.length == 0">
+                    <div class="no-items number">
+                        0
+                    </div>
+                    <div class="no-items">
+                        Pending Events
+                    </div>
+                </div>
+                <div ng-repeat="inv in controller.invited | orderBy:'-id'" id="card-{{inv.id}}">
+                    <div class="card-wrapper">
+                        <div class="card">
+                            <div class="view hm-zoom">
+                                <a href="#/job/view/{{inv.id}}">
+                                    <img class="img-fluid" ng-src="{{inv.company.imageUrl}}" alt="...">
+                                </a>
+                            </div>
+                            <div class="card-block">
+                                <a href="#/job/view/{{inv.id}}"><h2>{{inv.company.name}}</h2></a>
+                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{inv.employee.id}}">{{inv.employee.firstName}} {{inv.employee.lastName}}</a></footer>
+                                <p>Starting at {{inv.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                                <p>
+                                    <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>
+                                    <button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>
+                                    <a href="#/job/view/{{inv.id}}" class="btn btn-outline btn-primary" role="button">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <nav class="navbar navbar-dark bg-success">
+                    <div class="flex-center">
+                        <p class="navbar-brand" href="#">Upcoming ({{controller.upcoming.length}})</p>
+                    </div>
+                </nav>
+                <div ng-if="controller.upcoming.length == 0">
+                    <div class="no-items number" style="font-size: 50px">
+                        0
+                    </div>
+                    <div class="no-items" style="font-size: 30px">
+                        Upcoming Events
+                    </div>
+                </div>
+                <div ng-repeat="upc in controller.upcoming | orderBy:'-id'">
+                    <div class="card-wrapper">
+                        <div class="card">
+                            <div class="view hm-zoom">
+                                <a href="#/job/view/{{upc.id}}">
+                                    <img ng-src="{{upc.company.imageUrl}}" alt="...">
+                                </a>
+                            </div>
+                            <div class="card-block">
+                                <a href="#/job/view/{{upc.id}}"><h2>{{upc.company.name}}</h2></a>
+                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{upc.employee.firstName}} {{upc.employee.lastName}}</a></footer>
+                                <p>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                                <p>
+                                    <a href="#/job/view/{{upc.id}}" class="btn btn-outline btn-primary" role="button">View</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="myModalLabel">Add to list</h4>
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <button class="btn btn-default" style="width: 100%"><i class="fa fa-plus-square"></i> Create new list</button>
+                                <hr class="my-2">
+                            </div>
+                            <div class="col-12">
+                                <h4 class="text-center">Your lists</h4>
+                            </div>
+                            <ul class="col-12">
+                                <li ng-repeat="baList in controller.baLists">
+                                    <a>
+                                        <p>{{baList.title}}</p>
+                                        <footer class="blockquote-footer">{{baList.ambassadors.length}} Brand Ambassadors</footer>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--Footer-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
         </div>
     </div>
-</div>
+</main>

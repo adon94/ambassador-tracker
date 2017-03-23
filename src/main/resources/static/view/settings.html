@@ -1,8 +1,13 @@
-<p>Google Calendar API Quickstart</p>
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-5">
+    <div class="container">
+        <p>Google Calendar API Quickstart</p>
 
-<!--Add buttons to initiate auth sequence and sign out-->
-<button ng-click="handleClientLoad()">Client Load</button>
-<button id="authorize-button" ng-model="authBtn" ng-click="authClick()" style="display: none;">Authorize</button>
-<button id="signout-button" ng-model="signOutBtn" style="display: none;">Sign Out</button>
+        <!--Add buttons to initiate auth sequence and sign out-->
+        <button ng-click="handleClientLoad()">Client Load</button>
+        <button id="authorize-button" ng-model="authBtn" ng-click="authClick()" style="display: none;">Authorize</button>
+        <button id="signout-button" ng-model="signOutBtn" style="display: none;">Sign Out</button>
 
-<pre id="content"></pre>
+        <pre id="content"></pre>
+    </div>
+</main>
