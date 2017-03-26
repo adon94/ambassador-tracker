@@ -9,5 +9,5 @@ import java.util.List;
 @Transactional
 public interface BaListDAO extends CrudRepository<BaList, Long> {
 
-    List<BaList> findByEmployeeId(Long employee_id);
+    List<BaList> findByListManagerId(Long list_manager_id);
 }

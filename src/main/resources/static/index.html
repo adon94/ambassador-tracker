@@ -2,21 +2,18 @@
 <html ng-app="myApp">
 
 <head>
-    <title>Vectr</title>
-    <meta charset="utf-8" />
-    <link rel="manifest" href="/manifest.json">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <title>Pemble</title>
     <link rel="stylesheet" href="/node_modules/fullcalendar/dist/fullcalendar.min.css"/>
     <link rel="stylesheet" href="/node_modules/mdbootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/mdbootstrap/css/mdb.min.css">
-    <link href="resources/angular-moment-picker.min.css" rel="stylesheet">
-    <link rel="stylesheet/less" type="text/css" href="css/main.css">
-
+    <link rel="stylesheet" href="/node_modules/angular-toastr/dist/angular-toastr.min.css">
+    <link rel="stylesheet" href="resources/angular-moment-picker.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
-<body ng-cloak class="ng-cloak">
+<body>
 
-<div ng-view style="height: 100%"></div>
+<div ng-view ng-cloak style="height: 100%;"></div>
 
 <!--Node Modules-->
 <script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -28,9 +25,10 @@
 <script src="/node_modules/mdbootstrap/js/tether.js"></script>
 <script src="/node_modules/mdbootstrap/js/bootstrap.min.js"></script>
 <script src="/node_modules/mdbootstrap/js/mdb.min.js"></script>
+<script src="/node_modules/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+
 <!--Other-->
 <script src="https://use.fontawesome.com/0d188512fc.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtcxmU7esy3552QUvURZiW8rvaWjbMUW8&libraries=places"></script>
 <script src="resources/calendar.js"></script>
 <!--Moment picker-->
@@ -39,42 +37,63 @@
 <script async defer src="https://apis.google.com/js/api.js">
 </script>
 <script src="https://js.stripe.com/v3/"></script>
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+<!--&lt;!&ndash; Firebase &ndash;&gt;-->
+<!--<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>-->
 
-<!-- AngularFire -->
-<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-<script>
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBkt6sGzu2K-kqmRzUUhgc01o3NQHTaZ-s",
-        authDomain: "ambassadortracker.firebaseapp.com",
-        databaseURL: "https://ambassadortracker.firebaseio.com",
-        storageBucket: "ambassadortracker.appspot.com",
-        messagingSenderId: "1009962031783"
-    };
-    firebase.initializeApp(config);
-</script>
-<!-- Firechat -->
-<link rel="stylesheet" href="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.css" />
-<script src="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.js"></script>
+<!--&lt;!&ndash; AngularFire &ndash;&gt;-->
+<!--<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>-->
+<!--<script>-->
+    <!--// Initialize Firebase-->
+    <!--const config = {-->
+        <!--apiKey: "AIzaSyBkt6sGzu2K-kqmRzUUhgc01o3NQHTaZ-s",-->
+        <!--authDomain: "ambassadortracker.firebaseapp.com",-->
+        <!--databaseURL: "https://ambassadortracker.firebaseio.com",-->
+        <!--storageBucket: "ambassadortracker.appspot.com",-->
+        <!--messagingSenderId: "1009962031783"-->
+    <!--};-->
+    <!--firebase.initializeApp(config);-->
+<!--</script>-->
+<!--&lt;!&ndash; Firechat &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.css" />-->
+<!--<script src="https://cdn.firebase.com/libs/firechat/3.0.1/firechat.min.js"></script>-->
 
 <!--JS Files-->
 <script src="js/app.js"></script>
 <script src="js/googleplace.js"></script>
-<script src="js/factory/job.factory.js"></script>
-<script src="js/factory/ba.factory.js"></script>
-<script src="js/controller/job.js"></script>
+<script src="js/factory/job.js"></script>
+<script src="js/factory/user.js"></script>
+<script src="js/controller/login.js"></script>
+<script src="js/controller/account.js"></script>
+<script src="js/controller/profile.js"></script>
+<script src="js/controller/create-job.js"></script>
+<script src="js/controller/view-job.js"></script>
 <script src="js/controller/home.js"></script>
-<script src="js/controller/navigation.js"></script>
 <script src="js/controller/user.js"></script>
-<script src="js/controller/view-job-controller.js"></script>
-<script src="js/controller/view-ba-controller.js"></script>
-<script src="js/controller/view-emp-controller.js"></script>
 <script src="js/controller/wages.js"></script>
 <script src="js/controller/settings.js"></script>
 <script src="js/controller/expenses.js"></script>
 <script src="js/controller/messages.js"></script>
+<script type="text/javascript">
+    angular.module('myApp').run(function($rootScope, $cookies, $location) {
+
+        $rootScope.logout = function () {
+            console.log("Logging out");
+            $cookies.remove('currentUser');
+            $rootScope.currentUser = null;
+            $location.path("/login");
+        };
+
+        let userId = $cookies.get('currentUser');
+
+        if (userId == null) {
+            $location.path("/login");
+        }
+
+        $rootScope.$on('$routeChangeSuccess', function() {
+            $("html, body").animate({ scrollTop: 0 }, 200);
+        });
+    });
+</script>
 </body>
 
 </html>

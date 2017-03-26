@@ -12,7 +12,7 @@ import java.util.List;
 public class JobDO extends AbstractEntity {
 
     @ManyToOne
-    private EmployeeDO employee;
+    private User jobManager;
 
     private int requiredBoys;
     private int requiredGirls;
@@ -28,18 +28,18 @@ public class JobDO extends AbstractEntity {
     private String updatedAt;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    private List<BrandAmbassadorDO> invited;
+    private List<User> invited;
     @ManyToMany(cascade = CascadeType.MERGE)
-    private List<BrandAmbassadorDO> accepted;
+    private List<User> accepted;
     @ManyToMany(cascade = CascadeType.MERGE)
-    private List<BrandAmbassadorDO> declined;
+    private List<User> declined;
 
 
-//    public JobDO(int id, int employee, int requiredBoys, int requiredGirls, boolean open,
+//    public JobDO(int id, int jobManager, int requiredBoys, int requiredGirls, boolean open,
 //                 String company, String coverPic, String location, double wage,
 //                 String startDate, String endDate) {
 //        this.id = id;
-//        this.employee = employee;
+//        this.jobManager = jobManager;
 //        this.requiredBoys = requiredBoys;
 //        this.requiredGirls = requiredGirls;
 //        this.open = open;
@@ -51,12 +51,12 @@ public class JobDO extends AbstractEntity {
 //        this.endDate = endDate;
 //    }
 
-    public EmployeeDO getEmployee() {
-        return employee;
+    public User getJobManager() {
+        return jobManager;
     }
 
-    public void setEmployee(EmployeeDO employee) {
-        this.employee = employee;
+    public void setJobManager(User jobManager) {
+        this.jobManager = jobManager;
     }
 
     public int getRequiredBoys() {
@@ -148,27 +148,27 @@ public class JobDO extends AbstractEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<BrandAmbassadorDO> getInvited() {
+    public List<User> getInvited() {
         return invited;
     }
 
-    public void setInvited(List<BrandAmbassadorDO> invited) {
+    public void setInvited(List<User> invited) {
         this.invited = invited;
     }
 
-    public List<BrandAmbassadorDO> getAccepted() {
+    public List<User> getAccepted() {
         return accepted;
     }
 
-    public void setAccepted(List<BrandAmbassadorDO> accepted) {
+    public void setAccepted(List<User> accepted) {
         this.accepted = accepted;
     }
 
-    public List<BrandAmbassadorDO> getDeclined() {
+    public List<User> getDeclined() {
         return declined;
     }
 
-    public void setDeclined(List<BrandAmbassadorDO> declined) {
+    public void setDeclined(List<User> declined) {
         this.declined = declined;
     }
 }

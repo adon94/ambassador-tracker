@@ -1,0 +1,110 @@
+<div ng-include="'partial/nav.html'"></div>
+
+<main class="mt-3">
+    <div class="container">
+        <div class="card card-block">
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <td style="border-top: none"><b>Email</b></td>
+                    <td style="border-top: none" ng-if="!ctrl.editEmail">{{ctrl.user.email}}</td>
+                    <td style="border-top: none" ng-if="ctrl.editEmail"><input ng-model="ctrl.user.email" ng-value="currentUser.email"></td>
+                    <td style="border-top: none">
+                        <a class="blue-text" ng-if="!ctrl.editEmail" ng-click="ctrl.editEmail = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editEmail" ng-click="ctrl.updateUser(); ctrl.editEmail = false">Save</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Password</b></td>
+                    <td ng-if="!ctrl.editPassword">{{ctrl.user.password}}</td>
+                    <td ng-if="ctrl.editPassword"><input ng-model="ctrl.user.password" ng-value="currentUser.password"></td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editPassword" ng-click="ctrl.editPassword = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editPassword" ng-click="ctrl.updateUser(); ctrl.editPassword = false">Save</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Profile picture url</b></td>
+                    <td ng-if="!ctrl.editImageUrl">{{ctrl.user.imageUrl | limitTo:20}}...</td>
+                    <td ng-if="ctrl.editImageUrl"><input ng-model="ctrl.user.imageUrl" ng-value="currentUser.imageUrl"></td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editImageUrl" ng-click="ctrl.editImageUrl = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editImageUrl" ng-click="ctrl.updateUser(); ctrl.editImageUrl = false">Save</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>First name</b></td>
+                    <td ng-if="!ctrl.editFirstName">{{ctrl.user.firstName}}</td>
+                    <td ng-if="ctrl.editFirstName"><input ng-model="ctrl.user.firstName" ng-value="currentUser.firstName"></td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editFirstName" ng-click="ctrl.editFirstName = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editFirstName" ng-click="ctrl.updateUser(); ctrl.editFirstName = false">Save</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Last name</b></td>
+                    <td ng-if="!ctrl.editLastName">{{ctrl.user.lastName}}</td>
+                    <td ng-if="ctrl.editLastName"><input ng-model="ctrl.user.lastName" ng-value="currentUser.lastName"></td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editLastName" ng-click="ctrl.editLastName = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editLastName" ng-click="ctrl.updateUser(); ctrl.editLastName = false">Save</a>
+                    </td>
+                </tr>
+                <tr ng-if="!currentUser.manager">
+                    <td><b>Date of birth</b></td>
+                    <td ng-if="!ctrl.editDob">{{ctrl.user.dob | date:"dd/MM/yyyy"}}</td>
+                    <td ng-if="ctrl.editDob">
+                        <input id="dob"
+                               class="input-md"
+                               moment-picker="ctrl.dob"
+                               locale="en-gb"
+                               format="LL"
+                               max-view="month"
+                               start-view="decade"
+                               autoclose="true"
+                               ng-model="ctrl.dob"
+                               ng-model-options="{ updateOn: 'blur' }"
+                               aria-label="DOB">
+                    </td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editDob" ng-click="ctrl.editDob = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editDob" ng-click="ctrl.updateUser(); ctrl.editDob = false">Save</a>
+                    </td>
+                </tr>
+                <tr ng-if="!currentUser.manager">
+                    <td><b>Gender</b></td>
+                    <td ng-if="!ctrl.editGender">{{ctrl.gender}}</td>
+                    <td ng-if="ctrl.editGender">
+                        <select ng-model="ctrl.gender" ng-value="ctrl.gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editGender" ng-click="ctrl.editGender = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editGender" ng-click="ctrl.updateUser(); ctrl.editGender = false">Save</a>
+                    </td>
+                </tr>
+                <tr ng-if="!currentUser.manager">
+                    <td><b>Address</b></td>
+                    <td ng-if="!ctrl.editAddress">{{ctrl.user.address}}</td>
+                    <td ng-if="ctrl.editAddress"><input ng-model="ctrl.user.address" ng-value="currentUser.address"></td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editAddress" ng-click="ctrl.editAddress = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editAddress" ng-click="ctrl.updateUser(); ctrl.editAddress = false">Save</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Phone</b></td>
+                    <td ng-if="!ctrl.editPhone">{{ctrl.user.phone}}</td>
+                    <td ng-if="ctrl.editPhone"><input ng-model="ctrl.user.phone" ng-value="currentUser.phone"></td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editPhone" ng-click="ctrl.editPhone = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editPhone" ng-click="ctrl.updateUser(); ctrl.editPhone = false">Save</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>

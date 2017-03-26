@@ -1,5 +1,5 @@
 <div ng-include="'partial/nav.html'"></div>
-<main class="mt-5">
+<main class="mt-3">
     <div class="container">
         <div class="row">
             <div class="col-md-3">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="card-block">
                                 <a href="#/job/view/{{upc.id}}"><h2>{{upc.company.name}}</h2></a>
-                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{upc.employee.firstName}} {{upc.employee.lastName}}</a></footer>
+                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.jobManager.id}}">{{upc.jobManager.firstName}} {{upc.jobManager.lastName}}</a></footer>
                                 <p>Starting at {{upc.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                                 <p>
                                     <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>-->
@@ -82,7 +82,7 @@
                             </div>
                             <div class="card-block">
                                 <a href="#/job/view/{{past.id}}"><h2>{{past.company.name}}</h2></a>
-                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.employee.id}}">{{past.employee.firstName}} {{past.employee.lastName}}</a></footer>
+                                <footer class="blockquote-footer">Created by <a href="#/emp/view/{{upc.jobManager.id}}">{{past.jobManager.firstName}} {{past.jobManager.lastName}}</a></footer>
                                 <p>Started at {{past.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                                 <p>
                                     <!--<button ng-show="currentUser.id == controller.ba.id && !empUser" ng-click="controller.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>-->

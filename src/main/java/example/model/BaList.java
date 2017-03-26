@@ -10,13 +10,13 @@ public class BaList extends AbstractEntity {
     private String title;
 
     @ManyToOne
-    private EmployeeDO employee;
+    private User listManager;
 
     private String createdAt;
     private String updatedAt;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    private List<BrandAmbassadorDO> ambassadors;
+    private List<User> ambassadors;
 
     public BaList() {}
 
@@ -28,12 +28,12 @@ public class BaList extends AbstractEntity {
         this.title = title;
     }
 
-    public EmployeeDO getEmployee() {
-        return employee;
+    public User getListManager() {
+        return listManager;
     }
 
-    public void setEmployee(EmployeeDO employee) {
-        this.employee = employee;
+    public void setListManager(User listManager) {
+        this.listManager = listManager;
     }
 
     public String getCreatedAt() {
@@ -52,11 +52,11 @@ public class BaList extends AbstractEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<BrandAmbassadorDO> getAmbassadors() {
+    public List<User> getAmbassadors() {
         return ambassadors;
     }
 
-    public void setAmbassadors(List<BrandAmbassadorDO> ambassadors) {
+    public void setAmbassadors(List<User> ambassadors) {
         this.ambassadors = ambassadors;
     }
 }

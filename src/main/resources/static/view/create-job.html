@@ -1,20 +1,20 @@
 <div ng-include="'partial/nav.html'"></div>
 
-<main class="mt-5">
+<main class="mt-3">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img ng-if="controller.companyImageUrl.length > 0" ng-src="{{controller.companyImageUrl}}" alt="...">
+                    <img ng-if="ctrl.companyImageUrl.length > 0" ng-src="{{ctrl.companyImageUrl}}" alt="...">
                     <div class="card-block">
-                        <h1 ng-if="controller.companyItem.name.length > 0" class="h1-responsive">{{controller.companyItem.name}}</h1>
-                        <h1 ng-if="controller.companyItem.name.length == 0" class="h1-responsive">{{controller.companyItem}}</h1>
+                        <h1 ng-if="ctrl.companyItem.name.length > 0" class="h1-responsive">{{ctrl.companyItem.name}}</h1>
+                        <h1 ng-if="ctrl.companyItem.name.length == 0" class="h1-responsive">{{ctrl.companyItem}}</h1>
                         <hr class="my-2">
                         <p><small>Created by {{currentUser.firstName}} {{currentUser.lastName}}</small></p>
-                        <p>{{controller.job.location}}</p>
-                        <p>Rate: {{controller.job.wage | currency:"€"}}</p>
-                        <p>Starts at {{controller.startMoment | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-                        <p>Ends at {{controller.endMoment | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                        <p>{{ctrl.job.location}}</p>
+                        <p>Rate: {{ctrl.job.wage | currency:"€"}}</p>
+                        <p>Starts at {{ctrl.startMoment | date:"dd/MM/yyyy"}}</p>
+                        <p>Ends at: {{ctrl.endMoment | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                     </div>
                 </div>
             </div>
@@ -28,44 +28,44 @@
                     </div>
                     <div class="form-group">
                         <label for="company">Client</label>
-                        <input uib-typeahead="company as company.name for company in controller.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="2"
-                               ng-model="controller.companyItem" id="company" name="company" type="text" class="input-md" aria-label="Client">
+                        <input uib-typeahead="company as company.name for company in ctrl.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="1"
+                               ng-model="ctrl.companyItem" id="company" name="company" type="text" class="input-md" aria-label="Client">
                     </div>
                     <div class="form-group">
                         <label for="imageUrl">Image Url</label>
-                        <input ng-model="controller.companyImageUrl" id="imageUrl" name="imageUrl" type="text" class="input-md">
+                        <input ng-model="ctrl.companyImageUrl" id="imageUrl" name="imageUrl" type="text" class="input-md">
                     </div>
                     <div class="form-group">
                         <label for="location">Location</label>
-                        <input placeholder="" googleplace options="options1" ng-model="controller.job.location" id="location" name="location" type="text" class="input-md">
+                        <input placeholder="" googleplace options="options1" ng-model="ctrl.job.location" id="location" name="location" type="text" class="input-md">
                     </div>
-                    <div class="form-group input-group">
+                    <div class="form-group">
                         <label for="wage">Base wage</label>
                         <div class="md-form input-group">
                             <span class="input-group-addon">€</span>
-                            <input ng-model="controller.job.wage" name="wage" id="wage" class="input-md" type="text">
+                            <input ng-model="ctrl.job.wage" name="wage" id="wage" class="input-md" type="text">
                             <span class="input-group-addon">.00</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="requiredBoys">Minimum no. of boys</label>
-                        <input ng-model="controller.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" class="input-md">
+                        <input ng-model="ctrl.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" class="input-md">
                     </div>
                     <div class="form-group">
                         <label for="requiredGirls">Minimum no. of girls</label>
-                        <input ng-model="controller.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" class="input-md">
+                        <input ng-model="ctrl.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" class="input-md">
                     </div>
                     <div class="form-group">
                         <label for="startMoment">Starts at...</label>
                         <input id="startMoment"
                                class="input-md"
-                               moment-picker="controller.startMoment"
+                               moment-picker="ctrl.startMoment"
                                locale="en-gb"
                                format="LL LT"
                                max-view="hour"
                                start-view="month"
                                autoclose="true"
-                               ng-model="controller.startMoment"
+                               ng-model="ctrl.startMoment"
                                ng-model-options="{ updateOn: 'blur' }"
                                aria-label="Starts at">
                     </div>
@@ -73,13 +73,13 @@
                         <label for="endMoment">Ends at...</label>
                         <input id="endMoment"
                                class="input-md"
-                               moment-picker="controller.endMoment"
+                               moment-picker="ctrl.endMoment"
                                locale="en-gb"
                                format="LL LT"
                                max-view="hour"
                                start-view="month"
                                autoclose="true"
-                               ng-model="controller.endMoment"
+                               ng-model="ctrl.endMoment"
                                ng-model-options="{ updateOn: 'blur' }"
                                aria-label="Ends at">
                     </div>
@@ -87,12 +87,12 @@
                     <!-- Button for modal -->
                     <div class="form-group">
                         <label for="invite-select">Brand Ambassadors</label>
-                        <button type="button" ng-click="controller.getOverlappingJobs()" id="invite-select" class="btn btn-default btn-lg" style="margin-left: 3rem;" data-toggle="modal" data-target="#myModal">
+                        <button type="button" ng-click="ctrl.getOverlappingJobs()" id="invite-select" class="btn btn-default btn-lg" style="margin-left: 3rem;" data-toggle="modal" data-target="#myModal">
                             Invite
                         </button>
                     </div>
                     <div class="text-center">
-                        <button ng-click="controller.createJob()" class="btn btn-default">Submit</button>
+                        <button ng-click="ctrl.createJob()" class="btn btn-default">Submit</button>
                     </div>
                 </div>
             </div>
@@ -102,8 +102,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title flex-center" id="myModalLabel">Brand Ambassadors</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Brand Ambassadors</h4>
                     </div>
                     <div class="modal-body">
                         <div class="table-responsive">
@@ -116,7 +116,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="ba in controller.baList | orderBy:'firstName'">
+                                <tr ng-repeat="ba in ctrl.baList | orderBy:'firstName'">
                                     <td ng-if="ba.available"><input type="checkbox" value="{{ba.id}}" ng-model="ba.selected"></td>
                                     <td ng-if="!ba.available"><input type="checkbox" disabled></td>
                                     <td><a href="#/ba/view/{{ba.id}}" target="_blank">{{ba.firstName}} {{ba.lastName}}</a></td>

@@ -5,6 +5,7 @@ import example.dao.JobDAO;
 import example.model.BrandAmbassadorDO;
 import example.model.Company;
 import example.model.JobDO;
+import example.model.User;
 import example.service.JobService;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -84,41 +85,41 @@ public class JobServiceImpl implements JobService {
     @Override
     @Transactional
     public void removeJob(Long id) throws Exception {
-        this.jobDAO.delete(id);
+        jobDAO.delete(id);
         //catch EmptyResultDataAccessException
     }
 
     @Override
     @Transactional
     public List<JobDO> findByInvitedId(Long id) throws Exception {
-        return (List<JobDO>) this.jobDAO.findByInvitedId(id);
+        return (List<JobDO>) jobDAO.findByInvitedId(id);
     }
 
     @Override
     @Transactional
     public List<JobDO> findByAcceptedId(Long id) throws Exception {
-        return (List<JobDO>) this.jobDAO.findByAcceptedId(id);
+        return (List<JobDO>) jobDAO.findByAcceptedId(id);
     }
 
     @Override
     @Transactional
     public List<JobDO> findByDeclinedId(Long id) throws Exception {
-        return (List<JobDO>) this.jobDAO.findByDeclinedId(id);
+        return (List<JobDO>) jobDAO.findByDeclinedId(id);
     }
 
     @Override
     @Transactional
     public List<JobDO> findByEmployeeId(Long id) throws Exception {
-        return (List<JobDO>) this.jobDAO.findByEmployeeId(id);
+        return (List<JobDO>) jobDAO.findByJobManagerId(id);
     }
 
     @Override
     @Transactional
     public JobDO updateToAccepted(JobDO jobDO, Long invitedId) throws Exception {
         System.out.println("Invited BAs are: "+jobDO.getInvited());
-        List<BrandAmbassadorDO> updatedInvited = jobDO.getInvited();
+        List<User> updatedInvited = jobDO.getInvited();
 
-        List<BrandAmbassadorDO> updatedAccepted = jobDO.getAccepted();
+        List<User> updatedAccepted = jobDO.getAccepted();
         for(int i = 0; i < updatedInvited.size(); i++){
             if (updatedInvited.get(i).getId().equals(invitedId)){
                 updatedAccepted.add(updatedInvited.get(i));
@@ -134,9 +135,9 @@ public class JobServiceImpl implements JobService {
     @Transactional
     public JobDO updateToDeclined(JobDO jobDO, Long invitedId) throws Exception {
         System.out.println("Invited BAs are: "+jobDO.getInvited());
-        List<BrandAmbassadorDO> updatedInvited = jobDO.getInvited();
+        List<User> updatedInvited = jobDO.getInvited();
 
-        List<BrandAmbassadorDO> updatedDeclined = jobDO.getAccepted();
+        List<User> updatedDeclined = jobDO.getAccepted();
         for(int i = 0; i < updatedInvited.size(); i++){
             if (updatedInvited.get(i).getId().equals(invitedId)){
                 updatedDeclined.add(updatedInvited.get(i));

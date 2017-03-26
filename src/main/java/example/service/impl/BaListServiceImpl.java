@@ -50,6 +50,6 @@ public class BaListServiceImpl implements BaListService {
 
     @Override
     public List<BaList> findByEmployeeId(Long id) throws Exception {
-        return baListDAO.findByEmployeeId(id);
+        return baListDAO.findByListManagerId(id);
     }
 }

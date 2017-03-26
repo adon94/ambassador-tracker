@@ -8,6 +8,10 @@ body {
     background-color: #eee;
 }
 
+.navbar-brand {
+    margin-right: 3rem;
+}
+
 .carousel,
 .carousel-item,
 .active {
@@ -26,7 +30,7 @@ body {
 
 .on-top {
     margin-top: 100px;
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 0;
     left: 0;
@@ -34,18 +38,32 @@ body {
     width: 95%;
 }
 
-.login-card {
-    background-color: rgba(255, 255, 255, 0.85);
-}
-
-.nav-vectr {
+footer.page-footer {
+    margin-top: 0;
     background: #34495e;
 }
+
+.login-card {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.wet-asphalt {
+    background: #34495e;
+}
+
 .teal-blue {
     background-color: #33658A;
 }
 
+.blue-green {
+    background-color: #0FA3B1;
+}
+
 .card {
+    margin-bottom: 30px;
+}
+
+.tab {
     margin-bottom: 30px;
 }
 
@@ -105,22 +123,22 @@ body {
 }
 
 .fc-view-container {
-    background-image: url(http://www.ilikewallpaper.net/iphone-panoramic-wallpapers/download/15749/Island--iphone-panoramic-wallpaper-ilikewallpaper_com.jpg);
+    background-image: url(https://static.pexels.com/photos/1852/dawn-landscape-mountains-nature.jpg);
     background-size: cover;
     background-position: center;
 }
 
 .fc-view {
-    background-color: rgba(255, 255, 255, 0.478431);
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 .fc-unthemed td.fc-today {
-    background: rgba(252, 248, 227, 0.4);
+    opacity: 0.8;
 }
 
-.fc-head {
-    background-color: rgba(255, 255, 255, 0.2);
-}
+/*.fc-head {*/
+    /*background-color: rgba(255, 255, 255, 0.6);*/
+/*}*/
 
 .no-items {
     color: #606060;
