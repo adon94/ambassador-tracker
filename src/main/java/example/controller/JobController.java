@@ -28,9 +28,7 @@ public class JobController {
     public @ResponseBody
     JobDO createJob(@RequestBody JobDO job) throws Exception {
 
-        this.jobService.create(job);
-
-        return job;
+        return jobService.create(job);
     }
 
     @RequestMapping(value="/accept/{id}", method= RequestMethod.POST)

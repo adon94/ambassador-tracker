@@ -7,8 +7,9 @@
                 <div class="card">
                     <img ng-if="ctrl.companyImageUrl.length > 0" ng-src="{{ctrl.companyImageUrl}}" alt="...">
                     <div class="card-block">
-                        <h1 ng-if="ctrl.companyItem.name.length > 0" class="h1-responsive">{{ctrl.companyItem.name}}</h1>
-                        <h1 ng-if="ctrl.companyItem.name.length == 0" class="h1-responsive">{{ctrl.companyItem}}</h1>
+                        <!--<h1 ng-if="ctrl.companyItem.name.length > 0" class="h1-responsive">{{ctrl.companyItem.name}}</h1>-->
+                        <!--<h1 ng-if="ctrl.companyItem.name.length == 0" class="h1-responsive">{{ctrl.companyItem}}</h1>-->
+                        <h1 class="h1-responsive">{{ctrl.companyItem}}</h1>
                         <hr class="my-2">
                         <p><small>Created by {{currentUser.firstName}} {{currentUser.lastName}}</small></p>
                         <p>{{ctrl.job.location}}</p>

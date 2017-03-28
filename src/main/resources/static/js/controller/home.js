@@ -69,7 +69,7 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                         events: self.gEvents
                     };
 
-                    self.addRemoveEventSource(self.eventSources, self.googleEvents);
+                    $scope.addRemoveEventSource(self.eventSources, self.googleEvents);
                 } else {
                     console.log('No upcoming events found.');
                 }
@@ -83,18 +83,18 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
 
     let today = new Date();
     let invited = [];
-    self.invitedEvents = [];
+    $scope.invitedEvents = [];
     let accepted= [];
-    self.acceptedEvents= [];
-    self.pastAcceptedEvents= [];
+    $scope.acceptedEvents= [];
+    $scope.pastAcceptedEvents= [];
 
     let updateData = function () {
 
         if (!user.manager) {
             jobService.getInvitedJobs(user.id).then(function (response) {
                 invited = response.data;
-                self.invited = invited;
-                // for (inv in self.invited){
+                $scope.invited = invited;
+                // for (inv in $scope.invited){
                 //     inv.startDate = new Date(inv.startDate);
                 // }
                 angular.forEach(invited, function (value, key) {
@@ -102,11 +102,11 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                     invited[key].startDate = new Date(value.startDate);
 
                     if (invited[key].startDate > today) {
-                        self.invitedEvents.push({
+                        $scope.invitedEvents.push({
                             title: invited[key].company.name,
                             start: invited[key].startDate,
                             className: 'invitedEvent',
-                            url: '/#/job/view/' + invited[key].user.id
+                            url: '/#/job/view/' + invited[key].id
                             // backgroundColor: "#ff374b",
                             // stick: true
                         })
@@ -116,21 +116,21 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
 
             jobService.getAcceptedJobs(user.id).then(function (response) {
                 accepted = response.data;
-                self.accepted = accepted;
+                $scope.accepted = accepted;
 
                 angular.forEach(accepted, function (value, key) {
 
                     accepted[key].startDate = new Date(value.startDate);
 
                     if (accepted[key].startDate > today) {
-                        self.acceptedEvents.push({
+                        $scope.acceptedEvents.push({
                             title: accepted[key].company.name,
                             start: accepted[key].startDate,
                             className: 'acceptedEvent',
                             url: '/#/job/view/' + accepted[key].id
                         })
                     } else {
-                        self.pastAcceptedEvents.push({
+                        $scope.pastAcceptedEvents.push({
                             title: accepted[key].company.name,
                             start: accepted[key].startDate,
                             className: 'pastAcceptedEvent',
@@ -140,24 +140,24 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                 });
             });
 
-            self.invEvents = {
-                events: self.invitedEvents
+            $scope.invEvents = {
+                events: $scope.invitedEvents
             };
 
-            self.accEvents = {
-                events: self.acceptedEvents
+            $scope.accEvents = {
+                events: $scope.acceptedEvents
             };
 
-            self.pastAccEvents = {
-                events: self.pastAcceptedEvents
+            $scope.pastAccEvents = {
+                events: $scope.pastAcceptedEvents
             };
 
-            self.eventSources = [self.invEvents, self.accEvents, self.pastAccEvents];
+            $scope.eventSources = [$scope.invEvents, $scope.accEvents, $scope.pastAccEvents];
 
         } else if (user.manager) {
 
-            self.past = [];
-            self.upcoming = [];
+            $scope.past = [];
+            $scope.upcoming = [];
 
             jobService.getEmployeesJobs(user.id).then(function (response) {
                 let created = response.data;
@@ -175,106 +175,105 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                     };
 
                     if (created[key].startDate - Date.now() < 0) {
-                        self.past.push(eventItem);
+                        $scope.past.push(eventItem);
                     } else {
                         eventItem.className = 'acceptedEvent';
-                        self.upcoming.push(eventItem);
+                        $scope.upcoming.push(eventItem);
                     }
                 });
             });
 
-            self.pastEvents = {
-                events: self.past
+            $scope.pastEvents = {
+                events: $scope.past
             };
 
-            self.upcomingEvents = {
-                events: self.upcoming
+            $scope.upcomingEvents = {
+                events: $scope.upcoming
             };
 
-            self.eventSources = [self.pastEvents, self.upcomingEvents];
-            uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', self.upcomingEvents);
+            self.eventSources = [$scope.pastEvents, $scope.upcomingEvents];
 
             gapi.load('client:auth2', initClient);
         }
+    };
 
-        const date = new Date();
-        const d = date.getDate();
-        const m = date.getMonth();
-        const y = date.getFullYear();
+    const date = new Date();
+    const d = date.getDate();
+    const m = date.getMonth();
+    const y = date.getFullYear();
 
-        /* alert on eventClick */
-        self.alertOnEventClick = function (date, jsEvent, view) {
-            self.alertMessage = (date.title + ' was clicked ');
-        };
-        /* alert on Drop */
-        self.alertOnDrop = function (event, delta, revertFunc, jsEvent, ui, view) {
-            self.alertMessage = ('Event Droped to make dayDelta ' + delta);
-        };
-        /* alert on Resize */
-        self.alertOnResize = function (event, delta, revertFunc, jsEvent, ui, view) {
-            self.alertMessage = ('Event Resized to make dayDelta ' + delta);
-        };
-        /* add and removes an event source of choice */
-        self.addRemoveEventSource = function (sources, source) {
-            let canAdd = 0;
-            angular.forEach(sources, function (value, key) {
-                if (sources[key] === source) {
-                    sources.splice(key, 1);
-                    canAdd = 1;
-                }
-            });
-            if (canAdd === 0) {
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', source);
+    /* alert on eventClick */
+    $scope.alertOnEventClick = function (date, jsEvent, view) {
+        $scope.alertMessage = (date.title + ' was clicked ');
+    };
+    /* alert on Drop */
+    $scope.alertOnDrop = function (event, delta, revertFunc, jsEvent, ui, view) {
+        $scope.alertMessage = ('Event Droped to make dayDelta ' + delta);
+    };
+    /* alert on Resize */
+    $scope.alertOnResize = function (event, delta, revertFunc, jsEvent, ui, view) {
+        $scope.alertMessage = ('Event Resized to make dayDelta ' + delta);
+    };
+    /* add and remove an event source of choice */
+    $scope.addRemoveEventSource = function (sources, source) {
+        let canAdd = 0;
+        angular.forEach(sources, function (value, key) {
+            if (sources[key] === source) {
+                sources.splice(key, 1);
+                canAdd = 1;
             }
-        };
-        /* add custom event*/
-        self.addEvent = function () {
-            self.events.push({
-                title: 'Open Sesame',
-                start: new Date(y, m, 28),
-                end: new Date(y, m, 29),
-                className: ['openSesame']
-            });
-        };
-        /* remove event */
-        self.remove = function (index) {
-            self.events.splice(index, 1);
-        };
-        /* Change View */
-        self.changeView = function (view, calendar) {
-            uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
-        };
-        /* Change View */
-        self.renderCalender = function (calendar) {
-            if (uiCalendarConfig.calendars[calendar]) {
-                uiCalendarConfig.calendars[calendar].fullCalendar('render');
-            }
-        };
-        /* Render Tooltip */
-        self.eventRender = function (event, element, view) {
-            element.attr({
-                'tooltip': event.title,
-                'tooltip-append-to-body': true
-            });
-            $compile(element)(self);
-        };
-        /* config object */
-        $scope.uiConfig = {
-            calendar: {
-                timeFormat: 'HH:mm',
-                height: 550,
-                editable: false,
-                header: {
-                    left: 'title',
-                    center: '',
-                    right: 'today prev,next'
-                },
-                eventClick: self.alertOnEventClick,
-                eventDrop: self.alertOnDrop,
-                eventResize: self.alertOnResize,
-                eventRender: self.eventRender
-            }
-        };
-    }
+        });
+        if (canAdd === 0) {
+            uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', source);
+        }
+    };
+    /* add custom event*/
+    $scope.addEvent = function () {
+        $scope.events.push({
+            title: 'Open Sesame',
+            start: new Date(y, m, 28),
+            end: new Date(y, m, 29),
+            className: ['openSesame']
+        });
+    };
+    /* remove event */
+    $scope.remove = function (index) {
+        $scope.events.splice(index, 1);
+    };
+    /* Change View */
+    $scope.changeView = function (view, calendar) {
+        uiCalendarConfig.calendars[calendar].fullCalendar('changeView', view);
+    };
+    /* Change View */
+    $scope.renderCalender = function (calendar) {
+        if (uiCalendarConfig.calendars[calendar]) {
+            uiCalendarConfig.calendars[calendar].fullCalendar('render');
+        }
+    };
+    /* Render Tooltip */
+    $scope.eventRender = function (event, element, view) {
+        element.attr({
+            'tooltip': event.title,
+            'tooltip-append-to-body': true
+        });
+        $compile(element)($scope);
+    };
+    /* config object */
+    self.uiConfig = {
+        calendar: {
+            timeFormat: 'HH:mm',
+            height: 550,
+            editable: false,
+            header: {
+                left: 'title',
+                center: '',
+                right: 'today prev,next'
+            },
+            eventClick: $scope.alertOnEventClick,
+            eventDrop: $scope.alertOnDrop,
+            eventResize: $scope.alertOnResize,
+            eventRender: $scope.eventRender
+        }
+    };
 
 });

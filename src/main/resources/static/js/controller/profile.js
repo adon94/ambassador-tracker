@@ -29,11 +29,16 @@ angular.module('myApp').controller('profile', function ($rootScope, $cookies, $t
 
         if (!self.profile.manager) {
 
-            jobService.getInvitedJobs(id).then(function (response) {
-                self.main = response.data;
+            self.main = [];
 
-                angular.forEach(self.main, function (value, key) {
-                    self.main[key].startDate = new Date(value.startDate)
+            jobService.getInvitedJobs(id).then(function (response) {
+                self.pending = response.data;
+
+                angular.forEach(self.pending, function (value, key) {
+                    self.pending[key].startDate = new Date(value.startDate);
+                    if (self.pending[key].startDate - Date.now() > 0) {
+                        self.main.push(self.pending[key]);
+                    }
                 });
             });
 
@@ -47,7 +52,6 @@ angular.module('myApp').controller('profile', function ($rootScope, $cookies, $t
                     self.accepted[key].startDate = new Date(value.startDate);
 
                     if (self.accepted[key].startDate - Date.now() > 0) {
-                        console.log(self.accepted[key].client);
                         self.side.push(self.accepted[key]);
                     }
 

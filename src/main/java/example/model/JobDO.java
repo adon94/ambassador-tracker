@@ -34,23 +34,6 @@ public class JobDO extends AbstractEntity {
     @ManyToMany(cascade = CascadeType.MERGE)
     private List<User> declined;
 
-
-//    public JobDO(int id, int jobManager, int requiredBoys, int requiredGirls, boolean open,
-//                 String company, String coverPic, String location, double wage,
-//                 String startDate, String endDate) {
-//        this.id = id;
-//        this.jobManager = jobManager;
-//        this.requiredBoys = requiredBoys;
-//        this.requiredGirls = requiredGirls;
-//        this.open = open;
-//        this.company = company;
-//        this.coverPic = coverPic;
-//        this.location = location;
-//        this.wage = wage;
-//        this.startDate = startDate;
-//        this.endDate = endDate;
-//    }
-
     public User getJobManager() {
         return jobManager;
     }
@@ -91,14 +74,6 @@ public class JobDO extends AbstractEntity {
         company.setClient(true);
         this.company = company;
     }
-
-//    public String getCoverPic() {
-//        return coverPic;
-//    }
-//
-//    public void setCoverPic(String coverPic) {
-//        this.coverPic = coverPic;
-//    }
 
     public String getLocation() {
         return location;

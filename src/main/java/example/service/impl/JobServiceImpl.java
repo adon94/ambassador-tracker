@@ -48,7 +48,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     @Transactional
-    public void create(JobDO jobDO) throws Exception {
+    public JobDO create(JobDO jobDO) throws Exception {
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         jobDO.setCreatedAt(timestamp.toString());
@@ -67,7 +67,7 @@ public class JobServiceImpl implements JobService {
 
         System.out.println(jobDO.getCompany().getName());
 
-        jobDAO.save(jobDO);
+        return jobDAO.save(jobDO);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class JobServiceImpl implements JobService {
         System.out.println("Invited BAs are: "+jobDO.getInvited());
         List<User> updatedInvited = jobDO.getInvited();
 
-        List<User> updatedDeclined = jobDO.getAccepted();
+        List<User> updatedDeclined = jobDO.getDeclined();
         for(int i = 0; i < updatedInvited.size(); i++){
             if (updatedInvited.get(i).getId().equals(invitedId)){
                 updatedDeclined.add(updatedInvited.get(i));

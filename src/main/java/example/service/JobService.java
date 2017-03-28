@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface JobService {
-    void create(JobDO job) throws Exception;
+    JobDO create(JobDO job) throws Exception;
     JobDO view(Long id) throws Exception;
     List<JobDO> getAll() throws Exception;
     void removeJob(Long id) throws Exception;

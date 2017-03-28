@@ -1,0 +1,14 @@
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-3">
+    <div class="container">
+        <div class="col-4 offset-3">
+            <div class="card card-block">
+                <p ng-repeat="message in ctrl.currentChat.messages"><b>{{message.sender.firstName}} {{message.sender.lastName}}:</b> {{message.text}}</p>
+                <form ng-submit="ctrl.sendMessage()">
+                    <input type="text" ng-model="ctrl.message.text">
+                    <button class="btn btn-primary" type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

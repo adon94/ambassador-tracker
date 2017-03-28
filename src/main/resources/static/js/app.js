@@ -7,7 +7,7 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             .when('/', {
             templateUrl : 'view/home.html',
             controller : 'home',
-            controllerAs: 'controller'
+            controllerAs: 'ctrl'
         })
             .when('/login', {
             templateUrl : 'view/login.html',
@@ -27,6 +27,11 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             .when('/job/view/:id', {
             templateUrl : 'view/view-job.html',
             controller : 'view-job',
+            controllerAs: 'ctrl'
+        })
+            .when('/chat/:id', {
+            templateUrl : 'view/chat.html',
+            controller : 'chat',
             controllerAs: 'ctrl'
         })
             .when('/profile/:id', {

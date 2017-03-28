@@ -1,4 +1,4 @@
-angular.module('myApp').controller('view-job', function ($filter, $location, $routeParams, $rootScope, $cookies, jobService, userService) {
+angular.module('myApp').controller('view-job', function ($filter, $location, $routeParams, $rootScope, $cookies, jobService, userService, chatService) {
 
     let self = this;
     let id = $routeParams.id;
@@ -19,6 +19,7 @@ angular.module('myApp').controller('view-job', function ($filter, $location, $ro
 
     jobService.getJob(id).then(function (response) {
         self.job = response.data;
+        console.log(self.job);
         self.dateMade = new Date(self.job.createdAt);
         self.job.startDate = new Date(self.job.startDate);
         self.job.endDate = new Date(self.job.endDate);
@@ -65,4 +66,14 @@ angular.module('myApp').controller('view-job', function ($filter, $location, $ro
             });
         }
     });
+
+    self.openChat = function () {
+        let chat = {};
+        chat.participants = self.job.accepted;
+        chat.job = {};
+        chat.job.id = id;
+        chatService.jobChat(chat).then(function successCallback(response) {
+            $location.path('/chat/'+response.data.id);
+        });
+    };
 });
