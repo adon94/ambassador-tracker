@@ -33,9 +33,8 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
     }
 
     function updateSigninStatus(isSignedIn) {
-        console.log("updateSigninStatus");
         if (isSignedIn) {
-            console.log("SIGNED IN");
+
             gapi.client.calendar.events.list({
                 'calendarId': 'primary',
                 'timeMin': (new Date()).toISOString(),
@@ -61,7 +60,6 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                             start: when,
                             className: 'gCalEvent'
                         };
-                        console.log(eventItem);
                         self.gEvents.push(eventItem);
                     }
 
@@ -69,13 +67,22 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                         events: self.gEvents
                     };
 
-                    $scope.addRemoveEventSource(self.eventSources, self.googleEvents);
+                    $scope.addRemoveEventSource($scope.eventSources, self.googleEvents);
+                    $scope.addRemoveEventSource($scope.eventSources, $scope.accEvents);
+                    $scope.addRemoveEventSource($scope.eventSources, $scope.pastAccEvents);
+                    $scope.addRemoveEventSource($scope.eventSources, $scope.invEvents);
                 } else {
                     console.log('No upcoming events found.');
+                    $scope.addRemoveEventSource($scope.eventSources, $scope.accEvents);
+                    $scope.addRemoveEventSource($scope.eventSources, $scope.pastAccEvents);
+                    $scope.addRemoveEventSource($scope.eventSources, $scope.invEvents);
                 }
             });
         } else {
             console.log("NOT SIGNED IN");
+            $scope.addRemoveEventSource($scope.eventSources, $scope.accEvents);
+            $scope.addRemoveEventSource($scope.eventSources, $scope.pastAccEvents);
+            $scope.addRemoveEventSource($scope.eventSources, $scope.invEvents);
             //----------Sign in prompt------------
             // gapi.auth2.getAuthInstance().signIn();
         }
@@ -152,8 +159,11 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                 events: $scope.pastAcceptedEvents
             };
 
-            $scope.eventSources = [$scope.invEvents, $scope.accEvents, $scope.pastAccEvents];
+            console.log($scope.accEvents);
 
+            $scope.eventSources = [];
+
+            gapi.load('client:auth2', initClient);
         } else if (user.manager) {
 
             $scope.past = [];
@@ -161,7 +171,6 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
 
             jobService.getEmployeesJobs(user.id).then(function (response) {
                 let created = response.data;
-                console.log(created);
 
                 angular.forEach(created, function (value, key) {
 
@@ -191,7 +200,7 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                 events: $scope.upcoming
             };
 
-            self.eventSources = [$scope.pastEvents, $scope.upcomingEvents];
+            $scope.eventSources = [$scope.pastEvents, $scope.upcomingEvents];
 
             gapi.load('client:auth2', initClient);
         }
@@ -259,7 +268,7 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
         $compile(element)($scope);
     };
     /* config object */
-    self.uiConfig = {
+    $scope.uiConfig = {
         calendar: {
             timeFormat: 'HH:mm',
             height: 550,

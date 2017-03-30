@@ -76,7 +76,7 @@
 <script src="js/controller/chat.js"></script>
 <script src="js/controller/messages.js"></script>
 <script type="text/javascript">
-    angular.module('myApp').run(function($rootScope, $cookies, $location) {
+    angular.module('myApp').run(function($rootScope, $cookies, $location, chatService) {
 
         $rootScope.logout = function () {
             console.log("Logging out");
@@ -89,11 +89,24 @@
 
         if (userId == null) {
             $location.path("/login");
+        } else {
+            updateData();
         }
 
         $rootScope.$on('$routeChangeSuccess', function() {
             $("html, body").animate({ scrollTop: 0 }, 200);
         });
+
+        function updateData() {
+            chatService.findByParticipants(userId).then(function successCallback(response) {
+                $rootScope.messageCount = response.data.length;
+                $rootScope.latestMessageId = response.data[response.data.length - 1].id;
+            })
+        }
+
+        $rootScope.openLatestMessage = function () {
+            $location.path("/chat/" + $rootScope.latestMessageId);
+        }
     });
 </script>
 </body>

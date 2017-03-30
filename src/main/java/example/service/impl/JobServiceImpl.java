@@ -1,11 +1,9 @@
 package example.service.impl;
 
+import example.dao.ChatDAO;
 import example.dao.CompanyDAO;
 import example.dao.JobDAO;
-import example.model.BrandAmbassadorDO;
-import example.model.Company;
-import example.model.JobDO;
-import example.model.User;
+import example.model.*;
 import example.service.JobService;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -44,6 +42,13 @@ public class JobServiceImpl implements JobService {
     @Autowired
     public void setCompanyDAO(CompanyDAO companyDAO) {
         this.companyDAO = companyDAO;
+    }
+
+    private ChatDAO chatDAO;
+
+    @Autowired
+    public void setChatDAO(ChatDAO chatDAO) {
+        this.chatDAO = chatDAO;
     }
 
     @Override
@@ -122,10 +127,21 @@ public class JobServiceImpl implements JobService {
         List<User> updatedAccepted = jobDO.getAccepted();
         for(int i = 0; i < updatedInvited.size(); i++){
             if (updatedInvited.get(i).getId().equals(invitedId)){
+
+                List<Chat> chats = chatDAO.findByJob(jobDO);
+                if (!chats.isEmpty()) {
+                    Chat chat = chats.get(0);
+                    List<User> participants = chat.getParticipants();
+                    participants.add(updatedInvited.get(i));
+                    chat.setParticipants(participants);
+                    chatDAO.save(chat);
+                }
+
                 updatedAccepted.add(updatedInvited.get(i));
                 updatedInvited.remove(updatedInvited.get(i));
             }
         }
+
         jobDO.setInvited(updatedInvited);
         jobDO.setAccepted(updatedAccepted);
         return jobDAO.save(jobDO);

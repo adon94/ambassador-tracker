@@ -1,6 +1,6 @@
 <div ng-include="'partial/nav.html'"></div>
 
-<main class="mt-3">
+<main class="mt-2">
     <div class="container">
         <div class="card card-block">
             <table class="table table-hover">
@@ -30,6 +30,15 @@
                     <td>
                         <a class="blue-text" ng-if="!ctrl.editImageUrl" ng-click="ctrl.editImageUrl = true">Edit</a>
                         <a class="blue-text" ng-if="ctrl.editImageUrl" ng-click="ctrl.updateUser(); ctrl.editImageUrl = false">Save</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Cover photo url</b></td>
+                    <td ng-if="!ctrl.editCoverUrl">{{ctrl.user.coverUrl | limitTo:20}}...</td>
+                    <td ng-if="ctrl.editCoverUrl"><input ng-model="ctrl.user.coverUrl" ng-value="currentUser.coverUrl"></td>
+                    <td>
+                        <a class="blue-text" ng-if="!ctrl.editCoverUrl" ng-click="ctrl.editCoverUrl = true">Edit</a>
+                        <a class="blue-text" ng-if="ctrl.editCoverUrl" ng-click="ctrl.updateUser(); ctrl.editCoverUrl = false">Save</a>
                     </td>
                 </tr>
                 <tr>

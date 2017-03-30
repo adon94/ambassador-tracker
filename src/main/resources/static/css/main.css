@@ -160,3 +160,110 @@ footer.page-footer {
 .md-form .moment-picker {
     margin-left: 3rem;
 }
+
+.chat-container {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.scrollspy {
+    position: relative;
+    overflow-y: scroll;
+    height: calc(100% - 150px);
+    background-color: #eee;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+}
+
+.chip-block {
+    clear: both;
+}
+
+.left-chip {
+    display: inline-block;
+    font-size: 18px;
+    color: rgba(0,0,0,.6);
+    padding: 6px 12px;
+    background-color: #abd0f6;
+    margin-bottom: 1rem;
+    margin-right: 30%;
+    border-radius: 16px 16px 16px 0;
+}
+
+.chat-main {
+    height: calc(100% - 86px);
+}
+
+.right-chip {
+    display: inline-block;
+    font-size: 18px;
+    color: rgba(0,0,0,.6);
+    padding: 6px 12px;
+    background-color: #b6edb6;
+    margin-bottom: 1rem;
+    margin-left: 30%;
+    float: right;
+    border-radius: 16px 16px 0 16px;
+}
+
+.chat {
+    padding-top: 5px;
+    padding-left: 5px;
+    position: relative;
+    cursor: pointer;
+    background-color: white;
+}
+
+.chat-avatar {
+    border-radius: 50%;
+    display: block;
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+}
+
+.chat-body {
+    border-top: 1px solid #f2f2f2;
+    padding-right: 15px;
+}
+
+.chat-main, .header-main {
+    -webkit-align-items: baseline;
+    align-items: baseline;
+    line-height: normal;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    margin-top: -1px;
+}
+
+.grey-background {
+    background-color: #dfdfdf;
+}
+
+.white-background {
+    background-color: #ffffff;
+}
+
+.ico-badge:after{
+    content: attr(data-count);
+    position: absolute;
+    background: red;
+    top: -1px;
+    width: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 50%;
+    color: white;
+    border: 1px solid red;
+}
+
+.cover-pic {
+    height: 150px;
+    display: block;
+    background-size: cover;
+    background-position: center;
+}

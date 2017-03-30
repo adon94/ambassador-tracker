@@ -70,6 +70,7 @@ angular.module('myApp').controller('view-job', function ($filter, $location, $ro
     self.openChat = function () {
         let chat = {};
         chat.participants = self.job.accepted;
+        chat.participants.push(self.job.jobManager);
         chat.job = {};
         chat.job.id = id;
         chatService.jobChat(chat).then(function successCallback(response) {

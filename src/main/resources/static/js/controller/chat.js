@@ -1,4 +1,5 @@
-angular.module('myApp').controller('chat', function ($filter, $location, $routeParams, $rootScope, $cookies, chatService, userService) {
+angular.module('myApp').controller('chat', function ($filter, $location, $routeParams, $rootScope, $cookies,
+                                                     chatService, userService, $anchorScroll) {
 
     let self = this;
     let id = $routeParams.id;
@@ -17,6 +18,10 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
     let updateData = function () {
         chatService.findOne(id).then(function successCallback(response) {
             self.currentChat = response.data;
+        });
+
+        chatService.findByParticipants($rootScope.currentUser.id).then(function successCallback(response) {
+            self.allChats = response.data;
         })
     };
 
@@ -28,5 +33,19 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
             self.currentChat = response.data;
             self.message.text = null;
         })
+    };
+
+    self.openChat = function (chat) {
+        // let newHash = 'anchor' + (chat.messages.length - 1);
+        self.currentChat = chat;
+        // if ($location.hash() !== newHash) {
+        //     // set the $location.hash to `newHash` and
+        //     // $anchorScroll will automatically scroll to it
+        //     $location.hash(newHash);
+        // } else {
+        //     // call $anchorScroll() explicitly,
+        //     // since $location.hash hasn't changed
+        //     $anchorScroll();
+        // }
     }
 });

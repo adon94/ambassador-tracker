@@ -1,16 +1,27 @@
-angular.module('myApp').controller('wages', function($scope, $rootScope, $cookies, jobService, $filter) {
-    $scope.accepted = [];
+angular.module('myApp').controller('wages', function($scope, $rootScope, $cookies, jobService, $filter, userService) {
+
+    let self = this;
+    let user = {};
+
+    let userId = $cookies.get('currentUser');
+    if(userId != null) {
+        userService.findOne(userId).then(function successCallback(response) {
+            $rootScope.currentUser = response.data;
+            user = $rootScope.currentUser;
+            updateData();
+        });
+    }
+
+    self.accepted = [];
     // let invited = [];
-    $rootScope.authenticated = ($cookies.get("authenticated") === 'true');
-    $rootScope.empUser = ($cookies.get('empUser') === 'true');
     let id;
 
-    $scope.thisMonth = [];
-    $scope.thisMonthPotential = [];
+    self.thisMonth = [];
+    self.thisMonthPotential = [];
     let today = new Date();
-    $scope.date = $filter('date')(today,'MMMM-yyyy');
+    self.date = $filter('date')(today,'MMMM-yyyy');
 
-    $scope.getJobsFromMonth = function (jobList, date) {
+    self.getJobsFromMonth = function (jobList, date) {
         let selectedMonth = [];
 
         angular.forEach(jobList, function (value, key) {
@@ -28,9 +39,9 @@ angular.module('myApp').controller('wages', function($scope, $rootScope, $cookie
     };
 
 
-    $scope.getMonthWages = function (jobList) {
+    self.getMonthWages = function (jobList) {
 
-        $scope.monthWages = 0;
+        self.monthWages = 0;
 
         angular.forEach(jobList, function (value, key) {
 
@@ -42,7 +53,7 @@ angular.module('myApp').controller('wages', function($scope, $rootScope, $cookie
 
             jobList[key].eventWages = jobList[key].wage * jobList[key].eventHours;
 
-            $scope.monthWages += value.eventWages;
+            self.monthWages += value.eventWages;
 
             console.log("Wages are "+value.eventWages);
         });
@@ -50,31 +61,30 @@ angular.module('myApp').controller('wages', function($scope, $rootScope, $cookie
         return jobList;
     };
 
-    $scope.onDateChange = function () {
+    self.onDateChange = function () {
         console.log("Changed Date........");
 
-        $scope.thisMonth = $scope.getJobsFromMonth($scope.accepted, new Date($scope.date));
+        self.thisMonth = self.getJobsFromMonth(self.accepted, new Date(self.date));
 
-        $scope.thisMonth = $scope.getMonthWages($scope.thisMonth);
-        $scope.selectedMonthWages = $scope.monthWages;
+        self.thisMonth = self.getMonthWages(self.thisMonth);
+        self.selectedMonthWages = self.monthWages;
     };
 
-    if($rootScope.authenticated && !$rootScope.empUser) {
-        $rootScope.currentUser = JSON.parse($cookies.get('currentUser'));
+    let updateData = function () {
 
-        id = $rootScope.currentUser.id;
+        id = user.id;
 
         // console.log("Wages ctrl");
 
         jobService.getAcceptedJobs(id).then(function (response) {
-            $scope.accepted = response.data;
-            // $scope.accepted = accepted;
+            self.accepted = response.data;
+            // self.accepted = accepted;
 
-            $scope.thisMonth = $scope.getJobsFromMonth($scope.accepted, new Date());
+            self.thisMonth = self.getJobsFromMonth(self.accepted, new Date());
 
-            $scope.thisMonth = $scope.getMonthWages($scope.thisMonth);
+            self.thisMonth = self.getMonthWages(self.thisMonth);
 
-            console.log("Total wages: " + $scope.monthWages);
+            console.log("Total wages: " + self.monthWages);
 
             Chart.defaults.global = {
                 // Boolean - Whether to animate the chart
@@ -217,11 +227,11 @@ angular.module('myApp').controller('wages', function($scope, $rootScope, $cookie
                 let d = new Date();
                 d.setMonth(f);
 
-                let thisMonthJobs = $scope.getJobsFromMonth($scope.accepted, d);
+                let thisMonthJobs = self.getJobsFromMonth(self.accepted, d);
 
-                $scope.getMonthWages(thisMonthJobs);
+                self.getMonthWages(thisMonthJobs);
 
-                wagesByMonth.push($scope.monthWages);
+                wagesByMonth.push(self.monthWages);
             }
 
             let data = {

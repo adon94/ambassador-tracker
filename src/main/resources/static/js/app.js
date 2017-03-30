@@ -47,7 +47,7 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             .when('/ba/wages', {
             templateUrl : 'view/wages.html',
             controller : 'wages',
-            controllerAs: 'controller'
+            controllerAs: 'ctrl'
         })
             .when('/settings', {
             templateUrl : 'view/settings.html',

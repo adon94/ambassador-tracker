@@ -17,6 +17,7 @@ angular.module('myApp').controller('account', function($rootScope, $cookies, $lo
     }
 
     self.editImageUrl = false;
+    self.editCoverUrl = false;
     self.editEmail = false;
     self.editPassword = false;
     self.editFirstName = false;

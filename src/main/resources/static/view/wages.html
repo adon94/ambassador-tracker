@@ -1,5 +1,5 @@
 <div ng-include="'partial/nav.html'"></div>
-<main class="mt-3">
+<main class="mt-2">
     <div class="container">
         <div class="card card-block">
             <h1 class="h1-responsive">My Wages</h1>
@@ -9,12 +9,12 @@
                 <div class="col-lg-12">
                     <div class="md-form">
                         <i class="fa fa-calendar prefix"></i>
-                        <input placeholder="{{date}}"
-                               moment-picker="date"
+                        <input placeholder="{{ctrl.date}}"
+                               moment-picker="ctrl.date"
                                format="MMMM-YYYY"
                                autoclose="true"
-                               change="onDateChange()"
-                               ng-model="date"
+                               change="ctrl.onDateChange()"
+                               ng-model="ctrl.date"
                                ng-model-options="{ updateOn: 'blur' }">
                     </div>
                     <div class="table-responsive">
@@ -29,7 +29,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="job in thisMonth">
+                            <tr ng-repeat="job in ctrl.thisMonth">
                                 <td>{{job.startDate | date:"dd/MM/yyyy"}}</td>
                                 <td><a href="#/job/view/{{job.id}}">{{job.company.name}}</a></td>
                                 <td>{{job.eventHours}}</td>
@@ -41,7 +41,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><b>{{selectedMonthWages | currency:"€"}}</b></td>
+                                <td><b>{{ctrl.selectedMonthWages | currency:"€"}}</b></td>
                             </tr>
                             </tbody>
                         </table>

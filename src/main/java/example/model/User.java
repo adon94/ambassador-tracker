@@ -10,6 +10,8 @@ public class User extends AbstractEntity {
 
     @Column(name = "image_url", columnDefinition = "varchar(255) default 'http://yeslk.com/images/OIP-Mcca04340db0ea021035ee612b3eebc00o0.jpg'")
     private String imageUrl;
+    @Column(name = "cover_url", columnDefinition = "varchar(255) default 'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%2859%29.jpg'")
+    private String coverUrl;
 
     @Column(unique=true)
     private String email;
@@ -34,6 +36,14 @@ public class User extends AbstractEntity {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
     public String getEmail() {

@@ -1,13 +1,69 @@
 <div ng-include="'partial/nav.html'"></div>
-<main class="mt-3">
-    <div class="container">
-        <div class="col-4 offset-3">
-            <div class="card card-block">
-                <p ng-repeat="message in ctrl.currentChat.messages"><b>{{message.sender.firstName}} {{message.sender.lastName}}:</b> {{message.text}}</p>
-                <form ng-submit="ctrl.sendMessage()">
-                    <input type="text" ng-model="ctrl.message.text">
-                    <button class="btn btn-primary" type="submit">Send</button>
-                </form>
+<main class="mt-1 chat-main">
+    <div class="chat-container" style="height: 100%">
+        <div class="jumbotron" style="height: 100%; padding: 20px; margin-bottom: 0">
+            <div class="row" style="height: 100%">
+                <div class="col-3" style="height: 100%; padding-left: 5px; padding-right: 5px;">
+                    <div class="chat"
+                         ng-repeat="chat in ctrl.allChats"
+                         ng-click="ctrl.openChat(chat)"
+                         ng-style="ctrl.currentChat.id == chat.id && {'background-color':'#dfdfdf'}">
+                        <div style="display: -webkit-inline-box; border-bottom: 1px solid gainsboro; width: 100%"
+                             ng-repeat="participant in chat.participants"
+                             ng-if="chat.job == null && participant.id != currentUser.id">
+                            <div class="chat-avatar col-3" ng-style="{'background-image':'url('+participant.imageUrl+')'}">
+                            </div>
+                            <div class="col-9">
+                                <h5>{{participant.firstName}} {{participant.lastName}}</h5>
+                            </div>
+                        </div>
+                        <div style="display: -webkit-inline-box; border-bottom: 1px solid gainsboro; width: 100%"
+                             ng-if="chat.job != null">
+                            <div class="chat-avatar col-3" ng-style="{'background-image':'url('+chat.job.company.imageUrl+')'}">
+                            </div>
+                            <div class="col-9">
+                                <h5>{{chat.job.company.name}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-9" style="height: 100%; padding-left: 5px; padding-right: 5px;">
+                    <div style="height: 60px">
+                        <div ng-if="ctrl.currentChat.job != null">
+                            <h5><b><a style="color: black" href="#/job/view/{{ctrl.currentChat.job.id}}">
+                                {{ctrl.currentChat.job.company.name}}</a></b></h5>
+                            <footer class="blockquote-footer">
+                                <span style="display: inline-block" ng-repeat-start="participant in ctrl.currentChat.participants">
+                                <a href="#/profile/{{participant.id}}">
+                                    {{participant.firstName}} {{participant.lastName}}{{$last ? '' : ', '}}
+                                </a>
+                                </span> <span ng-repeat-end></span>
+                            </footer>
+                        </div>
+                        <h5 ng-repeat="participant in chat.participants"
+                            ng-if="ctrl.currentChat.job == null && participant.id != currentUser.id">
+                            <b>{{participant.firstName}} {{participant.lastName}}</b>
+                        </h5>
+                    </div>
+                    <div class="scrollspy">
+                        <div ng-repeat="message in ctrl.currentChat.messages | orderBy:'id'" class="chip-block" id="anchor{{message.id}}">
+                            <div class="left-chip" ng-if="message.sender.id != currentUser.id">
+                                <b>{{message.sender.firstName}} {{message.sender.lastName}} </b><br>{{message.text}}
+                            </div>
+                            <div class="right-chip" ng-if="message.sender.id == currentUser.id">
+                                {{message.text}}
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="card card-block">
+                        <form ng-submit="ctrl.sendMessage()">
+                            <div class="form-group">
+                                <input placeholder="Type a message and press enter to send" type="text" ng-model="ctrl.message.text">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
