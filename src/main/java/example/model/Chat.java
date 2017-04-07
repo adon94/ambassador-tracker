@@ -1,6 +1,7 @@
 package example.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,8 @@ public class Chat extends AbstractEntity {
 
     @OneToOne
     private JobDO job;
+
+    private Timestamp updatedAt;
 
     public List<Message> getMessages() {
         return messages;
@@ -38,5 +41,13 @@ public class Chat extends AbstractEntity {
 
     public void setJob(JobDO job) {
         this.job = job;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

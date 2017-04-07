@@ -33,6 +33,13 @@ public class ChatController {
         return chatService.jobChat(chat);
     }
 
+    @RequestMapping(value="/user", method= RequestMethod.POST)
+    public @ResponseBody
+    Chat userChat(@RequestBody Chat chat) throws Exception {
+
+        return chatService.userChat(chat);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody
     List<Chat> findByParticipantsId(@PathVariable("id") Long id) throws Exception {

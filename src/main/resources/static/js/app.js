@@ -1,4 +1,4 @@
-angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker', 'toastr' ])
+angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker', 'toastr', 'luegg.directives' ])
     .config(function($routeProvider, $locationProvider, toastrConfig) {
 
         $locationProvider.hashPrefix('');
@@ -29,7 +29,7 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             controller : 'view-job',
             controllerAs: 'ctrl'
         })
-            .when('/chat/:id', {
+            .when('/chat/:id?', {
             templateUrl : 'view/chat.html',
             controller : 'chat',
             controllerAs: 'ctrl'
@@ -62,7 +62,7 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             .when('/messages', {
             templateUrl : 'view/messages.html',
             controller : 'messages',
-            controllerAs: 'controller'
+            controllerAs: 'ctrl'
         })
             .otherwise('/');
 
@@ -76,21 +76,4 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             preventOpenDuplicates: false,
             target: 'body'
         });
-
-        // const messaging = firebase.messaging();
-        //
-        // messaging.requestPermission()
-        //     .then(function () {
-        //         console.log("All good");
-        //         return messaging.getToken();
-        //     })
-        //     .then(function (token) {
-        //         console.log(token);
-        //     })
-        //     .catch(function (err) {
-        //         console.log("Error occured: "+err);
-        //     });
-        // messaging.onMessage(function (payload) {
-        //     console.log("onMessage: " + payload)
-        // });
 });

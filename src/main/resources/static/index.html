@@ -26,6 +26,7 @@
 <script src="/node_modules/mdbootstrap/js/bootstrap.min.js"></script>
 <script src="/node_modules/mdbootstrap/js/mdb.min.js"></script>
 <script src="/node_modules/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+<script src="/node_modules/angularjs-scroll-glue/src/scrollglue.js"></script>
 
 <!--Other-->
 <script src="https://use.fontawesome.com/0d188512fc.js"></script>
@@ -76,7 +77,7 @@
 <script src="js/controller/chat.js"></script>
 <script src="js/controller/messages.js"></script>
 <script type="text/javascript">
-    angular.module('myApp').run(function($rootScope, $cookies, $location, chatService) {
+    angular.module('myApp').run(function($rootScope, $cookies, $location) {
 
         $rootScope.logout = function () {
             console.log("Logging out");
@@ -89,24 +90,24 @@
 
         if (userId == null) {
             $location.path("/login");
-        } else {
-            updateData();
         }
+//            updateData();
+//        }
 
         $rootScope.$on('$routeChangeSuccess', function() {
             $("html, body").animate({ scrollTop: 0 }, 200);
         });
 
-        function updateData() {
-            chatService.findByParticipants(userId).then(function successCallback(response) {
-                $rootScope.messageCount = response.data.length;
-                $rootScope.latestMessageId = response.data[response.data.length - 1].id;
-            })
-        }
+//        function updateData() {
+//            chatService.findByParticipants(userId).then(function successCallback(response) {
+//                $rootScope.messageCount = response.data.length;
+//                $rootScope.latestMessageId = response.data[response.data.length - 1].id;
+//            })
+//        }
 
-        $rootScope.openLatestMessage = function () {
-            $location.path("/chat/" + $rootScope.latestMessageId);
-        }
+//        $rootScope.openLatestMessage = function () {
+//            $location.path("/chat/" + $rootScope.latestMessageId);
+//        }
     });
 </script>
 </body>

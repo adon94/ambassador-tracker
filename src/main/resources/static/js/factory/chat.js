@@ -12,6 +12,9 @@ angular.module('myApp').factory('chatService', function($http) {
         },
         jobChat: function (chat) {
             return $http.post('/chat/job', chat);
+        },
+        userChat: function (chat) {
+            return $http.post('/chat/user', chat);
         }
     }
 

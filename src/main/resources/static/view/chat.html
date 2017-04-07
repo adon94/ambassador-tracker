@@ -5,9 +5,10 @@
             <div class="row" style="height: 100%">
                 <div class="col-3" style="height: 100%; padding-left: 5px; padding-right: 5px;">
                     <div class="chat"
-                         ng-repeat="chat in ctrl.allChats"
+                         ng-repeat="chat in ctrl.allChats | orderBy:'-updatedAt'"
                          ng-click="ctrl.openChat(chat)"
-                         ng-style="ctrl.currentChat.id == chat.id && {'background-color':'#dfdfdf'}">
+                         ng-style="ctrl.currentChat.id == chat.id && {'background-color':'#dfdfdf'}"
+                         ng-if="chat.messages.length > 0">
                         <div style="display: -webkit-inline-box; border-bottom: 1px solid gainsboro; width: 100%"
                              ng-repeat="participant in chat.participants"
                              ng-if="chat.job == null && participant.id != currentUser.id">
@@ -40,12 +41,19 @@
                                 </span> <span ng-repeat-end></span>
                             </footer>
                         </div>
-                        <h5 ng-repeat="participant in chat.participants"
-                            ng-if="ctrl.currentChat.job == null && participant.id != currentUser.id">
-                            <b>{{participant.firstName}} {{participant.lastName}}</b>
-                        </h5>
+                        <div ng-repeat="participant in ctrl.currentChat.participants"
+                             ng-if="ctrl.currentChat.job == null && participant.id != currentUser.id">
+                            <h5>
+                                <b><a style="color: black" href="#/profile/{{participant.id}}">
+                                    {{participant.firstName}} {{participant.lastName}}
+                                </a></b>
+                            </h5>
+                            <footer class="blockquote-footer">
+                                <span>Last seen today at 21:33</span>
+                            </footer>
+                        </div>
                     </div>
-                    <div class="scrollspy">
+                    <div id="chatWindow" scroll-glue class="scrollspy">
                         <div ng-repeat="message in ctrl.currentChat.messages | orderBy:'id'" class="chip-block" id="anchor{{message.id}}">
                             <div class="left-chip" ng-if="message.sender.id != currentUser.id">
                                 <b>{{message.sender.firstName}} {{message.sender.lastName}} </b><br>{{message.text}}
@@ -56,7 +64,7 @@
                             <br>
                         </div>
                     </div>
-                    <div class="card card-block">
+                    <div class="card card-block" ng-if="ctrl.currentChat != null">
                         <form ng-submit="ctrl.sendMessage()">
                             <div class="form-group">
                                 <input placeholder="Type a message and press enter to send" type="text" ng-model="ctrl.message.text">

@@ -1,5 +1,5 @@
 angular.module('myApp').controller('chat', function ($filter, $location, $routeParams, $rootScope, $cookies,
-                                                     chatService, userService, $anchorScroll) {
+                                                     chatService, userService) {
 
     let self = this;
     let id = $routeParams.id;
@@ -11,7 +11,11 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
         userService.findOne(userId).then(function successCallback(response) {
             $rootScope.currentUser = response.data;
             user = $rootScope.currentUser;
-            updateData();
+            if (id != null) {
+                updateData();
+            } else {
+                updateSideChats();
+            }
         });
     }
 
@@ -20,9 +24,13 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
             self.currentChat = response.data;
         });
 
+        updateSideChats();
+    };
+
+    let updateSideChats = function () {
         chatService.findByParticipants($rootScope.currentUser.id).then(function successCallback(response) {
             self.allChats = response.data;
-        })
+        });
     };
 
     self.sendMessage = function () {
@@ -32,20 +40,11 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
         chatService.create(self.currentChat).then(function successCallback(response) {
             self.currentChat = response.data;
             self.message.text = null;
+            updateSideChats();
         })
     };
 
     self.openChat = function (chat) {
-        // let newHash = 'anchor' + (chat.messages.length - 1);
         self.currentChat = chat;
-        // if ($location.hash() !== newHash) {
-        //     // set the $location.hash to `newHash` and
-        //     // $anchorScroll will automatically scroll to it
-        //     $location.hash(newHash);
-        // } else {
-        //     // call $anchorScroll() explicitly,
-        //     // since $location.hash hasn't changed
-        //     $anchorScroll();
-        // }
     }
 });

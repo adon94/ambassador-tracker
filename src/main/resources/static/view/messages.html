@@ -1,9 +1,67 @@
-<div ng-include="'partial/nav.html'"></div>
 <main class="mt-2">
-    <div class="container">
-        <!-- anything typed in here is magically saved to our Firebase database! -->
-        <input type="text" ng-model="data.text"/>
-        <!-- all changes from our Firebase database magically appear here! -->
-        <h1>You said: {{ data.text }}</h1>
+    <div class="chat-container">
+        <div class="card card-block">
+            <label for="salaryInput">Salary:</label>
+            <input id="salaryInput" type="text" ng-model="ctrl.salary"/>
+            <button class="btn btn-primary" ng-click="ctrl.getTax()">Calculate</button>
+            <h3>What you get (before USC & PRSI): {{ctrl.netIncome | currency:"€"}}</h3>
+            <h3>Stolen by the government: {{ctrl.taxPaid | currency:"€"}}</h3>
+        </div>
+        <div class="card card-block">
+            <h3>What your stolen money is spent on</h3>
+            <div class="table-responsive">
+                <table width="100%" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Social Protection</th>
+                        <th>Health</th>
+                        <th>Education</th>
+                        <th>Justice</th>
+                        <th>Ag & Food</th>
+                        <th>Youth</th>
+                        <th>Reform</th>
+                        <th>Defence</th>
+                        <th>Transport & Tourism</th>
+                        <th>Foreign Affairs</th>
+                        <th>Finance</th>
+                        <th>Energy</th>
+                        <th>Arts</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ctrl.sp | currency:"€"}}</td>
+                        <td>{{ctrl.h | currency:"€"}}</td>
+                        <td>{{ctrl.e | currency:"€"}}</td>
+                        <td>{{ctrl.j | currency:"€"}}</td>
+                        <td>{{ctrl.af | currency:"€"}}</td>
+                        <td>{{ctrl.y | currency:"€"}}</td>
+                        <td>{{ctrl.r | currency:"€"}}</td>
+                        <td>{{ctrl.d | currency:"€"}}</td>
+                        <td>{{ctrl.tt | currency:"€"}}</td>
+                        <td>{{ctrl.fa | currency:"€"}}</td>
+                        <td>{{ctrl.f | currency:"€"}}</td>
+                        <td>{{ctrl.en | currency:"€"}}</td>
+                        <td>{{ctrl.a | currency:"€"}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ctrl.spPercent | percentage:2}}</td>
+                        <td>{{ctrl.hP | percentage:2}}</td>
+                        <td>{{ctrl.eP | percentage:2}}</td>
+                        <td>{{ctrl.jP | percentage:2}}</td>
+                        <td>{{ctrl.afP | percentage:2}}</td>
+                        <td>{{ctrl.yP | percentage:2}}</td>
+                        <td>{{ctrl.rP | percentage:2}}</td>
+                        <td>{{ctrl.dP | percentage:2}}</td>
+                        <td>{{ctrl.ttP | percentage:2}}</td>
+                        <td>{{ctrl.faP | percentage:2}}</td>
+                        <td>{{ctrl.fP | percentage:2}}</td>
+                        <td>{{ctrl.enP | percentage:2}}</td>
+                        <td>{{ctrl.aP | percentage:2}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </main>

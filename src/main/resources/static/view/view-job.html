@@ -84,7 +84,9 @@
                                 <div ng-style="{'background-image':'url('+invited.coverUrl+')'}" class="cover-pic"></div>
                             </a>
                         </div>
-                        <div class="avatar hoverable" ng-style="{'background-image':'url('+invited.imageUrl+')'}"></div>
+                        <a href="#/profile/{{invited.id}}">
+                            <div class="avatar hoverable" ng-style="{'background-image':'url('+invited.imageUrl+')'}"></div>
+                        </a>
                         <div class="card-block">
                             <div class="flex-center">
                                 <a href="#/profile/{{invited.id}}"><h3 class="text-center">{{invited.firstName}} {{invited.lastName}}</h3></a>
@@ -114,7 +116,9 @@
                                 <div ng-style="{'background-image':'url('+declined.coverUrl+')'}" class="cover-pic"></div>
                             </a>
                         </div>
-                        <div class="avatar hoverable" ng-style="{'background-image':'url('+declined.imageUrl+')'}"></div>
+                        <a href="#/profile/{{declined.id}}">
+                            <div class="avatar hoverable" ng-style="{'background-image':'url('+declined.imageUrl+')'}"></div>
+                        </a>
                         <div class="card-block">
                             <div class="flex-center">
                                 <a href="#/profile/{{declined.id}}"><h3 class="text-center">{{declined.firstName}} {{declined.lastName}}</h3></a>

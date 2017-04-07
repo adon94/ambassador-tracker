@@ -1,4 +1,5 @@
-angular.module('myApp').controller('profile', function ($rootScope, $cookies, $timeout, $filter, $location, $routeParams, jobService, userService) {
+angular.module('myApp').controller('profile', function ($rootScope, $cookies, $timeout, $filter, $location,
+                                                        $routeParams, jobService, userService, chatService) {
 
     let self = this;
     let id = $routeParams.id;
@@ -121,6 +122,16 @@ angular.module('myApp').controller('profile', function ($rootScope, $cookies, $t
 
     self.editProfile = function () {
         $location.path('/account')
-    }
+    };
+
+    self.openChat = function () {
+        let chat = {};
+        chat.participants = [];
+        chat.participants.push(user);
+        chat.participants.push(self.profile);
+        chatService.userChat(chat).then(function successCallback(response) {
+            $location.path('/chat/'+response.data.id);
+        })
+    };
 
 });

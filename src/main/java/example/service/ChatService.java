@@ -9,6 +9,7 @@ import java.util.List;
 public interface ChatService {
     Chat create(Chat chat) throws Exception;
     Chat jobChat(Chat chat) throws Exception;
+    Chat userChat(Chat chat) throws Exception;
     List<Chat> findByParticipants(Long id) throws Exception;
     Chat findOne(Long id) throws Exception;
 }

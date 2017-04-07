@@ -1,73 +1,70 @@
-angular.module('myApp').factory('Message', function($firebaseObject, $firebaseArray) {
+angular.module('myApp').controller('messages', function() {
 
-    let messages = $firebaseArray(firebase.database().ref().child("messages"));
+    let self = this;
 
-    let Message = {
-        all: messages,
-        create: function (message) {
-            return messages.$add(message);
-        },
-        get: function (messageId) {
-            return $firebaseObject(firebase.database().ref().child("messages").child(messageId));
-        },
-        delete: function (message) {
-            return messages.$remove(message);
+    self.taxPaid = 0;
+    self.netIncome = 0;
+
+    self.getTax = function () {
+        if(self.salary > 33800) {
+            let low = 27040;
+            let high = (self.salary - 33800) * 0.6;
+            self.netIncome = low + high + 3300;
+            self.taxPaid = self.salary - self.netIncome;
+            getExpenditure();
+        } else {
+            self.netIncome = (self.salary * 0.8) + 3300;
+            self.taxPaid = self.salary - self.netIncome;
+            getExpenditure();
         }
     };
 
-    return Message;
-});
+    let getExpenditure = function () {
+        let total = 53680;
 
+        self.spPercent = (19627/total);
+        self.sp = self.spPercent * self.taxPaid;
 
-// angular.module('myApp').controller('messages', function($scope, Message, $rootScope, $cookies) {
-//
-//
-//     $rootScope.authenticated = $cookies.get('authenticated');
-//
-//     if ($rootScope.authenticated) {
-//
-//         $rootScope.empUser = ($cookies.get('empUser') === 'true');
-//
-//         $rootScope.currentUser = JSON.parse($cookies.get('currentUser'));
-//     }
-//
-//     $scope.user="Guest";
-//
-//     $scope.messages= Message.all;
-//
-//     $scope.inserisci = function(message){
-//         message.user.id = $rootScope.currentUsert
-//
-//         Message.create(message);
-//     };
-// });
+        self.hP = (13175/total);
+        self.h = self.hP * self.taxPaid;
 
-angular.module('myApp').controller('messages', function($scope, $rootScope, $cookies, $firebaseObject) {
+        self.eP = (8524/total);
+        self.e = self.eP * self.taxPaid;
 
-    $rootScope.authenticated = $cookies.get('authenticated');
-    $rootScope.empUser = ($cookies.get('empUser') === 'true');
-    $rootScope.currentUser = JSON.parse($cookies.get('currentUser'));
-    let userType;
+        self.jP = (2264/total);
+        self.j = self.jP * self.taxPaid;
 
-    if ($rootScope.empUser) {
-        userType = "emp";
-    } else {
-        userType = "ba";
+        self.afP = (1134/total);
+        self.af = self.afP * self.taxPaid;
+
+        self.yP = (1134/total);
+        self.y = self.yP * self.taxPaid;
+
+        self.rP = (940/total);
+        self.r = self.rP * self.taxPaid;
+
+        self.dP = (837/total);
+        self.d = self.dP * self.taxPaid;
+
+        self.ttP = (722/total);
+        self.tt = self.ttP * self.taxPaid;
+
+        self.faP = (694/total);
+        self.fa = self.faP * self.taxPaid;
+
+        self.fP = (430/total);
+        self.f = self.fP * self.taxPaid;
+
+        self.enP = (325/total);
+        self.en = self.enP * self.taxPaid;
+
+        self.aP = (234/total);
+        self.a = self.aP * self.taxPaid;
     }
 
-
-    // messaging.onMessage(function(payload) {
-    //     console.log("Message received. ", payload);
-    //     // ...
-    // });
-    $scope.data = {};
-
-    $scope.data.from = userType + $rootScope.currentUser.id;
-
-    let ref = firebase.database().ref().child("data");
-    // download the data into a local object
-    let syncObject = $firebaseObject(ref);
-    // synchronize the object with a three-way data binding
-    // click on `index.html` above to see it used in the DOM!
-    syncObject.$bindTo($scope, "data");
 });
+angular.module('myApp').filter('percentage', ['$filter', function ($filter) {
+    return function (input, decimals) {
+        return $filter('number')(input * 100, decimals) + '%';
+    };
+}]);
