@@ -22,6 +22,22 @@
                     <a class="nav-link" href="#/expenses">Expenses</a>
                 </li>
             </ul>
+            <form class="navbar-form waves-effect waves-light">
+                <div angucomplete-alt id="userSearch"
+                     placeholder="Search"
+                     maxlength="20"
+                     pause="10"
+                     selected-object="onSearchSelect"
+                     local-data="allUsers"
+                     search-fields="firstName,lastName"
+                     title-field="firstName,lastName"
+                     image-field="imageUrl"
+                     minlength="1"
+                     input-class="form-control"
+                     match-class="highlight"
+                     clear-selected="true"
+                ></div>
+            </form>
             <ul class="navbar-nav nav-flex-icons">
                 <li class="nav-item" ng-if="currentUser == null">
                     <a class="nav-link" href="#/login">Sign in/Sign up</a>

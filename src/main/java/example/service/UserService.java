@@ -15,4 +15,5 @@ public interface UserService {
     List<User> findByManager(boolean manager) throws Exception;
     boolean remove(Long id) throws Exception;
     ResponseEntity<User> login(User user) throws Exception;
+    User updateLastSeen(User user) throws Exception;
 }

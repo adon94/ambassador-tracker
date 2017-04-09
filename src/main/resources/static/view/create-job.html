@@ -5,17 +5,18 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
-                    <img ng-if="ctrl.companyImageUrl.length > 0" ng-src="{{ctrl.companyImageUrl}}" alt="...">
+                    <div ng-style="{'background-image':'url('+ctrl.job.company.imageUrl+')'}" class="event-pic"></div>
+                    <!--<img ng-if="ctrl.job.company.imageUrl.length > 0" ng-src="{{ctrl.job.company.imageUrl}}" alt="...">-->
                     <div class="card-block">
                         <!--<h1 ng-if="ctrl.companyItem.name.length > 0" class="h1-responsive">{{ctrl.companyItem.name}}</h1>-->
                         <!--<h1 ng-if="ctrl.companyItem.name.length == 0" class="h1-responsive">{{ctrl.companyItem}}</h1>-->
-                        <h1 class="h1-responsive">{{ctrl.companyItem}}</h1>
+                        <h1 class="h1-responsive">{{ctrl.job.company.name}}</h1>
                         <hr class="my-2">
                         <p><small>Created by {{currentUser.firstName}} {{currentUser.lastName}}</small></p>
                         <p>{{ctrl.job.location}}</p>
                         <p>Rate: {{ctrl.job.wage | currency:"€"}}</p>
-                        <p>Starts at {{ctrl.startMoment | date:"dd/MM/yyyy"}}</p>
-                        <p>Ends at: {{ctrl.endMoment | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                        <p>Starts at {{ctrl.startMoment._d | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                        <p>Ends at {{ctrl.endMoment._d | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                     </div>
                 </div>
             </div>
@@ -27,14 +28,30 @@
                         <h3><i class="fa fa-calendar"></i> New Event</h3>
                         <hr class="mt-2 mb-2">
                     </div>
+                    <!--<div class="form-group">-->
+                    <!--<label for="company">Client</label>-->
+                    <!--<input uib-typeahead="company as company.name for company in ctrl.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="1"-->
+                    <!--ng-model="ctrl.companyItem" id="company" name="company" type="text" class="input-md" aria-label="Client">-->
+                    <!--</div>-->
                     <div class="form-group">
                         <label for="company">Client</label>
-                        <input uib-typeahead="company as company.name for company in ctrl.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="1"
-                               ng-model="ctrl.companyItem" id="company" name="company" type="text" class="input-md" aria-label="Client">
+                        <div angucomplete-alt id="company"
+                             maxlength="20"
+                             pause="10"
+                             selected-object="ctrl.onCompanySelect"
+                             local-data="ctrl.clients"
+                             search-fields="name"
+                             title-field="name"
+                             image-field="imageUrl"
+                             minlength="1"
+                             input-class="input-md"
+                             match-class="highlight"
+                             input-changed="ctrl.onCompanyChange"
+                        ></div>
                     </div>
                     <div class="form-group">
                         <label for="imageUrl">Image Url</label>
-                        <input ng-model="ctrl.companyImageUrl" id="imageUrl" name="imageUrl" type="text" class="input-md">
+                        <input ng-model="ctrl.job.company.imageUrl" id="imageUrl" name="imageUrl" type="text" class="input-md">
                     </div>
                     <div class="form-group">
                         <label for="location">Location</label>
@@ -44,22 +61,22 @@
                         <label for="wage">Base wage</label>
                         <div class="md-form input-group">
                             <span class="input-group-addon">€</span>
-                            <input ng-model="ctrl.job.wage" name="wage" id="wage" class="input-md" type="text">
-                            <span class="input-group-addon">.00</span>
+                            <input ng-model="ctrl.job.wage" style="margin: 0 5px; width: 100px" name="wage" id="wage" class="input-md" type="text">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="requiredBoys">Minimum no. of boys</label>
-                        <input ng-model="ctrl.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" class="input-md">
-                    </div>
-                    <div class="form-group">
-                        <label for="requiredGirls">Minimum no. of girls</label>
-                        <input ng-model="ctrl.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" class="input-md">
-                    </div>
+                    <!--<div class="form-group">-->
+                    <!--<label for="requiredBoys">Minimum no. of boys</label>-->
+                    <!--<input ng-model="ctrl.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" class="input-md">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                    <!--<label for="requiredGirls">Minimum no. of girls</label>-->
+                    <!--<input ng-model="ctrl.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" class="input-md">-->
+                    <!--</div>-->
                     <div class="form-group">
                         <label for="startMoment">Starts at...</label>
                         <input id="startMoment"
                                class="input-md"
+                               placeholder="Select a date and time"
                                moment-picker="ctrl.startMoment"
                                locale="en-gb"
                                format="LL LT"
@@ -74,6 +91,7 @@
                         <label for="endMoment">Ends at...</label>
                         <input id="endMoment"
                                class="input-md"
+                               placeholder="Select a date and time"
                                moment-picker="ctrl.endMoment"
                                locale="en-gb"
                                format="LL LT"
@@ -88,7 +106,9 @@
                     <!-- Button for modal -->
                     <div class="form-group">
                         <label for="invite-select">Brand Ambassadors</label>
-                        <button type="button" ng-click="ctrl.getOverlappingJobs()" id="invite-select" class="btn btn-default btn-lg" style="margin-left: 3rem;" data-toggle="modal" data-target="#myModal">
+                        <button type="button" ng-disabled="ctrl.endMoment._d == null || ctrl.startMoment._d == null"
+                                ng-click="ctrl.getOverlappingJobs()" id="invite-select" class="btn btn-default btn-lg"
+                                style="margin-left: 3rem;" data-toggle="modal" data-target="#myModal">
                             Invite
                         </button>
                     </div>

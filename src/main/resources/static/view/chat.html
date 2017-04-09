@@ -3,54 +3,89 @@
     <div class="chat-container" style="height: 100%">
         <div class="jumbotron" style="height: 100%; padding: 20px; margin-bottom: 0">
             <div class="row" style="height: 100%">
-                <div class="col-3" style="height: 100%; padding-left: 5px; padding-right: 5px;">
-                    <div class="chat"
-                         ng-repeat="chat in ctrl.allChats | orderBy:'-updatedAt'"
-                         ng-click="ctrl.openChat(chat)"
-                         ng-style="ctrl.currentChat.id == chat.id && {'background-color':'#dfdfdf'}"
-                         ng-if="chat.messages.length > 0">
-                        <div style="display: -webkit-inline-box; border-bottom: 1px solid gainsboro; width: 100%"
-                             ng-repeat="participant in chat.participants"
-                             ng-if="chat.job == null && participant.id != currentUser.id">
-                            <div class="chat-avatar col-3" ng-style="{'background-image':'url('+participant.imageUrl+')'}">
-                            </div>
-                            <div class="col-9">
-                                <h5>{{participant.firstName}} {{participant.lastName}}</h5>
-                            </div>
+                <div class="col-3" style="height: 100%; padding-left: 5px; padding-right: 5px; overflow: auto;">
+                    <div class="form-group">
+                        <div angucomplete-alt id="userSelect"
+                             placeholder="Search or start a new chat"
+                             maxlength="20"
+                             pause="10"
+                             selected-object="ctrl.onUserSelect"
+                             local-data="ctrl.allUsers"
+                             search-fields="firstName,lastName"
+                             title-field="firstName,lastName"
+                             image-field="imageUrl"
+                             minlength="1"
+                             input-class="input-md"
+                             match-class="highlight"
+                             clear-selected="true">
                         </div>
-                        <div style="display: -webkit-inline-box; border-bottom: 1px solid gainsboro; width: 100%"
-                             ng-if="chat.job != null">
-                            <div class="chat-avatar col-3" ng-style="{'background-image':'url('+chat.job.company.imageUrl+')'}">
+                    </div>
+                    <div style="overflow: auto">
+                        <div class="chat"
+                             ng-repeat="chat in ctrl.allChats | orderBy:'-updatedAt'"
+                             ng-click="ctrl.openChat(chat)"
+                             ng-style="ctrl.currentChat.id == chat.id && {'background-color':'#dfdfdf'}"
+                             ng-if="chat.messages.length > 0">
+                            <div style="display: -webkit-inline-box; border-bottom: 1px solid gainsboro; width: 100%"
+                                 ng-repeat="participant in chat.participants"
+                                 ng-if="chat.job == null && participant.id != currentUser.id">
+                                <div class="chat-avatar col-3" ng-style="{'background-image':'url('+participant.imageUrl+')'}">
+                                </div>
+                                <div class="col-9">
+                                    <h5>{{participant.firstName}} {{participant.lastName}}</h5>
+                                    <footer class="blockquote-footer">
+                                        <span>{{chat.messages[chat.messages.length - 1].text}}</span>
+                                    </footer>
+                                </div>
                             </div>
-                            <div class="col-9">
-                                <h5>{{chat.job.company.name}}</h5>
+                            <div style="display: -webkit-inline-box; border-bottom: 1px solid gainsboro; width: 100%"
+                                 ng-if="chat.job != null">
+                                <div class="chat-avatar col-3" ng-style="{'background-image':'url('+chat.job.company.imageUrl+')'}">
+                                </div>
+                                <div class="col-9">
+                                    <h5>{{chat.job.company.name}}</h5>
+                                    <footer class="blockquote-footer">
+                                        <span>
+                                            {{chat.messages[chat.messages.length - 1].text | limitTo:25}}{{chat.messages[chat.messages.length - 1].text.length > 25 ? '...' : ''}}</span>
+                                    </footer>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-9" style="height: 100%; padding-left: 5px; padding-right: 5px;">
-                    <div style="height: 60px">
-                        <div ng-if="ctrl.currentChat.job != null">
-                            <h5><b><a style="color: black" href="#/job/view/{{ctrl.currentChat.job.id}}">
-                                {{ctrl.currentChat.job.company.name}}</a></b></h5>
-                            <footer class="blockquote-footer">
+                    <div style="height: 53px">
+                        <div ng-if="ctrl.currentChat.job != null"
+                             style="display: -webkit-inline-box; width: 100%;">
+                            <div class="chat-avatar col-3" ng-style="{'background-image':'url('+ctrl.currentChat.job.company.imageUrl+')'}">
+                            </div>
+                            <div class="col-9">
+                                <h5><b><a style="color: black" href="#/job/view/{{ctrl.currentChat.job.id}}">
+                                    {{ctrl.currentChat.job.company.name}}</a></b></h5>
+                                <footer class="blockquote-footer">
                                 <span style="display: inline-block" ng-repeat-start="participant in ctrl.currentChat.participants">
                                 <a href="#/profile/{{participant.id}}">
                                     {{participant.firstName}} {{participant.lastName}}{{$last ? '' : ', '}}
                                 </a>
                                 </span> <span ng-repeat-end></span>
-                            </footer>
+                                </footer>
+                            </div>
                         </div>
                         <div ng-repeat="participant in ctrl.currentChat.participants"
-                             ng-if="ctrl.currentChat.job == null && participant.id != currentUser.id">
-                            <h5>
-                                <b><a style="color: black" href="#/profile/{{participant.id}}">
-                                    {{participant.firstName}} {{participant.lastName}}
-                                </a></b>
-                            </h5>
-                            <footer class="blockquote-footer">
-                                <span>Last seen today at 21:33</span>
-                            </footer>
+                             ng-if="ctrl.currentChat.job == null && participant.id != currentUser.id"
+                             style="display: -webkit-inline-box; width: 100%;">
+                            <div class="chat-avatar col-3" ng-style="{'background-image':'url('+participant.imageUrl+')'}">
+                            </div>
+                            <div class="col-9">
+                                <h5>
+                                    <b><a style="color: black" href="#/profile/{{participant.id}}">
+                                        {{participant.firstName}} {{participant.lastName}}
+                                    </a></b>
+                                </h5>
+                                <footer class="blockquote-footer">
+                                    <span>Last seen <span am-time-ago="participant.lastSeen"></span></span>
+                                </footer>
+                            </div>
                         </div>
                     </div>
                     <div id="chatWindow" scroll-glue class="scrollspy">

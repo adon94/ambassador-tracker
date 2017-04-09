@@ -1,5 +1,5 @@
 angular.module('myApp').controller('chat', function ($filter, $location, $routeParams, $rootScope, $cookies,
-                                                     chatService, userService) {
+                                                     chatService, userService, $interval) {
 
     let self = this;
     let id = $routeParams.id;
@@ -19,6 +19,9 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
         });
     }
 
+
+    $interval(updateSideChats, 5000);
+
     let updateData = function () {
         chatService.findOne(id).then(function successCallback(response) {
             self.currentChat = response.data;
@@ -27,11 +30,23 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
         updateSideChats();
     };
 
-    let updateSideChats = function () {
+    function updateSideChats() {
         chatService.findByParticipants($rootScope.currentUser.id).then(function successCallback(response) {
             self.allChats = response.data;
         });
-    };
+
+        userService.all().then(function successCallback(response) {
+            self.allUsers = response.data;
+        });
+
+        if (self.currentChat != null) {
+            chatService.findOne(self.currentChat.id).then(function successCallback(response) {
+                if (response.data.messages.length > self.currentChat.messages.length) {
+                    self.currentChat = response.data;
+                }
+            });
+        }
+    }
 
     self.sendMessage = function () {
         self.message.sender = user;
@@ -46,5 +61,21 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
 
     self.openChat = function (chat) {
         self.currentChat = chat;
-    }
+    };
+
+    self.onUserSelect = function (selected) {
+
+        let chat = {};
+        chat.participants = [];
+        chat.participants.push(user);
+        chat.participants.push(selected.originalObject);
+        console.log(selected.originalObject);
+        chatService.userChat(chat).then(function successCallback(response) {
+            self.currentChat = response.data;
+            if (self.currentChat.messages == null){
+                self.currentChat.messages = [];
+            }
+            console.log(response.data);
+        });
+    };
 });

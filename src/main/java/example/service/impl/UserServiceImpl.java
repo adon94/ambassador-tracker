@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +24,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws Exception {
+        return userDAO.save(user);
+    }
+
+    @Override
+    public User updateLastSeen(User user) throws Exception {
+        Date d = new Date();
+        Timestamp t = new Timestamp(d.getTime());
+        user.setLastSeen(t);
         return userDAO.save(user);
     }
 

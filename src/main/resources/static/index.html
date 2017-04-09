@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/node_modules/mdbootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/node_modules/mdbootstrap/css/mdb.min.css">
     <link rel="stylesheet" href="/node_modules/angular-toastr/dist/angular-toastr.min.css">
+    <link rel="stylesheet" href="/node_modules/angucomplete-alt/angucomplete-alt.css">
     <link rel="stylesheet" href="resources/angular-moment-picker.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
@@ -27,6 +28,9 @@
 <script src="/node_modules/mdbootstrap/js/mdb.min.js"></script>
 <script src="/node_modules/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
 <script src="/node_modules/angularjs-scroll-glue/src/scrollglue.js"></script>
+<script src="/node_modules/angucomplete-alt/angucomplete-alt.js"></script>
+<script src="/node_modules/moment/moment.js"></script>
+<script src="/node_modules/angular-moment/angular-moment.js"></script>
 
 <!--Other-->
 <script src="https://use.fontawesome.com/0d188512fc.js"></script>
@@ -77,7 +81,7 @@
 <script src="js/controller/chat.js"></script>
 <script src="js/controller/messages.js"></script>
 <script type="text/javascript">
-    angular.module('myApp').run(function($rootScope, $cookies, $location) {
+    angular.module('myApp').run(function($rootScope, $cookies, $location, $interval, userService) {
 
         $rootScope.logout = function () {
             console.log("Logging out");
@@ -87,16 +91,44 @@
         };
 
         let userId = $cookies.get('currentUser');
+//        let user = {};
 
         if (userId == null) {
             $location.path("/login");
+        } else {
+            userService.findOne(userId).then(function successCallback(response) {
+                $rootScope.currentUser = response.data;
+                updateData();
+            });
+            userService.all().then(function (response) {
+                $rootScope.allUsers = response.data;
+            })
         }
-//            updateData();
-//        }
 
         $rootScope.$on('$routeChangeSuccess', function() {
             $("html, body").animate({ scrollTop: 0 }, 200);
         });
+
+        $rootScope.onSearchSelect = function (selected) {
+            $location.path('/profile'+selected.originalObject.id);
+        };
+
+        $interval(updateData, 5000);
+
+        function updateData() {
+            let userId = $cookies.get('currentUser');
+            if ($rootScope.currentUser != null) {
+                if ($rootScope.currentUser.id != null) {
+                    userService.updateLastSeen($rootScope.currentUser).then(function (response) {
+                        $rootScope.currentUser = response.data;
+                    });
+                }
+            } else if (userId != null) {
+                userService.findOne(userId).then(function successCallback(response) {
+                    $rootScope.currentUser = response.data;
+                });
+            }
+        }
 
 //        function updateData() {
 //            chatService.findByParticipants(userId).then(function successCallback(response) {

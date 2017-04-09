@@ -1,4 +1,5 @@
-angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker', 'toastr', 'luegg.directives' ])
+angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker', 'toastr', 'luegg.directives',
+    'angucomplete-alt', 'angularMoment' ])
     .config(function($routeProvider, $locationProvider, toastrConfig) {
 
         $locationProvider.hashPrefix('');

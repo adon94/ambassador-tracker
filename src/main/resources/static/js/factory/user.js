@@ -12,6 +12,12 @@ angular.module('myApp').factory('userService', function($http) {
         },
         login: function (user) {
             return $http.post('/user/login', user);
+        },
+        all: function () {
+            return $http.get('/user/all');
+        },
+        updateLastSeen: function (user) {
+            return $http.post('/user/updateLastSeen', user);
         }
     }
 

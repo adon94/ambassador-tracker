@@ -3,6 +3,7 @@ package example.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "USER")
@@ -29,6 +30,7 @@ public class User extends AbstractEntity {
     private boolean male;
     private boolean fullLicence;
     private boolean carOwner;
+    private Timestamp lastSeen;
 
     public String getImageUrl() {
         return imageUrl;
@@ -132,5 +134,13 @@ public class User extends AbstractEntity {
 
     public void setCarOwner(boolean carOwner) {
         this.carOwner = carOwner;
+    }
+
+    public Timestamp getLastSeen() {
+        return lastSeen;
+    }
+
+    public void setLastSeen(Timestamp lastSeen) {
+        this.lastSeen = lastSeen;
     }
 }

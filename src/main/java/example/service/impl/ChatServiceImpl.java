@@ -1,13 +1,17 @@
 package example.service.impl;
 
 import example.dao.ChatDAO;
+import example.dao.NotificationDAO;
 import example.model.Chat;
+import example.model.Message;
+import example.model.Notification;
 import example.model.User;
 import example.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -22,13 +26,40 @@ public class ChatServiceImpl implements ChatService {
         this.chatDAO = chatDAO;
     }
 
+    private NotificationDAO notificationDAO;
+
+    @Autowired
+    public void setNotificationDAO(NotificationDAO notificationDAO) {
+        this.notificationDAO = notificationDAO;
+    }
+
     @Override
     public Chat create(Chat chat) throws Exception {
         Date d = new Date();
         Timestamp t = new Timestamp(d.getTime());
         chat.setUpdatedAt(t);
 
-        return chatDAO.save(chat);
+        List<Notification> notifications = new ArrayList<>();
+
+        Message message = chat.getMessages().get(chat.getMessages().size() - 1);
+
+        Notification notification = new Notification();
+        notification.setSender(message.getSender());
+        notification.setChat(chat);
+        notification.setType("message");
+        notification.setSeen(false);
+
+        for (User user : chat.getParticipants()) {
+            if (!Objects.equals(user.getId(), message.getSender().getId())) {
+                notification.setUser(user);
+                notifications.add(notification);
+            }
+        }
+
+        Chat returnChat = chatDAO.save(chat);
+        notificationDAO.save(notifications);
+
+        return returnChat;
     }
 
     @Override
@@ -54,16 +85,17 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public Chat userChat(Chat chat) throws Exception {
-        Long userId = chat.getParticipants().get(0).getId();
+        Long userId1 = chat.getParticipants().get(0).getId();
+        Long userId2 = chat.getParticipants().get(1).getId();
 
-        List<Chat> chats = chatDAO.findByParticipantsId(userId);
+        List<Chat> chats = chatDAO.findByParticipantsId(userId1);
         if (!chats.isEmpty()) {
             Chat usersChat = null;
             for (Chat c : chats) {
                 if (c.getJob() == null) {
                     User userA = c.getParticipants().get(0);
                     User userB = c.getParticipants().get(1);
-                    if (Objects.equals(userA.getId(), userId) || Objects.equals(userB.getId(), userId)) {
+                    if (Objects.equals(userA.getId(), userId2) || Objects.equals(userB.getId(), userId2)) {
                         usersChat = c;
                     }
                 }
@@ -71,9 +103,15 @@ public class ChatServiceImpl implements ChatService {
             if (usersChat != null) {
                 return usersChat;
             } else {
+                Date d = new Date();
+                Timestamp t = new Timestamp(d.getTime());
+                chat.setUpdatedAt(t);
                 return chatDAO.save(chat);
             }
         } else {
+            Date d = new Date();
+            Timestamp t = new Timestamp(d.getTime());
+            chat.setUpdatedAt(t);
             return chatDAO.save(chat);
         }
     }

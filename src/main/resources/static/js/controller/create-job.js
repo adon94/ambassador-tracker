@@ -52,7 +52,7 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
     });
 
     jobService.getCompanies().then(function (response) {
-        self.clients = response.data;
+        self.clients = $filter('orderBy')(response.data, '-client', false);
         console.log(self.clients)
     });
 
@@ -96,5 +96,19 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
                 });
             });
         });
-    }
+    };
+    self.job.company = {};
+    self.job.company.imageUrl = 'https://skpsoft.com/baby/wp-content/uploads/2016/09/default-thumbnail.jpg';
+
+    self.onCompanyChange = function (str) {
+        // if (self.companyItem == null) {
+            self.job.company.name = str;
+        // }
+    };
+
+    self.onCompanySelect = function (selected) {
+        if (selected != null) {
+            self.job.company = selected.originalObject;
+        }
+    };
 });

@@ -27,10 +27,23 @@ public class UserController {
         return userService.create(user);
     }
 
+    @RequestMapping(value="/updateLastSeen", method= RequestMethod.POST)
+    public @ResponseBody
+    User updateLastSeen(@RequestBody User user) throws Exception {
+
+        return userService.updateLastSeen(user);
+    }
+
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public @ResponseBody
     User get(@PathVariable("id") Long id) throws Exception {
         return userService.findOne(id);
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public @ResponseBody
+    List<User> all() throws Exception {
+        return userService.findAll();
     }
 
     @RequestMapping(value = "/manager/{manager}", method = RequestMethod.GET)
