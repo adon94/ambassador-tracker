@@ -6,7 +6,7 @@
                 <div class="card-wrapper">
                     <div class="card">
                         <div class="card-up">
-                            <img ng-src="{{ctrl.profile.coverUrl}}" class="img-fluid">
+                            <div ng-style="{'background-image':'url('+ctrl.profile.coverUrl+')'}" class="cover-pic"></div>
                         </div>
                         <div class="avatar hoverable" ng-style="{'background-image':'url('+ctrl.profile.imageUrl+')'}"></div>
                         <div class="card-block">
@@ -58,7 +58,7 @@
                         <div class="card">
                             <div class="view hm-zoom">
                                 <a href="#/job/view/{{inv.id}}">
-                                    <img class="img-fluid" ng-src="{{inv.company.imageUrl}}" alt="...">
+                                    <div ng-style="{'background-image':'url('+inv.company.imageUrl+')'}" class="event-pic" style="height: 300px"></div>
                                 </a>
                             </div>
                             <div class="card-block">
@@ -98,7 +98,7 @@
                         <div class="card">
                             <div class="view hm-zoom">
                                 <a href="#/job/view/{{upc.id}}">
-                                    <img ng-src="{{upc.company.imageUrl}}" alt="...">
+                                    <div ng-style="{'background-image':'url('+upc.company.imageUrl+')'}" class="cover-pic"></div>
                                 </a>
                             </div>
                             <div class="card-block">

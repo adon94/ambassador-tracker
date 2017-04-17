@@ -25,7 +25,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> findByUser(User user) throws Exception {
-        return notificationDAO.findByUser(user);
+    public List<Notification> findByUserInAndTypeIn(User user, String type) throws Exception {
+        return notificationDAO.findByUserInAndTypeIn(user, type);
     }
 }

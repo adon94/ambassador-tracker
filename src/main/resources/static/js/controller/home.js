@@ -1,4 +1,5 @@
-angular.module('myApp').controller('home', function($http, $scope, $rootScope, jobService, $location, $cookies, userService, $compile, uiCalendarConfig) {
+angular.module('myApp').controller('home', function($http, $scope, $rootScope, jobService, $location, $cookies,
+                                                    userService, $compile, uiCalendarConfig) {
 
     let self = this;
     let user = {};
@@ -58,7 +59,8 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                         let eventItem = {
                             title: event.summary,
                             start: when,
-                            className: 'gCalEvent'
+                            className: 'gCalEvent',
+                            url: 'https://www.google.com/calendar'
                         };
                         self.gEvents.push(eventItem);
                     }
@@ -68,25 +70,30 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                     };
 
                     $scope.addRemoveEventSource($scope.eventSources, self.googleEvents);
-                    $scope.addRemoveEventSource($scope.eventSources, $scope.accEvents);
-                    $scope.addRemoveEventSource($scope.eventSources, $scope.pastAccEvents);
-                    $scope.addRemoveEventSource($scope.eventSources, $scope.invEvents);
+                    addUserEvents();
                 } else {
                     console.log('No upcoming events found.');
-                    $scope.addRemoveEventSource($scope.eventSources, $scope.accEvents);
-                    $scope.addRemoveEventSource($scope.eventSources, $scope.pastAccEvents);
-                    $scope.addRemoveEventSource($scope.eventSources, $scope.invEvents);
+                    addUserEvents();
                 }
             });
         } else {
             console.log("NOT SIGNED IN");
-            $scope.addRemoveEventSource($scope.eventSources, $scope.accEvents);
-            $scope.addRemoveEventSource($scope.eventSources, $scope.pastAccEvents);
-            $scope.addRemoveEventSource($scope.eventSources, $scope.invEvents);
+            addUserEvents();
             //----------Sign in prompt------------
             // gapi.auth2.getAuthInstance().signIn();
         }
     }
+
+    let addUserEvents = function () {
+        if (!user.manager) {
+            $scope.addRemoveEventSource($scope.eventSources, $scope.accEvents);
+            $scope.addRemoveEventSource($scope.eventSources, $scope.pastAccEvents);
+            $scope.addRemoveEventSource($scope.eventSources, $scope.invEvents);
+        } else {
+            $scope.addRemoveEventSource($scope.eventSources, $scope.pastEvents);
+            $scope.addRemoveEventSource($scope.eventSources, $scope.upcomingEvents);
+        }
+    };
 
     let today = new Date();
     let invited = [];
@@ -159,8 +166,6 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                 events: $scope.pastAcceptedEvents
             };
 
-            console.log($scope.accEvents);
-
             $scope.eventSources = [];
 
             gapi.load('client:auth2', initClient);
@@ -200,7 +205,7 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
                 events: $scope.upcoming
             };
 
-            $scope.eventSources = [$scope.pastEvents, $scope.upcomingEvents];
+            $scope.eventSources = [];
 
             gapi.load('client:auth2', initClient);
         }
@@ -208,7 +213,7 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
 
     const date = new Date();
     const d = date.getDate();
-    const m = date.getMonth();
+    // const m = date.getMonth();
     const y = date.getFullYear();
 
     /* alert on eventClick */
@@ -225,26 +230,18 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
     };
     /* add and remove an event source of choice */
     $scope.addRemoveEventSource = function (sources, source) {
-        let canAdd = 0;
-        angular.forEach(sources, function (value, key) {
-            if (sources[key] === source) {
-                sources.splice(key, 1);
-                canAdd = 1;
-            }
-        });
-        if (canAdd === 0) {
+        // let canAdd = 0;
+        // angular.forEach(sources, function (value, key) {
+        //     if (sources[key] === source) {
+        //         sources.splice(key, 1);
+        //         canAdd = 1;
+        //     }
+        // });
+        // if (canAdd === 0) {
             uiCalendarConfig.calendars.myCalendar.fullCalendar('addEventSource', source);
-        }
+        // }
     };
-    /* add custom event*/
-    $scope.addEvent = function () {
-        $scope.events.push({
-            title: 'Open Sesame',
-            start: new Date(y, m, 28),
-            end: new Date(y, m, 29),
-            className: ['openSesame']
-        });
-    };
+
     /* remove event */
     $scope.remove = function (index) {
         $scope.events.splice(index, 1);
@@ -284,5 +281,127 @@ angular.module('myApp').controller('home', function($http, $scope, $rootScope, j
             eventRender: $scope.eventRender
         }
     };
+
+    let REDIRECT_URI = 'http://localhost:8080';
+    var queryString = location.hash.substring(1);
+
+    // Parse query string to see if page request is coming from OAuth 2.0 server.
+    var params = {};
+    var regex = /([^&=]+)=([^&]*)/g, m;
+    while (m = regex.exec(queryString)) {
+        params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        // Try to exchange the param values for an access token.
+        exchangeOAuth2Token(params);
+    }
+
+    // If there's an access token, try an API request.
+    // Otherwise, start OAuth 2.0 flow.
+    function trySampleRequest() {
+        var params = JSON.parse(localStorage.getItem('oauth2-test-params'));
+        if (params && params['access_token']) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET',
+                'https://www.googleapis.com/drive/v3/about?fields=user&' +
+                'access_token=' + params['access_token']);
+            xhr.onreadystatechange = function (e) {
+                console.log(xhr.response);
+            };
+            xhr.send(null);
+        } else {
+            oauth2SignIn();
+        }
+    }
+
+    /*
+     * Create form to request access token from Google's OAuth 2.0 server.
+     */
+    function oauth2SignIn() {
+        // Google's OAuth 2.0 endpoint for requesting an access token
+        var oauth2Endpoint = 'https://accounts.google.com/o/oauth2/v2/auth';
+
+        // Create element to open OAuth 2.0 endpoint in new window.
+        var form = document.createElement('form');
+        form.setAttribute('method', 'GET'); // Send as a GET request.
+        form.setAttribute('action', oauth2Endpoint);
+
+        // Parameters to pass to OAuth 2.0 endpoint.
+        var params = {'client_id': CLIENT_ID,
+            'redirect_uri': REDIRECT_URI,
+            'scope': 'https://www.googleapis.com/auth/calendar.readonly',
+            'state': 'try_sample_request',
+            'include_granted_scopes': 'true',
+            'response_type': 'token'};
+
+        // Add form parameters as hidden input values.
+        for (var p in params) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', p);
+            input.setAttribute('value', params[p]);
+            form.appendChild(input);
+        }
+
+        // Add form to page and submit it to open the OAuth 2.0 endpoint.
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    /* Verify the access token received on the query string. */
+    function exchangeOAuth2Token(params) {
+        var oauth2Endpoint = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
+        if (params['access_token']) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', oauth2Endpoint + '?access_token=' + params['access_token']);
+            xhr.onreadystatechange = function (e) {
+                var response = JSON.parse(xhr.response);
+                console.log(response);
+                // When request is finished, verify that the 'aud' property in the
+                // response matches YOUR_CLIENT_ID.
+                if (xhr.readyState == 4 &&
+                    xhr.status == 200 &&
+                    response['aud'] &&
+                    response['aud'] == CLIENT_ID) {
+                    // Store granted scopes in local storage to facilitate
+                    // incremental authorization.
+                    params['scope'] = response['scope'];
+                    localStorage.setItem('oauth2-test-params', JSON.stringify(params) );
+                    if (params['state'] == 'try_sample_request') {
+                        trySampleRequest();
+                    }
+                } else if (xhr.readyState == 4) {
+                    console.log('There was an error processing the token, another ' +
+                        'response was returned, or the token was invalid.')
+                }
+            };
+            xhr.send(null);
+        }
+    }
+    self.connectGCal = function () {
+        // gapi.client.init({
+        //     discoveryDocs: DISCOVERY_DOCS,
+        //     clientId: CLIENT_ID,
+        //     scope: SCOPES
+        // }).then(function () {
+        //     let GoogleAuth;
+        //     gapi.auth2.getAuthInstance().isSignedIn.get();
+        //     GoogleAuth = gapi.auth2.getAuthInstance();
+        //     GoogleAuth.signIn();
+        // });
+        trySampleRequest();
+    };
+
+    self.verify = function () {
+        let REDIRECT_URI = 'http://localhost:8080';
+        var queryString = location.hash.substring(1);
+
+        // Parse query string to see if page request is coming from OAuth 2.0 server.
+        var params = {};
+        var regex = /([^&=]+)=([^&]*)/g, m;
+        while (m = regex.exec(queryString)) {
+            params[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            // Try to exchange the param values for an access token.
+            exchangeOAuth2Token(params);
+        }
+    }
 
 });

@@ -68,6 +68,7 @@
 <script src="js/factory/job.js"></script>
 <script src="js/factory/user.js"></script>
 <script src="js/factory/chat.js"></script>
+<script src="js/factory/notification.js"></script>
 <script src="js/controller/login.js"></script>
 <script src="js/controller/account.js"></script>
 <script src="js/controller/profile.js"></script>
@@ -79,67 +80,24 @@
 <script src="Unused/settings.js"></script>
 <script src="js/controller/expenses.js"></script>
 <script src="js/controller/chat.js"></script>
+<script src="js/controller/nav.js"></script>
+<script src="js/controller/generate.js"></script>
+<script src="js/controller/complete.js"></script>
+<script src="js/controller/events.js"></script>
 <script src="js/controller/messages.js"></script>
 <script type="text/javascript">
-    angular.module('myApp').run(function($rootScope, $cookies, $location, $interval, userService) {
-
-        $rootScope.logout = function () {
-            console.log("Logging out");
-            $cookies.remove('currentUser');
-            $rootScope.currentUser = null;
-            $location.path("/login");
-        };
+    angular.module('myApp').run(function($rootScope, $cookies, $location) {
 
         let userId = $cookies.get('currentUser');
-//        let user = {};
 
         if (userId == null) {
             $location.path("/login");
-        } else {
-            userService.findOne(userId).then(function successCallback(response) {
-                $rootScope.currentUser = response.data;
-                updateData();
-            });
-            userService.all().then(function (response) {
-                $rootScope.allUsers = response.data;
-            })
         }
 
         $rootScope.$on('$routeChangeSuccess', function() {
             $("html, body").animate({ scrollTop: 0 }, 200);
         });
 
-        $rootScope.onSearchSelect = function (selected) {
-            $location.path('/profile'+selected.originalObject.id);
-        };
-
-        $interval(updateData, 5000);
-
-        function updateData() {
-            let userId = $cookies.get('currentUser');
-            if ($rootScope.currentUser != null) {
-                if ($rootScope.currentUser.id != null) {
-                    userService.updateLastSeen($rootScope.currentUser).then(function (response) {
-                        $rootScope.currentUser = response.data;
-                    });
-                }
-            } else if (userId != null) {
-                userService.findOne(userId).then(function successCallback(response) {
-                    $rootScope.currentUser = response.data;
-                });
-            }
-        }
-
-//        function updateData() {
-//            chatService.findByParticipants(userId).then(function successCallback(response) {
-//                $rootScope.messageCount = response.data.length;
-//                $rootScope.latestMessageId = response.data[response.data.length - 1].id;
-//            })
-//        }
-
-//        $rootScope.openLatestMessage = function () {
-//            $location.path("/chat/" + $rootScope.latestMessageId);
-//        }
     });
 </script>
 </body>

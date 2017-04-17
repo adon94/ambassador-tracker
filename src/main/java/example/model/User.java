@@ -31,6 +31,7 @@ public class User extends AbstractEntity {
     private boolean fullLicence;
     private boolean carOwner;
     private Timestamp lastSeen;
+    private String registrationCode;
 
     public String getImageUrl() {
         return imageUrl;
@@ -142,5 +143,13 @@ public class User extends AbstractEntity {
 
     public void setLastSeen(Timestamp lastSeen) {
         this.lastSeen = lastSeen;
+    }
+
+    public String getRegistrationCode() {
+        return registrationCode;
+    }
+
+    public void setRegistrationCode(String registrationCode) {
+        this.registrationCode = registrationCode;
     }
 }

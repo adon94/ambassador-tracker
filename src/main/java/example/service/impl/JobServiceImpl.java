@@ -3,6 +3,7 @@ package example.service.impl;
 import example.dao.ChatDAO;
 import example.dao.CompanyDAO;
 import example.dao.JobDAO;
+import example.dao.NotificationDAO;
 import example.model.*;
 import example.service.JobService;
 import org.hibernate.Query;
@@ -51,13 +52,20 @@ public class JobServiceImpl implements JobService {
         this.chatDAO = chatDAO;
     }
 
+    private NotificationDAO notificationDAO;
+
+    @Autowired
+    public void setNotificationDAO(NotificationDAO notificationDAO) {
+        this.notificationDAO = notificationDAO;
+    }
+
     @Override
     @Transactional
     public JobDO create(JobDO jobDO) throws Exception {
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
-        jobDO.setCreatedAt(timestamp.toString());
-        jobDO.setUpdatedAt(timestamp.toString());
+        jobDO.setCreatedAt(timestamp);
+        jobDO.setUpdatedAt(timestamp);
 
         if (jobDO.getCompany().getImageUrl() == null && jobDO.getCompany().getId() > 0) {
             Company existing = companyDAO.findOne(jobDO.getCompany().getId());
@@ -65,6 +73,22 @@ public class JobServiceImpl implements JobService {
         } else if (jobDO.getCompany().getImageUrl() == null){
             jobDO.getCompany().setImageUrl(defaultImgUrl);
         }
+        User sender = jobDO.getJobManager();
+        List<Notification> notifications = new ArrayList<>();
+
+        for (User user : jobDO.getInvited()) {
+            Notification notification = new Notification();
+            notification.setTimestamp(timestamp);
+            notification.setSeen(false);
+            notification.setType("general");
+            notification.setSender(sender);
+            notification.setJob(jobDO);
+            notification.setMessage("invited you to work at an event:");
+            notification.setUser(user);
+            notifications.add(notification);
+        }
+
+        notificationDAO.save(notifications);
 
         jobDO.getCompany().setClient(true);
 
@@ -125,21 +149,39 @@ public class JobServiceImpl implements JobService {
         List<User> updatedInvited = jobDO.getInvited();
 
         List<User> updatedAccepted = jobDO.getAccepted();
+
+        User user = new User();
         for(int i = 0; i < updatedInvited.size(); i++){
             if (updatedInvited.get(i).getId().equals(invitedId)){
+                user = updatedInvited.get(i);
 
                 List<Chat> chats = chatDAO.findByJob(jobDO);
                 if (!chats.isEmpty()) {
                     Chat chat = chats.get(0);
                     List<User> participants = chat.getParticipants();
-                    participants.add(updatedInvited.get(i));
+                    participants.add(user);
                     chat.setParticipants(participants);
                     chatDAO.save(chat);
                 }
 
-                updatedAccepted.add(updatedInvited.get(i));
-                updatedInvited.remove(updatedInvited.get(i));
+                updatedAccepted.add(user);
+                updatedInvited.remove(user);
             }
+        }
+
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+
+        if (user != null) {
+            Notification notification = new Notification();
+            notification.setMessage("accepted your event invitation for");
+            notification.setSender(user);
+            notification.setTimestamp(timestamp);
+            notification.setJob(jobDO);
+            notification.setUser(jobDO.getJobManager());
+            notification.setType("general");
+            notification.setSeen(false);
+            notificationDAO.save(notification);
         }
 
         jobDO.setInvited(updatedInvited);
@@ -154,12 +196,30 @@ public class JobServiceImpl implements JobService {
         List<User> updatedInvited = jobDO.getInvited();
 
         List<User> updatedDeclined = jobDO.getDeclined();
+        User user = new User();
         for(int i = 0; i < updatedInvited.size(); i++){
             if (updatedInvited.get(i).getId().equals(invitedId)){
-                updatedDeclined.add(updatedInvited.get(i));
-                updatedInvited.remove(updatedInvited.get(i));
+                user = updatedInvited.get(i);
+                updatedDeclined.add(user);
+                updatedInvited.remove(user);
             }
         }
+
+        Date date = new Date();
+        Timestamp timestamp = new Timestamp(date.getTime());
+
+        if (user != null) {
+            Notification notification = new Notification();
+            notification.setMessage("declined your event invitation for");
+            notification.setSender(user);
+            notification.setTimestamp(timestamp);
+            notification.setJob(jobDO);
+            notification.setUser(jobDO.getJobManager());
+            notification.setType("general");
+            notification.setSeen(false);
+            notificationDAO.save(notification);
+        }
+
         jobDO.setInvited(updatedInvited);
         jobDO.setDeclined(updatedDeclined);
         return jobDAO.save(jobDO);

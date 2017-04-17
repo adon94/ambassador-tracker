@@ -5,10 +5,7 @@ import example.model.User;
 import example.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,10 +27,11 @@ public class NotificationController {
         return notificationService.saveMultiple(notifications);
     }
 
-    @RequestMapping(value="/user", method= RequestMethod.POST)
+    @RequestMapping(value="/user/{type}", method= RequestMethod.POST)
     public @ResponseBody
-    List<Notification> findByUser(@RequestBody User user) throws Exception {
+    List<Notification> findByUser(@RequestBody User user, @PathVariable String type) throws Exception {
 
-        return notificationService.findByUser(user);
+        List<Notification> n = notificationService.findByUserInAndTypeIn(user, type);
+        return n;
     }
 }

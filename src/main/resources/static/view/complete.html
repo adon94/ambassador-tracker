@@ -1,0 +1,101 @@
+<div ng-controller="nav as nctrl">
+    <nav class="navbar navbar-toggleable-md navbar-dark scrolling-navbar wet-asphalt">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#/complete"><i class="fa fa-pinterest-p fa-fw"><i>emble</i></i></a>
+        </div>
+    </nav>
+</div>
+<main class="mt-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-up">
+                        <div ng-style="{'background-image':'url('+ctrl.user.coverUrl+')'}" class="cover-pic"></div>
+                    </div>
+                    <div class="avatar hoverable" ng-style="{'background-image':'url('+ctrl.user.imageUrl+')'}"></div>
+                    <div class="card-block">
+                        <div class="flex-center">
+                            <h2 class="text-center">{{ctrl.user.firstName}} {{ctrl.user.lastName}}</h2>
+                        </div>
+                        <hr class="my-2">
+                        <p class="text-center" ng-if="!ctrl.user.manager">{{ctrl.user.address}}</p>
+                        <p class="text-center"><a href="mailto:{{ctrl.user.email}}">{{ctrl.user.email}}</a></p>
+                        <p class="text-center">{{ctrl.user.phone}}</p>
+                        <p class="text-center" ng-if="!ctrl.user.manager && ctrl.user.dob != null">{{ctrl.user.dob | date:"dd/MM/yyyy"}} ({{ctrl.age}} years old)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card card-block">
+                    <div class="text-center">
+                        <h3>Complete your profile</h3>
+                        <hr class="mt-2 mb-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="imageUrl">Profile Pic Url</label>
+                                    <input ng-model="ctrl.user.imageUrl" id="imageUrl" type="text" class="input-md">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="coverPic">Cover Pic Url</label>
+                                    <input ng-model="ctrl.user.coverUrl" id="coverPic" type="text" class="input-md">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="dob">Date of birth</label>
+                                    <input id="dob"
+                                           class="form-control md-select"
+                                           placeholder="Select a date"
+                                           moment-picker="ctrl.dob"
+                                           start-date="1990"
+                                           change="ctrl.onChange(newValue, oldValue)"
+                                           locale="en-gb"
+                                           format="LL"
+                                           max-view="month"
+                                           start-view="decade"
+                                           autoclose="true"
+                                           ng-model="ctrl.dob"
+                                           ng-model-options="{ updateOn: 'blur' }"
+                                           aria-label="Date of Birth">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select ng-model="ctrl.user.male" id="gender" class="form-control md-select">
+                                        <option value="true">Male</option>
+                                        <option value="false">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input placeholder="" googleplace options="options1" ng-model="ctrl.user.address" id="address" type="text" class="input-md">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="phone">Phone number</label>
+                                    <input ng-model="ctrl.user.phone" id="phone" type="text" class="input-md">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" ng-click="ctrl.saveProfile()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

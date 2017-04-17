@@ -20,7 +20,7 @@ angular.module('myApp').controller('login', function($rootScope, $location, $rou
                         if (response.status == 200) {
                             $cookies.put('currentUser', response.data.id);
                             $rootScope.currentUser = response.data;
-                            $location.path("/");
+                            $location.path("/complete");
                             toastr.success('Logged in as ' + response.data.firstName, 'Welcome');
                         }
                     })

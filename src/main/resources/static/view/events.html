@@ -1,0 +1,37 @@
+<div ng-include="'partial/nav.html'"></div>
+<main class="mt-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+                <div class="card card-block">
+                    <input placeholder="Search">
+                </div>
+                <div class="card" ng-repeat="job in ctrl.events | orderBy: 'createdAt'">
+                    <div class="row">
+                        <div class="col-4">
+                            <a href="#/job/{{job.id}}">
+                                <div ng-style="{'background-image':'url('+job.company.imageUrl+')'}" class="events-pic"></div>
+                            </a>
+                        </div>
+                        <div class="col-8">
+                            <div class="card-block">
+                                <h2><a href="#/job/{{job.id}}">{{job.company.name}}</a></h2>
+                                <p>{{job.startDate | date:"dd/MM/yyyy"}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card card-block">
+                    <h2>Filters</h2>
+                    <select ng-model="ctrl.eventFilter" ng-change="ctrl.filterChange()">
+                        <option value="all" selected>All</option>
+                        <option value="accepted">Accepted Events</option>
+                        <option value="invited">Invited Events</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

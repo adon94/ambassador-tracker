@@ -72,35 +72,41 @@
                     <!--<label for="requiredGirls">Minimum no. of girls</label>-->
                     <!--<input ng-model="ctrl.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" class="input-md">-->
                     <!--</div>-->
-                    <div class="form-group">
-                        <label for="startMoment">Starts at...</label>
-                        <input id="startMoment"
-                               class="input-md"
-                               placeholder="Select a date and time"
-                               moment-picker="ctrl.startMoment"
-                               locale="en-gb"
-                               format="LL LT"
-                               max-view="hour"
-                               start-view="month"
-                               autoclose="true"
-                               ng-model="ctrl.startMoment"
-                               ng-model-options="{ updateOn: 'blur' }"
-                               aria-label="Starts at">
-                    </div>
-                    <div class="form-group">
-                        <label for="endMoment">Ends at...</label>
-                        <input id="endMoment"
-                               class="input-md"
-                               placeholder="Select a date and time"
-                               moment-picker="ctrl.endMoment"
-                               locale="en-gb"
-                               format="LL LT"
-                               max-view="hour"
-                               start-view="month"
-                               autoclose="true"
-                               ng-model="ctrl.endMoment"
-                               ng-model-options="{ updateOn: 'blur' }"
-                               aria-label="Ends at">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="startMoment">Starts at...</label>
+                                <input id="startMoment"
+                                       class="form-control md-select"
+                                       placeholder="Select a date and time"
+                                       moment-picker="ctrl.startMoment"
+                                       locale="en-gb"
+                                       format="LL LT"
+                                       max-view="hour"
+                                       start-view="month"
+                                       autoclose="true"
+                                       ng-model="ctrl.startMoment"
+                                       ng-model-options="{ updateOn: 'blur' }"
+                                       aria-label="Starts at">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="endMoment">Ends at...</label>
+                                <input id="endMoment"
+                                       class="form-control md-select"
+                                       placeholder="Select a date and time"
+                                       moment-picker="ctrl.endMoment"
+                                       locale="en-gb"
+                                       format="LL LT"
+                                       max-view="hour"
+                                       start-view="month"
+                                       autoclose="true"
+                                       ng-model="ctrl.endMoment"
+                                       ng-model-options="{ updateOn: 'blur' }"
+                                       aria-label="Ends at">
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Button for modal -->
@@ -120,7 +126,7 @@
         </div>
         <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document" style="max-width: 1000px">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title flex-center" id="myModalLabel">Brand Ambassadors</h4>
@@ -134,6 +140,8 @@
                                     <th></th>
                                     <th>Name</th>
                                     <th>Availability</th>
+                                    <!--<th>Role</th>-->
+                                    <!--<th>Supplement Wage</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -146,6 +154,12 @@
                                         Unavailable, working with
                                         <a href="#/job/view/{{ba.jobId}}" target="_blank">{{ba.workingFor.name}}</a>
                                     </td>
+                                    <!--<td>-->
+                                        <!--<input type="text">-->
+                                    <!--</td>-->
+                                    <!--<td>-->
+                                        <!--<input type="text">-->
+                                    <!--</td>-->
                                 </tr>
                                 </tbody>
                             </table>

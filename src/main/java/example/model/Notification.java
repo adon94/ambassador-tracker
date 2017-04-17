@@ -1,7 +1,8 @@
 package example.model;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 
@@ -9,16 +10,18 @@ import java.sql.Timestamp;
 @Table(name = "NOTIFICATION")
 public class Notification extends AbstractEntity {
 
-    @OneToMany
+    @ManyToOne
     private User user;
-    @OneToMany
+    @ManyToOne
     private User sender;
     private String type;
+    @Lob
     private String message;
-    @OneToMany
+    @ManyToOne
     private Chat chat;
-    @OneToMany
-    private JobDO jobDO;
+    private int count;
+    @ManyToOne
+    private JobDO job;
     private String urlPath;
     private Timestamp timestamp;
     private boolean seen;
@@ -63,12 +66,20 @@ public class Notification extends AbstractEntity {
         this.chat = chat;
     }
 
-    public JobDO getJobDO() {
-        return jobDO;
+    public int getCount() {
+        return count;
     }
 
-    public void setJobDO(JobDO jobDO) {
-        this.jobDO = jobDO;
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public JobDO getJob() {
+        return job;
+    }
+
+    public void setJob(JobDO job) {
+        this.job = job;
     }
 
     public String getUrlPath() {

@@ -1,3 +1,4 @@
+<div ng-controller="nav as nctrl">
 <nav class="navbar navbar-toggleable-md navbar-dark scrolling-navbar wet-asphalt">
     <div class="container">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,40 +22,116 @@
                 <li class="nav-item" ng-if="currentUser.manager">
                     <a class="nav-link" href="#/expenses">Expenses</a>
                 </li>
+                <li class="nav-item" ng-if="currentUser.manager">
+                    <a class="nav-link" href="#/generate">Generate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#/events">Events</a>
+                </li>
             </ul>
-            <form class="navbar-form waves-effect waves-light">
-                <div angucomplete-alt id="userSearch"
-                     placeholder="Search"
-                     maxlength="20"
-                     pause="10"
-                     selected-object="onSearchSelect"
-                     local-data="allUsers"
-                     search-fields="firstName,lastName"
-                     title-field="firstName,lastName"
-                     image-field="imageUrl"
-                     minlength="1"
-                     input-class="form-control"
-                     match-class="highlight"
-                     clear-selected="true"
-                ></div>
-            </form>
+            <!--<form class="navbar-form waves-effect waves-light">-->
+                <!--<div angucomplete-alt id="userSearch"-->
+                     <!--placeholder="Search"-->
+                     <!--maxlength="20"-->
+                     <!--pause="10"-->
+                     <!--selected-object="onSearchSelect"-->
+                     <!--local-data="allUsers"-->
+                     <!--search-fields="firstName,lastName"-->
+                     <!--title-field="firstName,lastName"-->
+                     <!--image-field="imageUrl"-->
+                     <!--minlength="1"-->
+                     <!--input-class="form-control"-->
+                     <!--match-class="highlight"-->
+                     <!--clear-selected="true"-->
+                <!--&gt;</div>-->
+            <!--</form>-->
             <ul class="navbar-nav nav-flex-icons">
                 <li class="nav-item" ng-if="currentUser == null">
                     <a class="nav-link" href="#/login">Sign in/Sign up</a>
                 </li>
-                <li class="nav-item" style="margin-right: 5px" ng-if="currentUser != null">
-                    <a class="nav-link" href="#/chat"><i class="fa fa-envelope"></i></a>
-                    <!--<i data-count="{{messageCount}}" class="fa fa-envelope ico-badge"></i>-->
+                <!--<li class="nav-item" style="margin-right: 5px" ng-if="currentUser != null">-->
+                <!--<a class="nav-link" href="#/chat"><i class="fa fa-envelope"></i></a>-->
+                <!--&lt;!&ndash;<i data-count="{{messageCount}}" class="fa fa-envelope ico-badge"></i>&ndash;&gt;-->
+                <!--</li>-->
+                <li class="nav-item dropdown btn-group" style="margin-right: 15px" ng-if="currentUser != null">
+                    <a class="nav-link" id="messageDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<i class="fa fa-envelope"></i>-->
+                        <span ng-class="{ 'fa-stack has-badge': nctrl.msgCount > 0 }" data-count="{{nctrl.msgCount}}">
+                          <!--<i class="fa fa-circle fa-stack-2x"></i>-->
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown dropdown-menu-right" aria-labelledby="messageDrop" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                        <a class="dropdown-item notification-item" ng-repeat="msg in nctrl.msgNotifications | orderBy:'-timestamp'" ng-click="nctrl.openMessage(msg)"
+                           ng-style="msg.seen == false && {'background-color':'#dfdfdf'}">
+                            <div ng-if="msg.chat.job != null">
+                                <div style="float: left" class="chat-avatar col-3"
+                                     ng-if="msg.chat.job != null"
+                                     ng-style="{'background-image':'url('+msg.chat.job.company.imageUrl+')'}">
+                                </div>
+                                <div class="col-9" style="margin-left: 50px;">
+                                    <h4 ng-if="msg.chat.job != null">{{msg.chat.job.company.name}}</h4>
+                                    <p ng-if="msg.chat.job != null">{{msg.sender.firstName}}: {{msg.message}}</p>
+                                </div>
+                            </div>
+                            <div ng-if="msg.chat.job == null">
+                                <div style="float: left" class="chat-avatar col-3"
+                                     ng-repeat="participant in msg.chat.participants"
+                                     ng-if="msg.chat.job == null && participant.id != currentUser.id"
+                                     ng-style="{'background-image':'url('+participant.imageUrl+')'}">
+                                </div>
+                                <div class="col-9" style="margin-left: 50px;">
+                                    <h4 ng-if="msg.chat.job == null">{{msg.sender.firstName}} {{msg.sender.lastName}}</h4>
+                                    <p ng-if="msg.chat.job == null">{{msg.message}}</p>
+                                    <footer class="blockquote-footer">
+                                        <span am-time-ago="msg.timestamp"></span>
+                                    </footer>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="#/chat">
+                            <div class="text-center">
+                                <h5 style="color: blue">See all messages</h5>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown btn-group" style="margin-right: 5px" ng-if="currentUser != null">
+                    <a class="nav-link" id="notificationDrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!--<i class="fa fa-envelope"></i>-->
+                        <span ng-class="{ 'fa-stack has-badge': nctrl.ntfCount > 0 }" data-count="{{nctrl.ntfCount}}">
+                          <!--<i class="fa fa-circle fa-stack-2x"></i>-->
+                          <i class="fa fa-bell fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown dropdown-menu-right" aria-labelledby="notificationDrop" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
+                        <a class="dropdown-item notification-item" ng-repeat="ntf in nctrl.genNotifications | orderBy:'-timestamp'" ng-click="nctrl.openNotification(ntf)"
+                           ng-style="ntf.seen == false && {'background-color':'#dfdfdf'}">
+                            <div ng-if="ntf.job != null">
+                                <div style="float: left" class="chat-avatar col-3"
+                                     ng-if="ntf.job != null"
+                                     ng-style="{'background-image':'url('+ntf.job.company.imageUrl+')'}">
+                                </div>
+                                <div class="col-9" style="margin-left: 50px;">
+                                    <p style="white-space: initial;"><b>{{ntf.sender.firstName}} {{ntf.sender.lastName}}</b> {{ntf.message}} {{ntf.job.company.name}}</p>
+                                    <footer class="blockquote-footer">
+                                        <span am-time-ago="ntf.timestamp"></span>
+                                    </footer>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </li>
                 <li class="nav-item dropdown btn-group" ng-if="currentUser != null">
                     <a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{currentUser.firstName}}</a>
                     <div class="dropdown-menu dropdown dropdown-menu-right" aria-labelledby="dropdownMenu1" data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                         <a class="dropdown-item"  href="#/profile/{{currentUser.id}}"><i class="fa fa-user fa-fw"></i> My Profile</a>
                         <a class="dropdown-item"  href="#/account"><i class="fa fa-gear fa-fw"></i> Account settings</a>
-                        <a class="dropdown-item" ng-click="logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <a class="dropdown-item" ng-click="nctrl.logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+</div>

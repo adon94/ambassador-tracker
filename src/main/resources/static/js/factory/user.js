@@ -10,6 +10,9 @@ angular.module('myApp').factory('userService', function($http) {
         create: function (user) {
             return $http.post('/user/create', user);
         },
+        generate: function (user) {
+            return $http.post('/user/generate', user);
+        },
         login: function (user) {
             return $http.post('/user/login', user);
         },

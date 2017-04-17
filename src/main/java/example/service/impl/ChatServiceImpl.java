@@ -43,14 +43,15 @@ public class ChatServiceImpl implements ChatService {
 
         Message message = chat.getMessages().get(chat.getMessages().size() - 1);
 
-        Notification notification = new Notification();
-        notification.setSender(message.getSender());
-        notification.setChat(chat);
-        notification.setType("message");
-        notification.setSeen(false);
-
         for (User user : chat.getParticipants()) {
             if (!Objects.equals(user.getId(), message.getSender().getId())) {
+                Notification notification = new Notification();
+                notification.setTimestamp(t);
+                notification.setSender(message.getSender());
+                notification.setChat(chat);
+                notification.setType("message");
+                notification.setMessage(message.getText());
+                notification.setSeen(false);
                 notification.setUser(user);
                 notifications.add(notification);
             }

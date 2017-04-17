@@ -27,14 +27,13 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
         };
 
         job.invited = filterFilter(self.bas, { selected: true });
-        if(Object.prototype.toString.call(self.companyItem) == '[object String]'){
-            job.company = {};
-            job.company.name = self.companyItem;
-        } else {
-            job.company = self.companyItem;
-        }
-
-        job.company.imageUrl = self.companyImageUrl;
+        // if(Object.prototype.toString.call(self.companyItem) == '[object String]'){
+        //     job.company = {};
+        //     job.company.name = self.companyItem;
+        //     job.company.imageUrl = self.c
+        // } else {
+        //     job.company = self.companyItem;
+        // }
 
         jobService.createJob(job).then(function (response) {
             if(response.status == 200){
@@ -98,7 +97,7 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
         });
     };
     self.job.company = {};
-    self.job.company.imageUrl = 'https://skpsoft.com/baby/wp-content/uploads/2016/09/default-thumbnail.jpg';
+    // self.job.company.imageUrl = 'https://skpsoft.com/baby/wp-content/uploads/2016/09/default-thumbnail.jpg';
 
     self.onCompanyChange = function (str) {
         // if (self.companyItem == null) {

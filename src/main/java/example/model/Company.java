@@ -1,7 +1,6 @@
 package example.model;
 
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -11,8 +10,7 @@ public class Company extends AbstractEntity {
 
     private String name;
     private boolean client;//a company becomes a client if a job is created with using that company
-    @Column(name = "image_url", columnDefinition = "varchar(255) default 'http://whats-theword.com/wp-content/themes/gonzo/images/no-image-featured-image.png'")
-    private String imageUrl;
+    private String imageUrl = "https://skpsoft.com/baby/wp-content/uploads/2016/09/default-thumbnail.jpg";
 
     public Company() {
     }

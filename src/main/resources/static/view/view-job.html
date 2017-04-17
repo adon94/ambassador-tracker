@@ -19,7 +19,7 @@
                         </div>
                         <hr class="my-2">
                         <p><small>Created by <a href="#/profile/{{ctrl.job.jobManager.id}}">{{ctrl.job.jobManager.firstName}} {{ctrl.job.jobManager.lastName}}</a>
-                            at {{ctrl.dateMade | date:"HH:mm 'on' dd/MM/yyyy"}}</small></p>
+                            <span am-time-ago="ctrl.dateMade"></span></small></p>
                         <p>{{ctrl.job.location}}</p>
                         <p>Rate: {{ctrl.job.wage | currency:"€"}}</p>
                         <p>Starts at {{ctrl.job.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
@@ -28,100 +28,140 @@
                     </div>
                 </div>
                 <div class="card-wrapper">
-                    <button class="btn btn-default" style="width: 100%; margin: 0" ng-click="ctrl.openChat()">Group chat</button>
+                    <button class="btn btn-default" style="width: 100%; margin-left: 0; margin-right: 0" ng-click="ctrl.openChat()">Group chat</button>
+                </div>
+                <div class="card-wrapper">
+                    <button class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%; margin-left: 0; margin-right: 0">Show Staff</button>
                 </div>
             </div>
-            <div class="col-md-3">
-                <nav class="navbar navbar-dark bg-success tab">
-                    <div class="flex-center">
-                        <p class="navbar-brand" href="#">Accepted</p>
+            <div class="col-md-9">
+                <div class="card card-block" style="margin-bottom: 0">
+                    <select ng-model="ctrl.travelMode" ng-change="ctrl.calcRoute()">
+                        <option value="DRIVING">Driving</option>
+                        <option value="BICYCLING">Cycling</option>
+                        <option value="TRANSIT">Public Transport</option>
+                        <option value="WALKING">Walking</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-8" style="padding-right: 0">
+                        <div class="card">
+                            <div id="map" style="height:500px"></div>
+                        </div>
                     </div>
-                </nav>
-                <div ng-if="ctrl.job.accepted.length == 0">
-                    <div class="no-items number" style="font-size: 50px">
-                        0
-                    </div>
-                    <div class="no-items" style="font-size: 30px">
-                        Accepted BAs
+                    <div class="col-4" style="padding-left: 0">
+                        <div class="card card-block" style="padding: 0">
+                            <div id="directionsPanel" style="height: 500px; overflow: scroll"></div>
+                        </div>
                     </div>
                 </div>
-                <div ng-repeat="accepted in ctrl.job.accepted">
-                    <div class="card">
-                        <div class="card-up">
-                            <a href="#/profile/{{accepted.id}}">
-                                <div ng-style="{'background-image':'url('+accepted.coverUrl+')'}" class="cover-pic"></div>
-                            </a>
-                        </div>
-                        <a href="#/profile/{{accepted.id}}">
-                            <div class="avatar hoverable" ng-style="{'background-image':'url('+accepted.imageUrl+')'}"></div>
-                        </a>
-                        <div class="card-block">
-                            <div class="flex-center">
-                                <a href="#/profile/{{accepted.id}}"><h3 class="text-center">{{accepted.firstName}} {{accepted.lastName}}</h3></a>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document" style="max-width: 1000px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title flex-center" id="myModalLabel">Brand Ambassadors</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body" style="height: 650px; overflow: scroll">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <nav class="navbar navbar-dark bg-success tab">
+                                    <div class="flex-center">
+                                        <p class="navbar-brand" href="#">Accepted</p>
+                                    </div>
+                                </nav>
+                                <div ng-if="ctrl.job.accepted.length == 0">
+                                    <div class="no-items number" style="font-size: 50px">
+                                        0
+                                    </div>
+                                    <div class="no-items" style="font-size: 30px">
+                                        Accepted BAs
+                                    </div>
+                                </div>
+                                <div ng-repeat="accepted in ctrl.job.accepted">
+                                    <div class="card">
+                                        <div class="card-up">
+                                            <a href="#/profile/{{accepted.id}}">
+                                                <div ng-style="{'background-image':'url('+accepted.coverUrl+')'}" class="cover-pic"></div>
+                                            </a>
+                                        </div>
+                                        <a href="#/profile/{{accepted.id}}">
+                                            <div class="avatar hoverable" ng-style="{'background-image':'url('+accepted.imageUrl+')'}"></div>
+                                        </a>
+                                        <div class="card-block">
+                                            <div class="flex-center">
+                                                <a href="#/profile/{{accepted.id}}"><h2 class="text-center">{{accepted.firstName}} {{accepted.lastName}}</h2></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <nav class="navbar navbar-dark bg-primary tab">
-                    <div class="flex-center">
-                        <p class="navbar-brand" href="#">Pending</p>
-                    </div>
-                </nav>
-                <div ng-if="ctrl.job.invited.length == 0">
-                    <div class="no-items number" style="font-size: 50px">
-                        0
-                    </div>
-                    <div class="no-items" style="font-size: 30px">
-                        Pending BAs
-                    </div>
-                </div>
-                <div ng-repeat="invited in ctrl.job.invited">
-                    <div class="card">
-                        <div class="card-up">
-                            <a href="#/profile/{{invited.id}}">
-                                <div ng-style="{'background-image':'url('+invited.coverUrl+')'}" class="cover-pic"></div>
-                            </a>
-                        </div>
-                        <a href="#/profile/{{invited.id}}">
-                            <div class="avatar hoverable" ng-style="{'background-image':'url('+invited.imageUrl+')'}"></div>
-                        </a>
-                        <div class="card-block">
-                            <div class="flex-center">
-                                <a href="#/profile/{{invited.id}}"><h3 class="text-center">{{invited.firstName}} {{invited.lastName}}</h3></a>
+                            <div class="col-md-4">
+                                <nav class="navbar navbar-dark bg-primary tab">
+                                    <div class="flex-center">
+                                        <p class="navbar-brand" href="#">Pending</p>
+                                    </div>
+                                </nav>
+                                <div ng-if="ctrl.job.invited.length == 0">
+                                    <div class="no-items number" style="font-size: 50px">
+                                        0
+                                    </div>
+                                    <div class="no-items" style="font-size: 30px">
+                                        Pending BAs
+                                    </div>
+                                </div>
+                                <div ng-repeat="invited in ctrl.job.invited">
+                                    <div class="card">
+                                        <div class="card-up">
+                                            <a href="#/profile/{{invited.id}}">
+                                                <div ng-style="{'background-image':'url('+invited.coverUrl+')'}" class="cover-pic"></div>
+                                            </a>
+                                        </div>
+                                        <a href="#/profile/{{invited.id}}">
+                                            <div class="avatar hoverable" ng-style="{'background-image':'url('+invited.imageUrl+')'}"></div>
+                                        </a>
+                                        <div class="card-block">
+                                            <div class="flex-center">
+                                                <a href="#/profile/{{invited.id}}"><h2 class="text-center">{{invited.firstName}} {{invited.lastName}}</h2></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <nav class="navbar navbar-dark bg-danger tab">
-                    <div class="flex-center">
-                        <p class="navbar-brand" href="#">Declined</p>
-                    </div>
-                </nav>
-                <div ng-if="ctrl.job.declined.length == 0">
-                    <div class="no-items number" style="font-size: 50px">
-                        0
-                    </div>
-                    <div class="no-items" style="font-size: 30px">
-                        Declined BAs
-                    </div>
-                </div>
-                <div ng-repeat="declined in ctrl.job.declined">
-                    <div class="card">
-                        <div class="card-up">
-                            <a href="#/profile/{{declined.id}}">
-                                <div ng-style="{'background-image':'url('+declined.coverUrl+')'}" class="cover-pic"></div>
-                            </a>
-                        </div>
-                        <a href="#/profile/{{declined.id}}">
-                            <div class="avatar hoverable" ng-style="{'background-image':'url('+declined.imageUrl+')'}"></div>
-                        </a>
-                        <div class="card-block">
-                            <div class="flex-center">
-                                <a href="#/profile/{{declined.id}}"><h3 class="text-center">{{declined.firstName}} {{declined.lastName}}</h3></a>
+                            <div class="col-md-4">
+                                <nav class="navbar navbar-dark bg-danger tab">
+                                    <div class="flex-center">
+                                        <p class="navbar-brand" href="#">Declined</p>
+                                    </div>
+                                </nav>
+                                <div ng-if="ctrl.job.declined.length == 0">
+                                    <div class="no-items number" style="font-size: 50px">
+                                        0
+                                    </div>
+                                    <div class="no-items" style="font-size: 30px">
+                                        Declined BAs
+                                    </div>
+                                </div>
+                                <div ng-repeat="declined in ctrl.job.declined">
+                                    <div class="card">
+                                        <div class="card-up">
+                                            <a href="#/profile/{{declined.id}}">
+                                                <div ng-style="{'background-image':'url('+declined.coverUrl+')'}" class="cover-pic"></div>
+                                            </a>
+                                        </div>
+                                        <a href="#/profile/{{declined.id}}">
+                                            <div class="avatar hoverable" ng-style="{'background-image':'url('+declined.imageUrl+')'}"></div>
+                                        </a>
+                                        <div class="card-block">
+                                            <div class="flex-center">
+                                                <a href="#/profile/{{declined.id}}"><h2 class="text-center">{{declined.firstName}} {{declined.lastName}}</h2></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

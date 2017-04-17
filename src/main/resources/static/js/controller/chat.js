@@ -49,14 +49,16 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
     }
 
     self.sendMessage = function () {
-        self.message.sender = user;
-        self.message.timestamp = new Date();
-        self.currentChat.messages.push(self.message);
-        chatService.create(self.currentChat).then(function successCallback(response) {
-            self.currentChat = response.data;
-            self.message.text = null;
-            updateSideChats();
-        })
+        if (self.message.text != "" && self.message.text != null) {
+            self.message.sender = user;
+            self.message.timestamp = new Date();
+            self.currentChat.messages.push(self.message);
+            chatService.create(self.currentChat).then(function successCallback(response) {
+                self.currentChat = response.data;
+                self.message.text = null;
+                updateSideChats();
+            })
+        }
     };
 
     self.openChat = function (chat) {

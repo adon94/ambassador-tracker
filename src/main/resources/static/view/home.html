@@ -9,6 +9,7 @@
                     <li><span class="past"></span> Past Event</li>
                     <li><span class="pending"></span> Pending Event</li>
                 </ul>
+                <a ng-click="ctrl.connectGCal()" style="float: right">Connect to Google Calendar</a>
             </div>
             <div class="card-block">
                 <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" calendar="myCalendar"></div>

@@ -9,5 +9,5 @@ import java.util.List;
 @Service
 public interface NotificationService {
     List<Notification> saveMultiple(List<Notification> notifications) throws Exception;
-    List<Notification> findByUser(User user) throws Exception;
+    List<Notification> findByUserInAndTypeIn(User user, String type) throws Exception;
 }

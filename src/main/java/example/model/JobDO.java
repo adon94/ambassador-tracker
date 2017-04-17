@@ -1,6 +1,7 @@
 package example.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -24,8 +25,9 @@ public class JobDO extends AbstractEntity {
     private double wage;
     private String startDate;
     private String endDate;
-    private String createdAt;
-    private String updatedAt;
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+    private boolean publicEvent;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     private List<User> invited;
@@ -107,20 +109,28 @@ public class JobDO extends AbstractEntity {
         this.endDate = endDate;
     }
 
-    public String getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isPublicEvent() {
+        return publicEvent;
+    }
+
+    public void setPublicEvent(boolean publicEvent) {
+        this.publicEvent = publicEvent;
     }
 
     public List<User> getInvited() {

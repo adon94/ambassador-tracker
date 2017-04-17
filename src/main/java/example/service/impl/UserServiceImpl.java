@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,6 +25,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws Exception {
+        List<User> users = userDAO.findByRegistrationCode(user.getRegistrationCode());
+
+        if (!users.isEmpty()) {
+            User user1 = users.get(0);
+            user.setRegistrationCode(user1.getRegistrationCode());
+            user.setId(user1.getId());
+            user.setManager(user1.isManager());
+
+            return userDAO.save(user);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public User generateCode(User user) throws Exception {
+        UUID id = UUID.randomUUID();
+        user.setRegistrationCode(id.toString());
         return userDAO.save(user);
     }
 

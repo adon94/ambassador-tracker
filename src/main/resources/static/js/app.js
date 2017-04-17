@@ -60,6 +60,21 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             controller : 'expenses',
             controllerAs: 'controller'
         })
+            .when('/generate', {
+            templateUrl : 'view/generate.html',
+            controller : 'generate',
+            controllerAs: 'ctrl'
+        })
+            .when('/complete', {
+            templateUrl : 'view/complete.html',
+            controller : 'complete',
+            controllerAs: 'ctrl'
+        })
+            .when('/events', {
+            templateUrl : 'view/events.html',
+            controller : 'events',
+            controllerAs: 'ctrl'
+        })
             .when('/messages', {
             templateUrl : 'view/messages.html',
             controller : 'messages',

@@ -27,6 +27,13 @@ public class UserController {
         return userService.create(user);
     }
 
+    @RequestMapping(value="/generate", method= RequestMethod.POST)
+    public @ResponseBody
+    User generate(@RequestBody User user) throws Exception {
+
+        return userService.generateCode(user);
+    }
+
     @RequestMapping(value="/updateLastSeen", method= RequestMethod.POST)
     public @ResponseBody
     User updateLastSeen(@RequestBody User user) throws Exception {
