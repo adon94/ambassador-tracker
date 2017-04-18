@@ -35,13 +35,28 @@
                 </div>
             </div>
             <div class="col-md-9">
+                <div class="card card-block">
+                    <h2 class="card-title">Description</h2>
+                    <p>{{ctrl.job.description}}</p>
+                </div>
                 <div class="card card-block" style="margin-bottom: 0">
-                    <select ng-model="ctrl.travelMode" ng-change="ctrl.calcRoute()">
-                        <option value="DRIVING">Driving</option>
-                        <option value="BICYCLING">Cycling</option>
-                        <option value="TRANSIT">Public Transport</option>
-                        <option value="WALKING">Walking</option>
-                    </select>
+                    <h2 class="card-title">Directions</h2>
+                    <div class="row">
+                        <div class="col-4">
+                            <select class="form-control md-select" ng-model="ctrl.travelMode" ng-change="ctrl.calcRoute()">
+                                <option value="DRIVING">Driving</option>
+                                <option value="BICYCLING">Cycling</option>
+                                <option value="TRANSIT">Public Transport</option>
+                                <option value="WALKING">Walking</option>
+                            </select>
+                        </div>
+                        <div class="col-8">
+                            <form ng-submit="ctrl.calcRoute()">
+                                <input placeholder="Custom location" googleplace options="options1"
+                                       ng-model="ctrl.location" id="location" name="location" type="text" class="input-md">
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-8" style="padding-right: 0">
@@ -84,16 +99,16 @@
                                 <div ng-repeat="accepted in ctrl.job.accepted">
                                     <div class="card">
                                         <div class="card-up">
-                                            <a href="#/profile/{{accepted.id}}">
+                                            <a href="#/profile/{{accepted.id}}" target="_blank">
                                                 <div ng-style="{'background-image':'url('+accepted.coverUrl+')'}" class="cover-pic"></div>
                                             </a>
                                         </div>
-                                        <a href="#/profile/{{accepted.id}}">
+                                        <a href="#/profile/{{accepted.id}}" target="_blank">
                                             <div class="avatar hoverable" ng-style="{'background-image':'url('+accepted.imageUrl+')'}"></div>
                                         </a>
                                         <div class="card-block">
                                             <div class="flex-center">
-                                                <a href="#/profile/{{accepted.id}}"><h2 class="text-center">{{accepted.firstName}} {{accepted.lastName}}</h2></a>
+                                                <a href="#/profile/{{accepted.id}}" target="_blank"><h2 class="text-center">{{accepted.firstName}} {{accepted.lastName}}</h2></a>
                                             </div>
                                         </div>
                                     </div>
@@ -116,16 +131,16 @@
                                 <div ng-repeat="invited in ctrl.job.invited">
                                     <div class="card">
                                         <div class="card-up">
-                                            <a href="#/profile/{{invited.id}}">
+                                            <a href="#/profile/{{invited.id}}" target="_blank">
                                                 <div ng-style="{'background-image':'url('+invited.coverUrl+')'}" class="cover-pic"></div>
                                             </a>
                                         </div>
-                                        <a href="#/profile/{{invited.id}}">
+                                        <a href="#/profile/{{invited.id}}" target="_blank">
                                             <div class="avatar hoverable" ng-style="{'background-image':'url('+invited.imageUrl+')'}"></div>
                                         </a>
                                         <div class="card-block">
                                             <div class="flex-center">
-                                                <a href="#/profile/{{invited.id}}"><h2 class="text-center">{{invited.firstName}} {{invited.lastName}}</h2></a>
+                                                <a href="#/profile/{{invited.id}}" target="_blank"><h2 class="text-center">{{invited.firstName}} {{invited.lastName}}</h2></a>
                                             </div>
                                         </div>
                                     </div>
@@ -148,16 +163,16 @@
                                 <div ng-repeat="declined in ctrl.job.declined">
                                     <div class="card">
                                         <div class="card-up">
-                                            <a href="#/profile/{{declined.id}}">
+                                            <a href="#/profile/{{declined.id}}" target="_blank">
                                                 <div ng-style="{'background-image':'url('+declined.coverUrl+')'}" class="cover-pic"></div>
                                             </a>
                                         </div>
-                                        <a href="#/profile/{{declined.id}}">
+                                        <a href="#/profile/{{declined.id}}" target="_blank">
                                             <div class="avatar hoverable" ng-style="{'background-image':'url('+declined.imageUrl+')'}"></div>
                                         </a>
                                         <div class="card-block">
                                             <div class="flex-center">
-                                                <a href="#/profile/{{declined.id}}"><h2 class="text-center">{{declined.firstName}} {{declined.lastName}}</h2></a>
+                                                <a href="#/profile/{{declined.id}}" target="_blank"><h2 class="text-center">{{declined.firstName}} {{declined.lastName}}</h2></a>
                                             </div>
                                         </div>
                                     </div>

@@ -28,6 +28,8 @@ public class JobDO extends AbstractEntity {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private boolean publicEvent;
+    @Lob
+    private String description;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     private List<User> invited;
@@ -131,6 +133,14 @@ public class JobDO extends AbstractEntity {
 
     public void setPublicEvent(boolean publicEvent) {
         this.publicEvent = publicEvent;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<User> getInvited() {

@@ -109,14 +109,25 @@
                         </div>
                     </div>
 
-                    <!-- Button for modal -->
-                    <div class="form-group">
-                        <label for="invite-select">Brand Ambassadors</label>
-                        <button type="button" ng-disabled="ctrl.endMoment._d == null || ctrl.startMoment._d == null"
-                                ng-click="ctrl.getOverlappingJobs()" id="invite-select" class="btn btn-default btn-lg"
-                                style="margin-left: 3rem;" data-toggle="modal" data-target="#myModal">
-                            Invite
-                        </button>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="form76">Description</label>
+                                <textarea ng-model="ctrl.job.description" id="form76" class="form-control md-select"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="invite-select">Brand Ambassadors</label>
+                                <button type="button" ng-disabled="ctrl.endMoment._d == null || ctrl.startMoment._d == null"
+                                        ng-click="ctrl.getOverlappingJobs()" id="invite-select" class="btn btn-default btn-lg"
+                                        style="margin-left: 3rem;" data-toggle="modal" data-target="#myModal">
+                                    Invite
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="text-center">
                         <button ng-click="ctrl.createJob()" class="btn btn-default">Submit</button>
@@ -155,10 +166,10 @@
                                         <a href="#/job/view/{{ba.jobId}}" target="_blank">{{ba.workingFor.name}}</a>
                                     </td>
                                     <!--<td>-->
-                                        <!--<input type="text">-->
+                                    <!--<input type="text">-->
                                     <!--</td>-->
                                     <!--<td>-->
-                                        <!--<input type="text">-->
+                                    <!--<input type="text">-->
                                     <!--</td>-->
                                 </tr>
                                 </tbody>

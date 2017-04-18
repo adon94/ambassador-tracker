@@ -90,17 +90,17 @@ angular.module('myApp').controller('view-job', function ($filter, $location, $ro
         map = new google.maps.Map(document.getElementById('map'), mapOptions);
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+        if (user.address == null) {
+            self.location = 'Verve, Grand Canal Dock';
+        } else {
+            self.location = angular.copy(user.address);
+        }
+
         self.calcRoute();
     }
     self.travelMode = "DRIVING";
 
     self.calcRoute = function () {
-        let start;
-        if (user.address == null) {
-            start = 'Verve, Grand Canal Dock';
-        } else {
-            start = user.address;
-        }
         let end = self.job.location;
 
         let dateTime;
@@ -110,7 +110,7 @@ angular.module('myApp').controller('view-job', function ($filter, $location, $ro
             dateTime = self.job.startDate;
         }
         let request = {
-            origin:start,
+            origin:self.location,
             destination:end,
             travelMode: self.travelMode,
             transitOptions: {

@@ -104,11 +104,33 @@ angular.module('myApp').controller('nav', function($rootScope, $cookies, $locati
             let nList = [];
             nList.push(notification);
             notificationService.save(nList).then(function successCallback(response) {
-                notification = response.data;
+                self.genNotifications = response.data;
             });
         }
 
         $location.path('/job/view/' + notification.job.id);
+    };
+
+    self.readNotifications = function () {
+        console.log("Read notifications");
+        angular.forEach(self.genNotifications, function (value, key) {
+            self.genNotifications[key].seen = true;
+        });
+        notificationService.save(self.genNotifications).then(function (response) {
+            self.genNotifications = response.data;
+            self.ntfCount = 0;
+        })
+    };
+
+    self.readMessages = function () {
+        console.log("Read notifications");
+        angular.forEach(self.msgNotifications, function (value, key) {
+            self.msgNotifications[key].seen = true;
+        });
+        notificationService.save(self.msgNotifications).then(function (response) {
+            self.msgNotifications = response.data;
+            self.msgCount = 0;
+        })
     };
 
     self.logout = function () {

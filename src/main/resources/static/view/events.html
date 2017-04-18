@@ -4,7 +4,18 @@
         <div class="row">
             <div class="col-9">
                 <div class="card card-block">
-                    <input placeholder="Search">
+                    <div angucomplete-alt id="eventSearch"
+                         maxlength="20"
+                         pause="10"
+                         selected-object="ctrl.onSearchSelect"
+                         local-data="ctrl.allJobs"
+                         search-fields="company.name"
+                         title-field="company.name"
+                         image-field="company.imageUrl"
+                         minlength="1"
+                         input-class="input-md"
+                         match-class="highlight"
+                    ></div>
                 </div>
                 <div class="card" ng-repeat="job in ctrl.events | orderBy: 'createdAt'">
                     <div class="row">
@@ -15,7 +26,7 @@
                         </div>
                         <div class="col-8">
                             <div class="card-block">
-                                <h2><a href="#/job/{{job.id}}">{{job.company.name}}</a></h2>
+                                <h2><a href="#/job/view/{{job.id}}">{{job.company.name}}</a></h2>
                                 <p>{{job.startDate | date:"dd/MM/yyyy"}}</p>
                             </div>
                         </div>
