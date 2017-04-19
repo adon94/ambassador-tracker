@@ -127,7 +127,7 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-12">
-                                <button class="btn btn-default" style="width: 100%"><i class="fa fa-plus-square"></i> Create new list</button>
+                                <button class="btn btn-default" data-toggle="modal" data-target="#newModal" style="width: 100%"><i class="fa fa-plus-square"></i> Create new list</button>
                                 <hr class="my-2">
                             </div>
                             <div class="col-12">
@@ -135,8 +135,9 @@
                             </div>
                             <ul class="col-12">
                                 <li ng-repeat="baList in ctrl.baLists">
-                                    <a>
-                                        <p>{{baList.title}}</p>
+                                    <a ng-click="ctrl.addToList(baList)" data-dismiss="modal"
+                                       class="dropdown-item notification-item" style="width: 100%">
+                                        <h2>{{baList.title}}</h2>
                                         <footer class="blockquote-footer">{{baList.ambassadors.length}} Brand Ambassadors</footer>
                                     </a>
                                 </li>
@@ -149,6 +150,32 @@
                     </div>
                 </div>
                 <!--/.Content-->
+            </div>
+        </div>
+
+        <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                        <h4 class="modal-title w-100" id="newModalLabel">New List</h4>
+                    </div>
+                    <!--Body-->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input placeholder="List name" ng-model="ctrl.baList.title" class="input-md">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="ctrl.createList()" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -1,9 +1,6 @@
 package example.service.impl;
 
-import example.dao.ChatDAO;
-import example.dao.CompanyDAO;
-import example.dao.JobDAO;
-import example.dao.NotificationDAO;
+import example.dao.*;
 import example.model.*;
 import example.service.JobService;
 import org.hibernate.Query;
@@ -57,6 +54,13 @@ public class JobServiceImpl implements JobService {
     @Autowired
     public void setNotificationDAO(NotificationDAO notificationDAO) {
         this.notificationDAO = notificationDAO;
+    }
+
+    private BaListDAO baListDAO;
+
+    @Autowired
+    public void setBaListDAO(BaListDAO baListDAO) {
+        this.baListDAO = baListDAO;
     }
 
     @Override
@@ -162,6 +166,32 @@ public class JobServiceImpl implements JobService {
                     participants.add(user);
                     chat.setParticipants(participants);
                     chatDAO.save(chat);
+                }
+
+                List<BaList> lists = baListDAO.findByCompany(jobDO.getCompany());
+
+                if (!lists.isEmpty()) {
+                    BaList list = lists.get(0);
+                    boolean exists = false;
+                    for (User u: list.getAmbassadors()) {
+                        if (u.getId().equals(user.getId())) {
+                            exists = true;
+                        }
+                    }
+                    if (!exists) {
+                        List<User> baList = list.getAmbassadors();
+                        baList.add(user);
+                        list.setAmbassadors(baList);
+                        baListDAO.save(list);
+                    }
+                } else {
+                    BaList list = new BaList();
+                    list.setCompany(jobDO.getCompany());
+                    list.setTitle(jobDO.getCompany().getName());
+                    List<User> uList = new ArrayList<>();
+                    uList.add(user);
+                    list.setAmbassadors(uList);
+                    baListDAO.save(list);
                 }
 
                 updatedAccepted.add(user);

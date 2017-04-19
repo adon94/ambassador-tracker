@@ -40,4 +40,11 @@ angular.module('myApp').controller('complete', function ($scope, $location, $roo
         self.age = Math.abs(ageDate.getUTCFullYear() - 1970);
     };
 
+    $(".address").on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
 });

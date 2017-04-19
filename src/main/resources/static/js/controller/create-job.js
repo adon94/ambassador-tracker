@@ -1,4 +1,5 @@
-angular.module('myApp').controller('createJob', function ($scope, $filter, filterFilter, $location, $rootScope, $cookies, userService, jobService) {
+angular.module('myApp').controller('createJob', function ($scope, $filter, filterFilter, $location, $rootScope,
+                                                          $cookies, userService, jobService, baListService) {
     let self = this;
     $scope.gPlace;
     let user = {};
@@ -14,6 +15,7 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
 
     self.selected = [];
     self.job = {};
+    self.baLists = [];
 
     self.createJob = function () {
         let job = self.job;
@@ -52,8 +54,23 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
 
     jobService.getCompanies().then(function (response) {
         self.clients = $filter('orderBy')(response.data, '-client', false);
-        console.log(self.clients)
     });
+
+    baListService.find(userId).then(function (response) {
+        self.baLists = response.data;
+    });
+
+    self.getCompanyList = function () {
+        baListService.company(self.job.company).then(function (response) {
+
+            if (response.data.length > 0) {
+                let companyList = response.data[0];
+
+                companyList.title = "Previously worked with " + companyList.title;
+                self.baLists.push(companyList);
+            }
+        })
+    };
 
     self.getOverlappingJobs = function () {
 
@@ -69,11 +86,8 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
         //Make sure this works
         jobService.getOverlappingJobs(job).then(function (response) {
             overlappingJobs = response.data;
-            console.log(overlappingJobs);
 
             angular.forEach(overlappingJobs, function (value, key) {
-                console.log(overlappingJobs[key].accepted);
-                console.log("In first loop");
                 angular.forEach(overlappingJobs[key].accepted, function (value2, key2) {
                     if (unavailableBAs.indexOf(value2) == -1){
                         value2.workingFor = value.company;
@@ -108,6 +122,30 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
     self.onCompanySelect = function (selected) {
         if (selected != null) {
             self.job.company = selected.originalObject;
+            self.getCompanyList();
         }
     };
+
+    self.listChange = function () {
+        console.log("List change");
+        console.log(self.selectedList);
+    };
+
+    self.myFilter = function(e) {
+        if (self.selectedList != null) {
+            return hasObject(e.id);
+        } else {
+            return true;
+        }
+    };
+
+    let hasObject = function (id) {
+        let retVal = false;
+        angular.forEach(self.selectedList.ambassadors, function (value) {
+            if (value.id == id) {
+                retVal = true;
+            }
+        });
+        return retVal;
+    }
 });

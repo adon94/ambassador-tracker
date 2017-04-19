@@ -1,9 +1,11 @@
 angular.module('myApp').controller('profile', function ($rootScope, $cookies, $timeout, $filter, $location,
-                                                        $routeParams, jobService, userService, chatService) {
+                                                        $routeParams, jobService, userService, chatService,
+                                                        baListService) {
 
     let self = this;
     let id = $routeParams.id;
     let user = {};
+    self.baLists = [];
 
     let userId = $cookies.get('currentUser');
     if(userId != null) {
@@ -58,6 +60,13 @@ angular.module('myApp').controller('profile', function ($rootScope, $cookies, $t
 
                 });
             });
+            console.log(user.manager);
+            if (user.manager) {
+                baListService.find(user.id).then(function (response) {
+                    self.baLists = response.data;
+                    console.log("Lists:", self.baLists);
+                })
+            }
 
         } else {
             self.main = [];
@@ -131,6 +140,26 @@ angular.module('myApp').controller('profile', function ($rootScope, $cookies, $t
         chat.participants.push(self.profile);
         chatService.userChat(chat).then(function successCallback(response) {
             $location.path('/chat/'+response.data.id);
+        })
+    };
+
+    self.createList = function () {
+        self.baList.ambassadors = [self.profile];
+        self.baList.listManager = user;
+
+        baListService.create(self.baList).then(function (response) {
+            self.baLists.push(response.data);
+            self.baList = {};
+            // $modalInstance.close();
+        })
+    };
+
+    self.addToList = function (list) {
+        list.ambassadors.push(self.profile);
+        baListService.create(list).then(function (response) {
+            self.baLists.push(response.data);
+            self.baList = {};
+            // $modalInstance.close();
         })
     };
 

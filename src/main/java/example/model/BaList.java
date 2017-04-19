@@ -12,6 +12,9 @@ public class BaList extends AbstractEntity {
     @ManyToOne
     private User listManager;
 
+    @ManyToOne
+    private Company company;
+
     private String createdAt;
     private String updatedAt;
 
@@ -34,6 +37,14 @@ public class BaList extends AbstractEntity {
 
     public void setListManager(User listManager) {
         this.listManager = listManager;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getCreatedAt() {

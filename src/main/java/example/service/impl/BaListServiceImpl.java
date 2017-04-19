@@ -2,6 +2,7 @@ package example.service.impl;
 
 import example.dao.BaListDAO;
 import example.model.BaList;
+import example.model.Company;
 import example.service.BaListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +52,10 @@ public class BaListServiceImpl implements BaListService {
     @Override
     public List<BaList> findByEmployeeId(Long id) throws Exception {
         return baListDAO.findByListManagerId(id);
+    }
+
+    @Override
+    public List<BaList> findByCompany(Company company) throws Exception {
+        return baListDAO.findByCompany(company);
     }
 }

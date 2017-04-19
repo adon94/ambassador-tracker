@@ -34,65 +34,66 @@
                     <div class="text-center">
                         <h3>Complete your profile</h3>
                         <hr class="mt-2 mb-2">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="imageUrl">Profile Pic Url</label>
-                                    <input ng-model="ctrl.user.imageUrl" id="imageUrl" type="text" class="input-md">
+                        <form ng-submit="ctrl.saveProfile()">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="imageUrl">Profile Pic Url</label>
+                                        <input ng-model="ctrl.user.imageUrl" id="imageUrl" type="text" class="input-md">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="coverPic">Cover Pic Url</label>
+                                        <input ng-model="ctrl.user.coverUrl" id="coverPic" type="text" class="input-md">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="coverPic">Cover Pic Url</label>
-                                    <input ng-model="ctrl.user.coverUrl" id="coverPic" type="text" class="input-md">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="dob">Date of birth</label>
+                                        <input id="dob"
+                                               class="form-control md-select"
+                                               moment-picker="ctrl.dob"
+                                               start-date="1990"
+                                               change="ctrl.onChange(newValue, oldValue)"
+                                               locale="en-gb"
+                                               format="LL"
+                                               max-view="month"
+                                               start-view="decade"
+                                               autoclose="true"
+                                               ng-model="ctrl.dob"
+                                               ng-model-options="{ updateOn: 'blur' }"
+                                               aria-label="Date of Birth">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="gender">Gender</label>
+                                        <select ng-model="ctrl.user.male" id="gender" class="form-control md-select">
+                                            <option value="true">Male</option>
+                                            <option value="false">Female</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="dob">Date of birth</label>
-                                    <input id="dob"
-                                           class="form-control md-select"
-                                           placeholder="Select a date"
-                                           moment-picker="ctrl.dob"
-                                           start-date="1990"
-                                           change="ctrl.onChange(newValue, oldValue)"
-                                           locale="en-gb"
-                                           format="LL"
-                                           max-view="month"
-                                           start-view="decade"
-                                           autoclose="true"
-                                           ng-model="ctrl.dob"
-                                           ng-model-options="{ updateOn: 'blur' }"
-                                           aria-label="Date of Birth">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <input placeholder="" googleplace options="options1" ng-model="ctrl.user.address" id="address" type="text" class="input-md">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="phone">Phone number</label>
+                                        <input ng-model="ctrl.user.phone" id="phone" type="text" class="input-md">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="gender">Gender</label>
-                                    <select ng-model="ctrl.user.male" id="gender" class="form-control md-select">
-                                        <option value="true">Male</option>
-                                        <option value="false">Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input placeholder="" googleplace options="options1" ng-model="ctrl.user.address" id="address" type="text" class="input-md">
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="phone">Phone number</label>
-                                    <input ng-model="ctrl.user.phone" id="phone" type="text" class="input-md">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" ng-click="ctrl.saveProfile()">Save</button>
+                            <button class="btn btn-primary" type="submit">Save</button>
+                        </form>
                     </div>
                 </div>
             </div>

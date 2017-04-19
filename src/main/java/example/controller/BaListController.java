@@ -1,6 +1,7 @@
 package example.controller;
 
 import example.model.BaList;
+import example.model.Company;
 import example.service.BaListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,5 +34,12 @@ public class BaListController {
     List<BaList> getMyLists(@PathVariable Long id) throws Exception {
 
         return this.baListService.findByEmployeeId(id);
+    }
+
+    @RequestMapping(value="/company", method= RequestMethod.POST)
+    public @ResponseBody
+    List<BaList> getByCompany(@RequestBody Company company) throws Exception {
+
+        return baListService.findByCompany(company);
     }
 }

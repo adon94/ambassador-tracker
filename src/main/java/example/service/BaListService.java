@@ -1,6 +1,7 @@
 package example.service;
 
 import example.model.BaList;
+import example.model.Company;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,5 +12,6 @@ public interface BaListService {
     BaList view(Long id) throws Exception;
     List<BaList> getAll() throws Exception;
     void removeJob(Long id) throws Exception;
+    List<BaList> findByCompany(Company  company) throws Exception;
     List<BaList> findByEmployeeId(Long id) throws Exception;
 }
