@@ -19,9 +19,9 @@
                     <li class="nav-item" ng-if="currentUser.manager">
                         <a class="nav-link" href="#/job/new">New Event</a>
                     </li>
-                    <li class="nav-item" ng-if="currentUser.manager">
-                        <a class="nav-link" href="#/expenses">Expenses</a>
-                    </li>
+                    <!--<li class="nav-item" ng-if="currentUser.manager">-->
+                        <!--<a class="nav-link" href="#/expenses">Expenses</a>-->
+                    <!--</li>-->
                     <li class="nav-item" ng-if="currentUser.manager">
                         <a class="nav-link" href="#/generate">Generate</a>
                     </li>
@@ -29,6 +29,21 @@
                         <a class="nav-link" href="#/events">Events</a>
                     </li>
                 </ul>
+                <div angucomplete-alt id="search"
+                     style="color: white"
+                     maxlength="20"
+                     placeholder="Search"
+                     pause="10"
+                     selected-object="ctrl.onCompanySelect"
+                     local-data="ctrl.clients"
+                     search-fields="name"
+                     title-field="name"
+                     image-field="imageUrl"
+                     minlength="1"
+                     input-class="input-md"
+                     match-class="highlight"
+                     input-changed="ctrl.onCompanyChange"
+                ></div>
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item" ng-if="currentUser == null">
                         <a class="nav-link" href="#/login">Sign in/Sign up</a>
@@ -41,7 +56,7 @@
                         </span>
                         </a>
                         <div class="dropdown-menu dropdown dropdown-menu-right" aria-labelledby="messageDrop"
-                             data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" style="padding: 0">
+                             data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" style="padding: 0;min-width: 300px;">
                             <div class="card-header teal-blue white-text" style="height: 45px">
                                 <h5 style="margin: 0; float: left">Messages</h5>
                                 <a ng-click="nctrl.readMessages()" style="padding: 0; float: right; color: white;">
@@ -52,7 +67,7 @@
                                 <a class="dropdown-item notification-item"
                                    ng-repeat="msg in nctrl.msgNotifications | orderBy:'-timestamp'"
                                    ng-click="nctrl.openMessage(msg)"
-                                   ng-style="msg.seen == false && {'background-color':'#dfdfdf'}">
+                                   ng-style="msg.seen == false && {'background-color':'#edf2fa'}">
                                     <div ng-if="msg.chat.job != null">
                                         <div style="float: left" class="chat-avatar col-3"
                                              ng-if="msg.chat.job != null"
@@ -100,7 +115,7 @@
                         </span>
                         </a>
                         <div class="dropdown-menu dropdown dropdown-menu-right" aria-labelledby="notificationDrop"
-                             data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" style="padding: 0">
+                             data-dropdown-in="fadeIn" data-dropdown-out="fadeOut" style="padding: 0;min-width: 300px;">
                             <div class="card-header teal-blue white-text" style="height: 45px">
                                 <h5 style="margin: 0; float: left">Notifications</h5>
                                 <a ng-click="nctrl.readNotifications()" style="padding: 0; float: right; color: white;">
@@ -111,7 +126,7 @@
                                 <a class="dropdown-item notification-item"
                                    ng-repeat="ntf in nctrl.genNotifications | orderBy:'-timestamp'"
                                    ng-click="nctrl.openNotification(ntf)"
-                                   ng-style="ntf.seen == false && {'background-color':'#dfdfdf'}">
+                                   ng-style="ntf.seen == false && {'background-color':'#edf2fa'}">
                                     <div ng-if="ntf.job != null">
                                         <div style="float: left" class="chat-avatar col-3"
                                              ng-if="ntf.job != null"

@@ -1,7 +1,8 @@
-angular.module('myApp').controller('complete', function ($scope, $location, $rootScope, $cookies, userService) {
+angular.module('myApp').controller('complete', function ($scope, $location, $rootScope, $cookies, userService, toastr) {
     let self = this;
     $scope.gPlace;
-    let user = {};
+    $scope.upload = true;
+    $scope.cupload = true;
 
     let userId = $cookies.get('currentUser');
 
@@ -9,20 +10,18 @@ angular.module('myApp').controller('complete', function ($scope, $location, $roo
         userService.findOne(userId).then(function successCallback(response) {
             $rootScope.currentUser = response.data;
             self.user = angular.copy($rootScope.currentUser);
-            updateData();
         });
     }
 
-    let updateData = function () {
-        if (self.user.imageUrl == null) {
-            self.user.imageUrl = 'https://web.usask.ca/images/profile.jpg';
-        }
-    };
-
     self.saveProfile = function () {
-        userService.create(self.user).then(function (response) {
-            $location.path("/")
-        })
+        if (self.user.coverUrl != null && self.user.imageUrl != null && self.user.dob != null && self.user.gender != null
+            && self.user.phone != null && self.user.address != null) {
+            userService.create(self.user).then(function (response) {
+                $location.path("/")
+            })
+        } else {
+            toastr.error('All fields required to continue', 'Error');
+        }
     };
 
     self.onChange = function (newValue, oldValue) {
@@ -46,5 +45,36 @@ angular.module('myApp').controller('complete', function ($scope, $location, $roo
             return false;
         }
     });
+
+    $scope.fileSelected = function (element) {
+        self.loading = true;
+        let url = '/profileImages/';
+        if (!self.main) {
+            url = '/coverImages/'
+        }
+
+        let file = element.files[0];
+        let storageRef = firebase.storage().ref('users/'+ $rootScope.currentUser.id +"/"+ file.name.replace(" ", ""));
+        let state = storageRef.put(file);
+        state.on('state_changed',
+            function progress(snapshot) {
+            },
+
+            function error(err) {
+            },
+
+            function complete() {
+                if(self.main) {
+                    self.user.imageUrl = state.snapshot.downloadURL.toString();
+                    console.log(self.user.imageUrl, ': is my new profiler');
+                } else {
+                    self.user.coverUrl = state.snapshot.downloadURL;
+                    console.log(self.user.coverUrl, ': is my new cover');
+                }
+                self.loading = false;
+            }
+        );
+
+    };
 
 });

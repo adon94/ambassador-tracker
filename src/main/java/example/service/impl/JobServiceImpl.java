@@ -3,6 +3,7 @@ package example.service.impl;
 import example.dao.*;
 import example.model.*;
 import example.service.JobService;
+import example.service.MailService;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionBuilder;
@@ -80,6 +81,8 @@ public class JobServiceImpl implements JobService {
         User sender = jobDO.getJobManager();
         List<Notification> notifications = new ArrayList<>();
 
+        MailService m = new MailService();
+
         for (User user : jobDO.getInvited()) {
             Notification notification = new Notification();
             notification.setTimestamp(timestamp);
@@ -87,9 +90,20 @@ public class JobServiceImpl implements JobService {
             notification.setType("general");
             notification.setSender(sender);
             notification.setJob(jobDO);
-            notification.setMessage("invited you to work at an event:");
+            if (jobDO.getId() == null) {
+                notification.setMessage("invited you to work at an event:");
+            } else {
+                notification.setMessage("updated an event:");
+            }
             notification.setUser(user);
             notifications.add(notification);
+
+            String email = jobDO.getJobManager().getFirstName() + " " +
+                    jobDO.getJobManager().getLastName() + " " +
+                    notification.getMessage() + " " +
+                    jobDO.getCompany().getName();
+
+            m.sendNotification(user.getEmail(), email);
         }
 
         notificationDAO.save(notifications);
@@ -216,6 +230,10 @@ public class JobServiceImpl implements JobService {
 
         jobDO.setInvited(updatedInvited);
         jobDO.setAccepted(updatedAccepted);
+
+        if(updatedInvited.size() == jobDO.getMaxPeople()) {
+            jobDO.setFull(true);
+        }
         return jobDAO.save(jobDO);
     }
 

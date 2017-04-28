@@ -1,8 +1,11 @@
 angular.module('myApp').controller('createJob', function ($scope, $filter, filterFilter, $location, $rootScope,
-                                                          $cookies, userService, jobService, baListService) {
+                                                          $cookies, userService, jobService, baListService, $routeParams) {
     let self = this;
     $scope.gPlace;
+    $scope.upload = true;
     let user = {};
+
+    let id = $routeParams.id;
 
     let userId = $cookies.get('currentUser');
 
@@ -14,29 +17,39 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
     }
 
     self.selected = [];
-    self.job = {};
+    self.startMoment ={};
+    self.endMoment ={};
+
+    if (id == null) {
+        self.job = {};
+        self.job.company = {};
+        self.edit = false;
+    } else {
+        jobService.getJob(id).then(function (response) {
+            self.job = response.data;
+            self.edit = true;
+        })
+    }
     self.baLists = [];
 
     self.createJob = function () {
         let job = self.job;
-        if(self.startMoment != null && self.endMoment != null) {
+        if(self.startMoment._d != null && self.endMoment._d != null) {
             job.startDate = self.startMoment._d;
             job.endDate = self.endMoment._d;
         }
 
         job.jobManager = {
-            "id": $rootScope.currentUser.id
+            "id": $rootScope.currentUser.id,
+            "firstName": $rootScope.currentUser.firstName,
+            "lastName": $rootScope.currentUser.lastName
         };
 
-        job.invited = filterFilter(self.bas, { selected: true });
-        // if(Object.prototype.toString.call(self.companyItem) == '[object String]'){
-        //     job.company = {};
-        //     job.company.name = self.companyItem;
-        //     job.company.imageUrl = self.c
-        // } else {
-        //     job.company = self.companyItem;
-        // }
+        if (!self.edit) {
+            job.invited = filterFilter(self.bas, {selected: true});
+        }
 
+        console.log(job);
         jobService.createJob(job).then(function (response) {
             if(response.status == 200){
                 $location.path("/");
@@ -101,6 +114,7 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
                 self.baList[key].available = true;
                 self.baList[key].workingFor = null;
                 self.baList[key].jobId = null;
+                self.baList[key].name = value.firstName + " " + value.lastName;
                 angular.forEach(unavailableBAs, function (value2, key2){
                     if (value2.id == value.id){
                         self.baList[key].available = false;
@@ -110,18 +124,15 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
             });
         });
     };
-    self.job.company = {};
-    // self.job.company.imageUrl = 'https://skpsoft.com/baby/wp-content/uploads/2016/09/default-thumbnail.jpg';
 
     self.onCompanyChange = function (str) {
-        // if (self.companyItem == null) {
-            self.job.company.name = str;
-        // }
+        self.job.company.name = str;
     };
 
     self.onCompanySelect = function (selected) {
         if (selected != null) {
             self.job.company = selected.originalObject;
+            console.log(selected);
             self.getCompanyList();
         }
     };
@@ -147,5 +158,23 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
             }
         });
         return retVal;
-    }
+    };
+
+    $scope.fileSelected = function (element) {
+
+        let file = element.files[0];
+        let storageRef = firebase.storage().ref('events/' + file.name.replace(" ", ""));
+        let state = storageRef.put(file);
+        state.on('state_changed',
+            function progress(snapshot) {
+            },
+
+            function error(err) {
+            },
+
+            function complete() {
+                self.job.company.imageUrl = state.snapshot.downloadURL.toString();
+            }
+        );
+    };
 });

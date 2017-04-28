@@ -1,11 +1,13 @@
 angular.module('myApp').controller('profile', function ($rootScope, $cookies, $timeout, $filter, $location,
                                                         $routeParams, jobService, userService, chatService,
-                                                        baListService) {
+                                                        baListService, $scope) {
 
     let self = this;
     let id = $routeParams.id;
     let user = {};
     self.baLists = [];
+    $scope.upload = true;
+    $scope.cupload = true;
 
     let userId = $cookies.get('currentUser');
     if(userId != null) {
@@ -150,7 +152,6 @@ angular.module('myApp').controller('profile', function ($rootScope, $cookies, $t
         baListService.create(self.baList).then(function (response) {
             self.baLists.push(response.data);
             self.baList = {};
-            // $modalInstance.close();
         })
     };
 
@@ -159,8 +160,40 @@ angular.module('myApp').controller('profile', function ($rootScope, $cookies, $t
         baListService.create(list).then(function (response) {
             self.baLists.push(response.data);
             self.baList = {};
-            // $modalInstance.close();
         })
+    };
+
+    self.updateProfile = function () {
+        $rootScope.currentUser.imageUrl = self.profile.imageUrl;
+        $rootScope.currentUser.coverUrl = self.profile.coverUrl;
+
+        userService.create($rootScope.currentUser).then(function (response) {
+            $rootScope.currentUser = response.data;
+        })
+    };
+
+    $scope.fileSelected = function (element) {
+
+        let file = element.files[0];
+        let storageRef = firebase.storage().ref('users/'+ $rootScope.currentUser.id +"/"+ file.name.replace(" ", ""));
+        let state = storageRef.put(file);
+        state.on('state_changed',
+            function progress(snapshot) {
+            },
+
+            function error(err) {
+            },
+
+            function complete() {
+                if(self.main) {
+                    self.profile.imageUrl = state.snapshot.downloadURL.toString();
+                    console.log(self.profile.imageUrl, ': is my new profiler');
+                } else {
+                    self.profile.coverUrl = state.snapshot.downloadURL;
+                    console.log(self.profile.coverUrl, ': is my new cover');
+                }
+            }
+        );
     };
 
 });

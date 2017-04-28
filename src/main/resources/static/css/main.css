@@ -114,13 +114,23 @@ footer.page-footer {
 }
 
 .avatar {
-    border-radius: 50%;
+    border-radius: 50% !important;
     display: block;
-    height: 120px;
+    height: 120px !important;
     margin: -65px auto 0;
     width: 120px;
-    background-size: cover;
-    background-position: center;
+    object-fit: cover;
+    /*background-size: cover;*/
+    /*background-position: center;*/
+}
+
+.edit-pic {
+    display: block;
+    height: 400px;
+    width: 400px;
+    object-fit: cover;
+    /*background-size: cover;*/
+    /*background-position: center;*/
 }
 
 .fc-view-container {
@@ -275,7 +285,7 @@ footer.page-footer {
 }
 
 .events-pic {
-    height: 150px;
+    height: 170px;
     display: block;
     background-size: cover;
     background-position: center;
@@ -338,4 +348,31 @@ footer.page-footer {
     border-right: none;
     border-left: none;
     border-top: none;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px 20%;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    margin: -75px 0 0 -75px;
+    width: 120px;
+    height: 120px;
 }

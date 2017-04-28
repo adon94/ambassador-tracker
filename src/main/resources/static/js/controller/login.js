@@ -13,7 +13,8 @@ angular.module('myApp').controller('login', function($rootScope, $location, $rou
     }
 
     self.createUser = function () {
-        if(self.new.firstName != "" && self.new.lastName != "" && self.new.email != "" && self.new.password != "" && self.newPassword2 != "") {
+        if(self.new.firstName != null && self.new.lastName != null && self.new.email != null &&
+            self.new.password != null && self.newPassword2 != null && self.new.registrationCode != null) {
             if (self.new.password.length > 4) {
                 if (self.new.password == self.newPassword2) {
                     userService.create(self.new).then(function (response) {

@@ -16,7 +16,8 @@
                     <div class="card-up">
                         <div ng-style="{'background-image':'url('+ctrl.user.coverUrl+')'}" class="cover-pic"></div>
                     </div>
-                    <div class="avatar hoverable" ng-style="{'background-image':'url('+ctrl.user.imageUrl+')'}"></div>
+                    <!--<div class="avatar hoverable" ng-style="{'background-image':'url('+ctrl.user.imageUrl+')'}"></div>-->
+                    <img ng-src="{{ctrl.user.imageUrl}}" class="avatar hoverable">
                     <div class="card-block">
                         <div class="flex-center">
                             <h2 class="text-center">{{ctrl.user.firstName}} {{ctrl.user.lastName}}</h2>
@@ -38,14 +39,26 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="imageUrl">Profile Pic Url</label>
-                                        <input ng-model="ctrl.user.imageUrl" id="imageUrl" type="text" class="input-md">
+                                        <label for="imageUrl">Profile Pic (<a ng-click="upload = true">Upload</a>/<a ng-click="upload = false">Url</a>)</label>
+                                        <input ng-if="!upload" ng-model="ctrl.user.imageUrl" id="imageUrl" type="text" class="input-md">
+                                        <!--<input ng-if="upload" class="btn btn-default" type="file" id="inputfile" ng-click="ctrl.main = true"-->
+                                               <!--onchange="angular.element(this).scope().fileSelected(this)"/>-->
+                                        <div class="fileUpload btn blue-green" ng-if="upload">
+                                            <span>Upload</span>
+                                            <input type="file" class="upload" ng-click="ctrl.main = true"
+                                                   onchange="angular.element(this).scope().fileSelected(this)"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="coverPic">Cover Pic Url</label>
-                                        <input ng-model="ctrl.user.coverUrl" id="coverPic" type="text" class="input-md">
+                                        <label for="coverPic">Cover Pic (<a ng-click="cupload = true">Upload</a>/<a ng-click="cupload = false">Url</a>)</label>
+                                        <input ng-if="!cupload" ng-model="ctrl.user.coverUrl" id="coverPic" type="text" class="input-md">
+                                        <div class="fileUpload btn blue-green" ng-if="cupload">
+                                            <span>Upload</span>
+                                            <input type="file" class="upload" ng-click="ctrl.main = false"
+                                                   onchange="angular.element(this).scope().fileSelected(this)"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +105,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn teal-blue" type="submit">Continue</button>
                         </form>
                     </div>
                 </div>
@@ -100,3 +113,4 @@
         </div>
     </div>
 </main>
+<img id="mySpinner" src="/static/resources/spinner.gif" ng-show="ctrl.loading" class="loader"/>

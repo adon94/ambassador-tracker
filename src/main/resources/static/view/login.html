@@ -1,8 +1,17 @@
-<div ng-include="'partial/nav.html'"></div>
+<div ng-controller="nav as nctrl">
+    <nav class="navbar navbar-toggleable-md navbar-dark scrolling-navbar wet-asphalt">
+        <div class="container">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#/login"><i class="fa fa-pinterest-p fa-fw"><i>emble</i></i></a>
+        </div>
+    </nav>
+</div>
 <div class="on-top">
     <div class="row">
-        <div class="col-7"></div>
-        <div class="col-5">
+        <div class="col-6"></div>
+        <div class="col-6">
             <div class="card card-block login-card">
                 <div class="row flex-center">
                     <form class="form-inline" ng-submit="ctrl.login()">
@@ -19,8 +28,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-7"></div>
-        <div class="col-5">
+        <div class="col-6"></div>
+        <div class="col-6">
             <div class="card login-card">
                 <div class="card-block">
                     <div class="text-center">
@@ -37,12 +46,12 @@
                             <input type="text" id="form2" class="form-control" placeholder="Last name" ng-model="ctrl.new.lastName">
                         </div>
                         <div class="form-group col-6">
-                            <label class="sr-only" for="form3">Your email</label>
-                            <input type="text" id="form3" class="form-control" placeholder="Your email" ng-model="ctrl.new.email">
-                        </div>
-                        <div class="form-group col-6">
                             <label class="sr-only" for="form4">Reg-pin</label>
                             <input type="text" id="form4" class="form-control" placeholder="Registration code" ng-model="ctrl.new.registrationCode">
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="sr-only" for="form3">Your email</label>
+                            <input type="text" id="form3" class="form-control" placeholder="Your email" ng-model="ctrl.new.email">
                         </div>
                         <br>
                         <div class="form-group col-6">

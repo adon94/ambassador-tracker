@@ -137,6 +137,8 @@ angular.module('myApp').controller('nav', function($rootScope, $cookies, $locati
         console.log("Logging out");
         $cookies.remove('currentUser');
         $rootScope.currentUser = null;
+        userId = null;
+        user = {};
         $location.path("/login");
     };
 

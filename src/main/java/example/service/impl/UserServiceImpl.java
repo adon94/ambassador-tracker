@@ -2,6 +2,7 @@ package example.service.impl;
 
 import example.dao.UserDAO;
 import example.model.User;
+import example.service.MailService;
 import example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,14 +36,31 @@ public class UserServiceImpl implements UserService {
 
             return userDAO.save(user);
         } else {
-            return null;
+            throw new Exception("Not found");
         }
+    }
+
+    @Override
+    public User admin() throws Exception {
+
+        User user = new User();
+        user.setManager(true);
+        user.setEmail("pembleco@gmail.com");
+        user.setPassword("admin");
+        user.setFirstName("Pemble");
+        user.setLastName("Admin");
+
+        return userDAO.save(user);
     }
 
     @Override
     public User generateCode(User user) throws Exception {
         UUID id = UUID.randomUUID();
         user.setRegistrationCode(id.toString());
+        if (user.getEmail() != null) {
+            MailService m = new MailService();
+            m.sendRegMail(user.getEmail(), id.toString());
+        }
         return userDAO.save(user);
     }
 

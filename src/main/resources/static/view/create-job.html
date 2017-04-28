@@ -15,8 +15,10 @@
                         <p><small>Created by {{currentUser.firstName}} {{currentUser.lastName}}</small></p>
                         <p>{{ctrl.job.location}}</p>
                         <p>Rate: {{ctrl.job.wage | currency:"€"}}</p>
-                        <p>Starts at {{ctrl.startMoment._d | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-                        <p>Ends at {{ctrl.endMoment._d | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                        <p ng-if="!ctrl.edit">Starts at {{ctrl.startMoment._d | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                        <p ng-if="!ctrl.edit">Ends at {{ctrl.endMoment._d | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                        <p ng-if="ctrl.edit">Starts at {{ctrl.job.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
+                        <p ng-if="ctrl.edit">Ends at {{ctrl.job.endDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                     </div>
                 </div>
             </div>
@@ -25,7 +27,8 @@
 
                     <!--Header-->
                     <div class="text-center">
-                        <h3><i class="fa fa-calendar"></i> New Event</h3>
+                        <h3 ng-if="!ctrl.edit"><i class="fa fa-calendar"></i> New Event</h3>
+                        <h3 ng-if="ctrl.edit"><i class="fa fa-calendar"></i> Edit Event</h3>
                         <hr class="mt-2 mb-2">
                     </div>
                     <!--<div class="form-group">-->
@@ -37,6 +40,7 @@
                         <label for="company">Client</label>
                         <div angucomplete-alt id="company"
                              maxlength="20"
+                             placeholder="{{ctrl.job.company.name}}"
                              pause="10"
                              selected-object="ctrl.onCompanySelect"
                              local-data="ctrl.clients"
@@ -50,24 +54,35 @@
                         ></div>
                     </div>
                     <div class="form-group">
-                        <label for="imageUrl">Image Url</label>
-                        <input ng-model="ctrl.job.company.imageUrl" id="imageUrl" name="imageUrl" type="text" class="input-md">
+                        <label for="imageUrl">Image (<a ng-click="upload = true">Upload</a>/<a ng-click="upload = false">Url</a>)</label>
+                        <input ng-model="ctrl.job.company.imageUrl" id="imageUrl" ng-if="!upload" name="imageUrl" type="text" class="input-md">
+                        <div class="fileUpload btn btn-default" ng-if="upload">
+                            <span>Upload</span>
+                            <input type="file" class="upload" style="margin: 10px 40%;"
+                                   onchange="angular.element(this).scope().fileSelected(this)"/>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="location">Location</label>
                         <input placeholder="" googleplace options="options1" ng-model="ctrl.job.location" id="location" name="location" type="text" class="input-md">
                     </div>
-                    <div class="form-group">
-                        <label for="wage">Base wage</label>
-                        <div class="md-form input-group">
-                            <span class="input-group-addon">€</span>
-                            <input ng-model="ctrl.job.wage" style="margin: 0 5px; width: 100px" name="wage" id="wage" class="input-md" type="text">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="wage">Base wage</label>
+                                <div class="md-form input-group">
+                                    <span class="input-group-addon">€</span>
+                                    <input ng-model="ctrl.job.wage" name="wage" id="wage" class="input-md" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="maxPeople">Max. people</label>
+                                <input ng-model="ctrl.job.maxPeople" id="maxPeople" name="maxPeople" type="text" class="input-md">
+                            </div>
                         </div>
                     </div>
-                    <!--<div class="form-group">-->
-                    <!--<label for="requiredBoys">Minimum no. of boys</label>-->
-                    <!--<input ng-model="ctrl.job.requiredBoys" id="requiredBoys" name="requiredBoys" type="text" class="input-md">-->
-                    <!--</div>-->
                     <!--<div class="form-group">-->
                     <!--<label for="requiredGirls">Minimum no. of girls</label>-->
                     <!--<input ng-model="ctrl.job.requiredGirls" id="requiredGirls" name="requiredGirls" type="text" class="input-md">-->
@@ -77,15 +92,15 @@
                             <div class="form-group">
                                 <label for="startMoment">Starts at...</label>
                                 <input id="startMoment"
+                                       placeholder="{{ctrl.job.startDate | date:' dd MMMM yyyy HH:mm'}}"
                                        class="form-control md-select"
-                                       placeholder="Select a date and time"
                                        moment-picker="ctrl.startMoment"
+                                       ng-model="ctrl.startMoment"
                                        locale="en-gb"
                                        format="LL LT"
                                        max-view="hour"
                                        start-view="month"
                                        autoclose="true"
-                                       ng-model="ctrl.startMoment"
                                        ng-model-options="{ updateOn: 'blur' }"
                                        aria-label="Starts at">
                             </div>
@@ -95,7 +110,7 @@
                                 <label for="endMoment">Ends at...</label>
                                 <input id="endMoment"
                                        class="form-control md-select"
-                                       placeholder="Select a date and time"
+                                       placeholder="{{ctrl.job.endDate | date:' dd MMMM yyyy HH:mm'}}"
                                        moment-picker="ctrl.endMoment"
                                        locale="en-gb"
                                        format="LL LT"
@@ -117,7 +132,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" ng-if="!ctrl.edit">
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="invite-select">Brand Ambassadors</label>
@@ -144,13 +159,22 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <select class="md-select form-control"
-                                ng-model="ctrl.selectedList"
-                                ng-change="ctrl.listChange()"
-                                ng-init="ctrl.selectedList = null">
-                            <option ng-value="null" selected="selected">All</option>
-                            <option ng-repeat="list in ctrl.baLists" ng-value="{{list}}">{{list.title}}</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <input placeholder="Search" ng-model="search.$" type="text" class="input-md">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <select class="md-select form-control"
+                                        ng-model="ctrl.selectedList"
+                                        ng-change="ctrl.listChange()"
+                                        ng-init="ctrl.selectedList = null">
+                                    <option ng-value="null" selected="selected">All</option>
+                                    <option ng-repeat="list in ctrl.baLists" ng-value="{{list}}">{{list.title}}</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table width="100%" class="table table-striped table-bordered table-hover">
                                 <thead>
@@ -158,12 +182,10 @@
                                     <th></th>
                                     <th>Name</th>
                                     <th>Availability</th>
-                                    <!--<th>Role</th>-->
-                                    <!--<th>Supplement Wage</th>-->
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="ba in ctrl.baList | orderBy:'firstName' | filter: ctrl.myFilter">
+                                <tr ng-repeat="ba in ctrl.baList | orderBy:'firstName' | filter: ctrl.myFilter | filter: search" ng-if="ba.firstName != null">
                                     <td ng-if="ba.available"><input type="checkbox" value="{{ba.id}}" ng-model="ba.selected"></td>
                                     <td ng-if="!ba.available"><input type="checkbox" disabled></td>
                                     <td><a href="#/ba/view/{{ba.id}}" target="_blank">{{ba.firstName}} {{ba.lastName}}</a></td>
@@ -172,12 +194,6 @@
                                         Unavailable, working with
                                         <a href="#/job/view/{{ba.jobId}}" target="_blank">{{ba.workingFor.name}}</a>
                                     </td>
-                                    <!--<td>-->
-                                    <!--<input type="text">-->
-                                    <!--</td>-->
-                                    <!--<td>-->
-                                    <!--<input type="text">-->
-                                    <!--</td>-->
                                 </tr>
                                 </tbody>
                             </table>

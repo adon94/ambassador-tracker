@@ -15,9 +15,9 @@ public class JobDO extends AbstractEntity {
     @ManyToOne
     private User jobManager;
 
-    private int requiredBoys;
-    private int requiredGirls;
+    private int maxPeople;
     private boolean open;
+    private boolean full;
 
     @ManyToOne(cascade=CascadeType.MERGE)//come back to this... maybe
     private Company company;
@@ -46,20 +46,12 @@ public class JobDO extends AbstractEntity {
         this.jobManager = jobManager;
     }
 
-    public int getRequiredBoys() {
-        return requiredBoys;
+    public int getMaxPeople() {
+        return maxPeople;
     }
 
-    public void setRequiredBoys(int requiredBoys) {
-        this.requiredBoys = requiredBoys;
-    }
-
-    public int getRequiredGirls() {
-        return requiredGirls;
-    }
-
-    public void setRequiredGirls(int requiredGirls) {
-        this.requiredGirls = requiredGirls;
+    public void setMaxPeople(int maxPeople) {
+        this.maxPeople = maxPeople;
     }
 
     public boolean isOpen() {
@@ -165,5 +157,13 @@ public class JobDO extends AbstractEntity {
 
     public void setDeclined(List<User> declined) {
         this.declined = declined;
+    }
+
+    public boolean isFull() {
+        return full;
+    }
+
+    public void setFull(boolean full) {
+        this.full = full;
     }
 }

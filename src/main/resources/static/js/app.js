@@ -1,5 +1,5 @@
 angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker', 'toastr', 'luegg.directives',
-    'angucomplete-alt', 'angularMoment' ])
+    'angucomplete-alt', 'angularMoment', 'firebase' ])
     .config(function($routeProvider, $locationProvider, toastrConfig) {
 
         $locationProvider.hashPrefix('');
@@ -20,7 +20,7 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             controller : 'account',
             controllerAs: 'ctrl'
         })
-            .when('/job/new', {
+            .when('/job/new/:id?', {
             templateUrl : 'view/create-job.html',
             controller : 'createJob',
             controllerAs: 'ctrl'
@@ -92,4 +92,14 @@ angular.module('myApp', [ 'ngRoute', 'ui.calendar', 'ngCookies', 'moment-picker'
             preventOpenDuplicates: false,
             target: 'body'
         });
+
+        // Initialize Firebase
+        const config = {
+            apiKey: "AIzaSyBkt6sGzu2K-kqmRzUUhgc01o3NQHTaZ-s",
+            authDomain: "ambassadortracker.firebaseapp.com",
+            databaseURL: "https://ambassadortracker.firebaseio.com",
+            storageBucket: "ambassadortracker.appspot.com",
+            messagingSenderId: "1009962031783"
+        };
+        firebase.initializeApp(config);
 });

@@ -1,14 +1,23 @@
 <div ng-include="'partial/nav.html'"></div>
 <main class="mt-2">
     <div class="container">
-        <div class="form-group">
-            <label for="userType">User type</label>
-            <select id="userType" ng-model="ctrl.user.manager">
-                <option value="false">Brand Ambassador</option>
-                <option value="true">Manager</option>
-            </select>
+        <div class="card card-block">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="email">Email (optional)</label>
+                    <input ng-model="ctrl.user.email" id="email" type="text" class="input-md">
+                </div>
+                <div class="form-group">
+                    <label for="userType">User type</label>
+                    <select id="userType" ng-model="ctrl.user.manager" ng-init="ctrl.user.manager = 'false'"
+                            class="form-control md-select">
+                        <option value="false">Brand Ambassador</option>
+                        <option value="true">Manager</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" ng-click="ctrl.generate()">Generate</button>
+            <p>{{ctrl.userCode}}</p>
         </div>
-        <button class="btn btn-primary" ng-click="ctrl.generate()">Generate</button>
-        <p>{{ctrl.userCode}}</p>
     </div>
 </main>

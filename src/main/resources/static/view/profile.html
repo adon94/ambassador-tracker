@@ -6,9 +6,14 @@
                 <div class="card-wrapper">
                     <div class="card">
                         <div class="card-up">
+                            <a data-target="#coverModal" data-toggle="modal">
                             <div ng-style="{'background-image':'url('+ctrl.profile.coverUrl+')'}" class="cover-pic"></div>
+                            </a>
                         </div>
-                        <div class="avatar hoverable" ng-style="{'background-image':'url('+ctrl.profile.imageUrl+')'}"></div>
+                        <a data-target="#picModal" data-toggle="modal">
+                            <!--<div class="avatar hoverable" ng-style="{'background-image':'url('+ctrl.profile.imageUrl+')'}"></div>-->
+                            <img ng-src="{{ctrl.profile.imageUrl}}" class="avatar hoverable">
+                        </a>
                         <div class="card-block">
                             <div class="flex-center">
                                 <h2 class="text-center">{{ctrl.profile.firstName}} {{ctrl.profile.lastName}}</h2>
@@ -66,7 +71,8 @@
                                 <footer class="blockquote-footer">Created by <a href="#/emp/view/{{inv.jobManager.id}}">{{inv.jobManager.firstName}} {{inv.jobManager.lastName}}</a></footer>
                                 <p>Starting at {{inv.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                                 <p>
-                                    <button ng-if="currentUser.id == ctrl.profile.id && !currentUser.manager" ng-click="ctrl.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>
+                                    <button ng-if="currentUser.id == ctrl.profile.id && !currentUser.manager && inv.full == false" ng-click="ctrl.acceptJob(inv)" class="btn btn-outline btn-success">Accept</button>
+                                    <button ng-if="currentUser.id == ctrl.profile.id && !currentUser.manager && inv.full == true" disabled class="btn btn-outline btn-success">Event is full</button>
                                     <button ng-if="currentUser.id == ctrl.profile.id && !currentUser.manager" ng-click="ctrl.declineJob(inv)" class="btn btn-outline btn-danger">Decline</button>
                                     <a href="#/job/view/{{inv.id}}" class="btn btn-outline btn-primary" role="button">View</a>
                                 </p>
@@ -173,6 +179,56 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" ng-click="ctrl.createList()" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="picModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Body-->
+                    <div class="modal-body flex-center">
+                        <img class="edit-pic" ng-src="{{ctrl.profile.imageUrl}}">
+                    </div>
+                    <div class="modal-footer" ng-if="currentUser.id == ctrl.profile.id">
+                        <div class="form-group">
+                            <label for="profilePic">Profile Picture (<a ng-click="upload = true">Upload</a>/<a ng-click="upload = false">Url</a>)</label>
+                            <input ng-if="!upload" ng-model="ctrl.profile.imageUrl" id="profilePic" type="text" class="input-md">
+                            <div class="fileUpload btn btn-default" ng-if="upload">
+                                <span>Upload</span>
+                                <input type="file" class="upload" ng-click="ctrl.main = true"
+                                       onchange="angular.element(this).scope().fileSelected(this)"/>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" ng-click="ctrl.updateProfile()" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="coverModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <!--Content-->
+                <div class="modal-content">
+                    <!--Body-->
+                    <div class="modal-body flex-center">
+                        <img class="edit-pic" ng-src="{{ctrl.profile.coverUrl}}" style="height: 250px">
+                    </div>
+                    <div class="modal-footer" ng-if="currentUser.id == ctrl.profile.id">
+                        <div class="form-group">
+                            <label for="coverPic">Cover Picture (<a ng-click="cupload = true">Upload</a>/<a ng-click="cupload = false">Url</a>)</label>
+                            <input ng-if="!cupload" ng-model="ctrl.profile.coverUrl" id="coverPic" type="text" class="input-md">
+                            <div class="fileUpload btn btn-default" ng-if="cupload">
+                                <span>Upload</span>
+                                <input type="file" class="upload" ng-click="ctrl.main = false"
+                                       onchange="angular.element(this).scope().fileSelected(this)"/>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" ng-click="ctrl.updateProfile()" data-dismiss="modal">Save</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>

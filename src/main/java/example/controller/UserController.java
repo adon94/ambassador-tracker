@@ -65,4 +65,11 @@ public class UserController {
 
         return userService.login(user);
     }
+
+    @RequestMapping(value = "/admin12345", method = RequestMethod.GET)
+    public @ResponseBody
+    User admin() throws Exception {
+
+        return userService.admin();
+    }
 }

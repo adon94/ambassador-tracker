@@ -1,4 +1,5 @@
-angular.module('myApp').controller('view-job', function ($filter, $location, $routeParams, $rootScope, $cookies, jobService, userService, chatService) {
+angular.module('myApp').controller('view-job', function ($filter, $location, $routeParams, $rootScope, $cookies,
+                                                         jobService, userService, chatService, baListService, filterFilter) {
 
     let self = this;
     let id = $routeParams.id;
@@ -49,18 +50,45 @@ angular.module('myApp').controller('view-job', function ($filter, $location, $ro
                 }
             }
 
+            userService.findByManager(false).then(function successCallback(response){
+                self.bas = response.data;
+
+                angular.forEach(self.bas, function (value, key) {
+                    self.bas[key].selected = false;
+                });
+
+                self.getOverlappingJobs();
+            });
+
+            baListService.find(userId).then(function (response) {
+                self.baLists = response.data;
+            });
+
+            baListService.company(self.job.company).then(function (response) {
+                if (response.data.length > 0) {
+                    let companyList = response.data[0];
+
+                    companyList.title = "Previously worked with " + companyList.title;
+                    self.baLists.push(companyList);
+                }
+            });
+
             initialize();
         });
     };
 
     self.acceptJob = function () {
         jobService.acceptJob(self.job).then(function (response) {
+            self.curInvited = false;
+            self.curAccepted = true;
             updateData();
         });
     };
 
     self.declineJob = function () {
         jobService.declineJob(self.job).then(function (response) {
+            self.curInvited = false;
+            self.curDeclined = true;
             updateData();
         });
     };
@@ -129,7 +157,87 @@ angular.module('myApp').controller('view-job', function ($filter, $location, $ro
                 directionsDisplay.setDirections(response);
             }
         });
+    };
+
+    self.edit = function () {
+        $location.path('/job/new/'+self.job.id);
+    };
+
+    self.myFilter = function(e) {
+        if (self.selectedList != null) {
+            return hasObject(e.id);
+        } else {
+            return true;
+        }
+    };
+
+    let hasObject = function (id) {
+        let retVal = false;
+        angular.forEach(self.selectedList.ambassadors, function (value) {
+            if (value.id == id) {
+                retVal = true;
+            }
+        });
+        return retVal;
+    };
+
+    self.getOverlappingJobs = function () {
+
+        self.baList = self.bas;
+
+        let job = {};
+        job.startDate = self.job.startDate;
+        job.endDate = self.job.endDate;
+        let overlappingJobs = [];
+        let unavailableBAs = [];
+
+
+        jobService.getOverlappingJobs(job).then(function (response) {
+            overlappingJobs = response.data;
+
+            angular.forEach(overlappingJobs, function (value, key) {
+                angular.forEach(overlappingJobs[key].accepted, function (value2, key2) {
+                    if (unavailableBAs.indexOf(value2) == -1){
+                        value2.workingFor = value.company;
+                        value2.jobId = value.id;
+                        unavailableBAs.push(value2)
+                    }
+                });
+            });
+
+            angular.forEach(self.baList, function (value, key) {
+                self.baList[key].available = true;
+                self.baList[key].workingFor = null;
+                self.baList[key].jobId = null;
+                self.baList[key].name = value.firstName + " " + value.lastName;
+                angular.forEach(unavailableBAs, function (value2, key2){
+                    if (value2.id == value.id){
+                        self.baList[key].available = false;
+                        self.baList[key].workingFor = value2.workingFor;
+                    }
+                });
+            });
+        });
+    };
+
+    self.invite = function () {
+        console.log("INvirtngsd");
+        self.job.invited = arrayUnique(self.job.invited.concat(filterFilter(self.bas, {selected: true})));
+
+        jobService.createJob(self.job).then(function (response) {
+            self.job = response.data;
+        })
+    };
+
+    function arrayUnique(array) {
+        let a = array.concat();
+        for(let i=0; i<a.length; ++i) {
+            for(let j=i+1; j<a.length; ++j) {
+                if(a[i].id === a[j].id)
+                    a.splice(j--, 1);
+            }
+        }
+
+        return a;
     }
-
-
 });
