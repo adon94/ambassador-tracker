@@ -17,11 +17,15 @@ angular.module('myApp').controller('nav', function($rootScope, $cookies, $locati
     } else {
         userService.findOne(userId).then(function successCallback(response) {
             $rootScope.currentUser = response.data;
-//                $rootScope.msgNotifications = [];
+
             updateData();
         });
-        userService.all().then(function (response) {
+        userService.all().then(function successCallback(response) {
             self.allUsers = response.data;
+
+            angular.forEach(self.allUsers, function (value, key) {
+                self.allUsers[key].name = value.firstName + " " + value.lastName;
+            })
         })
     }
 
@@ -141,5 +145,10 @@ angular.module('myApp').controller('nav', function($rootScope, $cookies, $locati
         user = {};
         $location.path("/login");
     };
+
+    self.onUserSelect = function (selected) {
+        console.log(selected);
+        $location.path('/profile/' + selected.originalObject.id);
+    }
 
 });

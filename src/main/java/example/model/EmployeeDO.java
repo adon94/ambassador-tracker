@@ -7,8 +7,8 @@ import javax.persistence.Table;
  * Created by HP Lab1 on 04/11/2016.
  */
 
-@Entity
-@Table(name = "EMPLOYEE")
+//@Entity
+//@Table(name = "EMPLOYEE")
 public class EmployeeDO extends AbstractUser {
 //    private int[] favourites;
 //    private int[] recents;

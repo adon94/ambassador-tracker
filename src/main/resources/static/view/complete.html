@@ -84,8 +84,8 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="gender">Gender</label>
-                                        <select ng-model="ctrl.user.male" id="gender" class="form-control md-select">
-                                            <option value="true">Male</option>
+                                        <select ng-model="ctrl.user.male" ng-inti="ctrl.user.male = 'true'" id="gender" class="form-control md-select">
+                                            <option value="true" selected="selected">Male</option>
                                             <option value="false">Female</option>
                                         </select>
                                     </div>

@@ -25,19 +25,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User user) throws Exception {
+    public ResponseEntity<User> create(User user) throws Exception {
         List<User> users = userDAO.findByRegistrationCode(user.getRegistrationCode());
 
         if (!users.isEmpty()) {
             User user1 = users.get(0);
-            user.setRegistrationCode(user1.getRegistrationCode());
             user.setId(user1.getId());
             user.setManager(user1.isManager());
+            user.setRegistrationCode(null);
 
-            return userDAO.save(user);
+            return new ResponseEntity<User>(userDAO.save(user), HttpStatus.OK);
         } else {
-            throw new Exception("Not found");
+            return new ResponseEntity<User>(user, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Override
+    public User update(User user) throws Exception {
+
+        return userDAO.save(user);
     }
 
     @Override

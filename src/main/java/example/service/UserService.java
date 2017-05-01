@@ -9,8 +9,9 @@ import java.util.List;
 @Service
 public interface UserService {
 
-    User create(User user) throws Exception;
+    ResponseEntity<User> create(User user) throws Exception;
     User admin() throws Exception;
+    User update(User user) throws Exception;
     User generateCode(User user) throws Exception;
     User findOne(Long id) throws Exception;
     List<User> findAll() throws Exception;

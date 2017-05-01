@@ -14,10 +14,12 @@ angular.module('myApp').controller('complete', function ($scope, $location, $roo
     }
 
     self.saveProfile = function () {
-        if (self.user.coverUrl != null && self.user.imageUrl != null && self.user.dob != null && self.user.gender != null
+        if (self.user.coverUrl != null && self.user.imageUrl != null && self.user.dob != null && self.user.male != null
             && self.user.phone != null && self.user.address != null) {
-            userService.create(self.user).then(function (response) {
+            userService.update(self.user).then(function successResponse(response) {
                 $location.path("/")
+            }, function errorCallback(response) {
+                toastr.error('An unexpected error occurred', 'Error ' + response.status);
             })
         } else {
             toastr.error('All fields required to continue', 'Error');

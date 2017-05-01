@@ -9,7 +9,7 @@ import java.util.List;
         name = "JobDO.findOverlap",
         query = "SELECT id FROM job WHERE DATEDIFF(start_date, ?1) = 0 AND start_date < ?2 AND ?1 < end_date"
 )
-@Table(name = "job")
+@Table(name = "JOB")
 public class JobDO extends AbstractEntity {
 
     @ManyToOne

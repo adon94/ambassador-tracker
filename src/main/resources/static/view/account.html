@@ -16,29 +16,11 @@
                 </tr>
                 <tr>
                     <td><b>Password</b></td>
-                    <td ng-if="!ctrl.editPassword">{{ctrl.user.password}}</td>
-                    <td ng-if="ctrl.editPassword"><input ng-model="ctrl.user.password" ng-value="currentUser.password"></td>
+                    <td ng-if="!ctrl.editPassword" style="-webkit-text-security: disc;">{{ctrl.user.password}}</td>
+                    <td ng-if="ctrl.editPassword"><input type="password" ng-model="ctrl.user.password" ng-value="currentUser.password"></td>
                     <td>
                         <a class="blue-text" ng-if="!ctrl.editPassword" ng-click="ctrl.editPassword = true">Edit</a>
                         <a class="blue-text" ng-if="ctrl.editPassword" ng-click="ctrl.updateUser(); ctrl.editPassword = false">Save</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>Profile picture url</b></td>
-                    <td ng-if="!ctrl.editImageUrl">{{ctrl.user.imageUrl | limitTo:20}}...</td>
-                    <td ng-if="ctrl.editImageUrl"><input ng-model="ctrl.user.imageUrl" ng-value="currentUser.imageUrl"></td>
-                    <td>
-                        <a class="blue-text" ng-if="!ctrl.editImageUrl" ng-click="ctrl.editImageUrl = true">Edit</a>
-                        <a class="blue-text" ng-if="ctrl.editImageUrl" ng-click="ctrl.updateUser(); ctrl.editImageUrl = false">Save</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>Cover photo url</b></td>
-                    <td ng-if="!ctrl.editCoverUrl">{{ctrl.user.coverUrl | limitTo:20}}...</td>
-                    <td ng-if="ctrl.editCoverUrl"><input ng-model="ctrl.user.coverUrl" ng-value="currentUser.coverUrl"></td>
-                    <td>
-                        <a class="blue-text" ng-if="!ctrl.editCoverUrl" ng-click="ctrl.editCoverUrl = true">Edit</a>
-                        <a class="blue-text" ng-if="ctrl.editCoverUrl" ng-click="ctrl.updateUser(); ctrl.editCoverUrl = false">Save</a>
                     </td>
                 </tr>
                 <tr>

@@ -22,7 +22,7 @@ public class UserController {
 
     @RequestMapping(value="/create", method= RequestMethod.POST)
     public @ResponseBody
-    User create(@RequestBody User user) throws Exception {
+    ResponseEntity<User> create(@RequestBody User user) throws Exception {
 
         return userService.create(user);
     }
@@ -32,6 +32,13 @@ public class UserController {
     User generate(@RequestBody User user) throws Exception {
 
         return userService.generateCode(user);
+    }
+
+    @RequestMapping(value="/update", method= RequestMethod.POST)
+    public @ResponseBody
+    User update(@RequestBody User user) throws Exception {
+
+        return userService.update(user);
     }
 
     @RequestMapping(value="/updateLastSeen", method= RequestMethod.POST)

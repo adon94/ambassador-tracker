@@ -218,7 +218,7 @@ public class JobServiceImpl implements JobService {
 
         if (user != null) {
             Notification notification = new Notification();
-            notification.setMessage("accepted your event invitation for");
+            notification.setMessage("joined your event for");
             notification.setSender(user);
             notification.setTimestamp(timestamp);
             notification.setJob(jobDO);

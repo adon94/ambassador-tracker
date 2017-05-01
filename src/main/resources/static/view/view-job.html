@@ -11,11 +11,11 @@
                         <h1 class="h1-responsive">{{ctrl.job.company.name}}</h1>
                         <div class="flex-center">
                             <button disabled ng-if="ctrl.job.full == true" class="btn btn-outline btn-success">(full)</button>
-                            <button ng-if="ctrl.curInvited && ctrl.job.full == false" ng-click="ctrl.acceptJob()" class="btn btn-outline btn-success">
-                                <i class="fa fa-check"></i>
+                            <button ng-if="(ctrl.curInvited || (ctrl.job.publicEvent && !ctrl.invited)) && ctrl.job.full == false" ng-click="ctrl.acceptJob()" class="btn btn-outline btn-success">
+                                Join
                             </button>
                             <button ng-if="ctrl.curInvited" ng-click="ctrl.declineJob()" class="btn btn-outline btn-danger">
-                                <i class="fa fa-times"></i>
+                                Decline
                             </button>
                         </div>
                         <hr class="my-2">
@@ -25,7 +25,6 @@
                         <p>Rate: {{ctrl.job.wage | currency:"€"}}</p>
                         <p>Starts: {{ctrl.job.startDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
                         <p>Ends: {{ctrl.job.endDate | date:"HH:mm 'on' dd/MM/yyyy"}}</p>
-                        <!-- /.col-lg-12 -->
                     </div>
                 </div>
                 <div class="card-wrapper">
@@ -115,7 +114,7 @@
                                             </a>
                                         </div>
                                         <a href="#/profile/{{accepted.id}}" target="_blank">
-                                            <div class="avatar hoverable" ng-style="{'background-image':'url('+accepted.imageUrl+')'}"></div>
+                                            <img ng-src="{{accepted.imageUrl}}" class="avatar hoverable">
                                         </a>
                                         <div class="card-block">
                                             <div class="flex-center">
@@ -147,7 +146,7 @@
                                             </a>
                                         </div>
                                         <a href="#/profile/{{invited.id}}" target="_blank">
-                                            <div class="avatar hoverable" ng-style="{'background-image':'url('+invited.imageUrl+')'}"></div>
+                                            <img ng-src="{{invited.imageUrl}}" class="avatar hoverable">
                                         </a>
                                         <div class="card-block">
                                             <div class="flex-center">
@@ -179,7 +178,7 @@
                                             </a>
                                         </div>
                                         <a href="#/profile/{{declined.id}}" target="_blank">
-                                            <div class="avatar hoverable" ng-style="{'background-image':'url('+declined.imageUrl+')'}"></div>
+                                            <img ng-src="{{declined.imageUrl}}" class="avatar hoverable">
                                         </a>
                                         <div class="card-block">
                                             <div class="flex-center">

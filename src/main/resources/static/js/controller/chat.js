@@ -37,6 +37,10 @@ angular.module('myApp').controller('chat', function ($filter, $location, $routeP
 
         userService.all().then(function successCallback(response) {
             self.allUsers = response.data;
+
+            angular.forEach(self.allUsers, function (value, key) {
+                self.allUsers[key].name = value.firstName + " " + value.lastName;
+            })
         });
 
         if (self.currentChat != null) {

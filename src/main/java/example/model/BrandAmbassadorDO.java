@@ -5,8 +5,8 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import java.sql.Blob;
 
-@Entity
-@Table(name = "BRAND_AMBASSADOR")
+//@Entity
+//@Table(name = "BRAND_AMBASSADOR")
 public class BrandAmbassadorDO extends AbstractUser {
 
     private String dob;

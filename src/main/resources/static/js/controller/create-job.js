@@ -1,5 +1,6 @@
 angular.module('myApp').controller('createJob', function ($scope, $filter, filterFilter, $location, $rootScope,
-                                                          $cookies, userService, jobService, baListService, $routeParams) {
+                                                          $cookies, userService, jobService, baListService, $routeParams,
+                                                            toastr) {
     let self = this;
     $scope.gPlace;
     $scope.upload = true;
@@ -33,28 +34,43 @@ angular.module('myApp').controller('createJob', function ($scope, $filter, filte
     self.baLists = [];
 
     self.createJob = function () {
-        let job = self.job;
-        if(self.startMoment._d != null && self.endMoment._d != null) {
-            job.startDate = self.startMoment._d;
-            job.endDate = self.endMoment._d;
-        }
 
-        job.jobManager = {
-            "id": $rootScope.currentUser.id,
-            "firstName": $rootScope.currentUser.firstName,
-            "lastName": $rootScope.currentUser.lastName
-        };
+        if (self.startMoment != null && self.endMoment != null && self.job.company != null && self.job.location != null
+        && self.job.company.name != null && self.job.wage != null && self.job.maxPeople != null && self.job.description != null) {
+            if (self.job.maxPeople > 0) {
+                if (self.job.wage > 0) {
 
-        if (!self.edit) {
-            job.invited = filterFilter(self.bas, {selected: true});
-        }
+                    let job = self.job;
+                    if (self.startMoment._d != null && self.endMoment._d != null) {
+                        job.startDate = self.startMoment._d;
+                        job.endDate = self.endMoment._d;
+                    }
 
-        console.log(job);
-        jobService.createJob(job).then(function (response) {
-            if(response.status == 200){
-                $location.path("/");
+                    job.jobManager = {
+                        "id": $rootScope.currentUser.id,
+                        "firstName": $rootScope.currentUser.firstName,
+                        "lastName": $rootScope.currentUser.lastName
+                    };
+
+                    if (!self.edit) {
+                        job.invited = filterFilter(self.bas, {selected: true});
+                    }
+
+                    console.log(job);
+                    jobService.createJob(job).then(function (response) {
+                        if (response.status == 200) {
+                            $location.path("/");
+                        }
+                    });
+                } else {
+                    toastr.warning('Hourly wage cannot be 0 or less');
+                }
+            } else {
+                toastr.warning('Maximum people must be greater than 0');
             }
-        });
+        } else {
+            toastr.warning('Please fill out all fields');
+        }
     };
 
     userService.findByManager(false).then(function successCallback(response){

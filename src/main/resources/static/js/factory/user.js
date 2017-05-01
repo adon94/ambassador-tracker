@@ -21,6 +21,9 @@ angular.module('myApp').factory('userService', function($http) {
         },
         updateLastSeen: function (user) {
             return $http.post('/user/updateLastSeen', user);
+        },
+        update: function (user) {
+            return $http.post('/user/update', user);
         }
     }
 

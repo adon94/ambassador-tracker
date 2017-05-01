@@ -17,12 +17,18 @@ angular.module('myApp').controller('login', function($rootScope, $location, $rou
             self.new.password != null && self.newPassword2 != null && self.new.registrationCode != null) {
             if (self.new.password.length > 4) {
                 if (self.new.password == self.newPassword2) {
-                    userService.create(self.new).then(function (response) {
+                    userService.create(self.new).then(function successCallback(response) {
                         if (response.status == 200) {
                             $cookies.put('currentUser', response.data.id);
                             $rootScope.currentUser = response.data;
                             $location.path("/complete");
                             toastr.success('Logged in as ' + response.data.firstName, 'Welcome');
+                        }
+                    }, function errorCallback(response) {
+                        if (response.status == 404) {
+                            toastr.error('Invalid registration code', 'Error');
+                        } else {
+                            toastr.error('An unexpected error occurred', 'Error '+response.status);
                         }
                     })
                 } else {

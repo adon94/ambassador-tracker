@@ -285,7 +285,7 @@ footer.page-footer {
 }
 
 .events-pic {
-    height: 170px;
+    height: 210px;
     display: block;
     background-size: cover;
     background-position: center;
@@ -375,4 +375,19 @@ footer.page-footer {
     margin: -75px 0 0 -75px;
     width: 120px;
     height: 120px;
+}
+
+#userSelect_value {
+    color: white;
+}
+
+.angucomplete-title {
+    height: 38px;
+    padding-top: 5px;
+}
+
+.angucomplete-image {
+    height: 34px !important;
+    border-radius: 50% !important;
+    object-fit: cover;
 }

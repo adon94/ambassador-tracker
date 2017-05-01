@@ -50,12 +50,10 @@ public class MailService {
             // Send the actual HTML message, as big as you like
             message.setContent("<h1>Welcome to Pemble</h1>\n" +
                     "<p>Here is your registration code:</p>\n" +
-                    "<p>" + code + "</p>" +
-                    "<p>Go to 147.252.150.7:8080</p>", "text/html");
+                    "<p>" + code + "</p>", "text/html");
 
             // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
+            sendEmail(message);
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
@@ -91,10 +89,17 @@ public class MailService {
                     "<p>"+msg+"</p>\n", "text/html");
 
             // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
+            sendEmail(message);
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
+    }
+
+    private void sendEmail(Message message) {
+//        try {
+//            Transport.send(message);
+//        } catch (MessagingException mex) {
+//            mex.printStackTrace();
+//        }
     }
 }

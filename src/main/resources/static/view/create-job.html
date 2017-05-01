@@ -31,11 +31,6 @@
                         <h3 ng-if="ctrl.edit"><i class="fa fa-calendar"></i> Edit Event</h3>
                         <hr class="mt-2 mb-2">
                     </div>
-                    <!--<div class="form-group">-->
-                    <!--<label for="company">Client</label>-->
-                    <!--<input uib-typeahead="company as company.name for company in ctrl.clients | filter:{name:$viewValue} | limitTo:8" typeahead-show-hint="true" typeahead-min-length="1"-->
-                    <!--ng-model="ctrl.companyItem" id="company" name="company" type="text" class="input-md" aria-label="Client">-->
-                    <!--</div>-->
                     <div class="form-group">
                         <label for="company">Client</label>
                         <div angucomplete-alt id="company"
@@ -56,9 +51,9 @@
                     <div class="form-group">
                         <label for="imageUrl">Image (<a ng-click="upload = true">Upload</a>/<a ng-click="upload = false">Url</a>)</label>
                         <input ng-model="ctrl.job.company.imageUrl" id="imageUrl" ng-if="!upload" name="imageUrl" type="text" class="input-md">
-                        <div class="fileUpload btn btn-default" ng-if="upload">
+                        <div class="fileUpload btn teal-blue" ng-if="upload">
                             <span>Upload</span>
-                            <input type="file" class="upload" style="margin: 10px 40%;"
+                            <input type="file" class="upload"
                                    onchange="angular.element(this).scope().fileSelected(this)"/>
                         </div>
                     </div>
@@ -69,17 +64,17 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="wage">Base wage</label>
+                                <label for="wage">Hourly wage</label>
                                 <div class="md-form input-group">
                                     <span class="input-group-addon">€</span>
-                                    <input ng-model="ctrl.job.wage" name="wage" id="wage" class="input-md" type="text">
+                                    <input ng-model="ctrl.job.wage" name="wage" id="wage" class="input-md" type="number">
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="maxPeople">Max. people</label>
-                                <input ng-model="ctrl.job.maxPeople" id="maxPeople" name="maxPeople" type="text" class="input-md">
+                                <input ng-model="ctrl.job.maxPeople" id="maxPeople" name="maxPeople" type="number" class="input-md">
                             </div>
                         </div>
                     </div>
@@ -96,6 +91,7 @@
                                        class="form-control md-select"
                                        moment-picker="ctrl.startMoment"
                                        ng-model="ctrl.startMoment"
+                                       max-date="ctrl.endMoment"
                                        locale="en-gb"
                                        format="LL LT"
                                        max-view="hour"
@@ -112,6 +108,7 @@
                                        class="form-control md-select"
                                        placeholder="{{ctrl.job.endDate | date:' dd MMMM yyyy HH:mm'}}"
                                        moment-picker="ctrl.endMoment"
+                                       min-date="ctrl.startMoment"
                                        locale="en-gb"
                                        format="LL LT"
                                        max-view="hour"
@@ -133,19 +130,28 @@
                         </div>
                     </div>
                     <div class="row" ng-if="!ctrl.edit">
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="form-group">
-                                <label for="invite-select">Brand Ambassadors</label>
+                                <label for="invite-select">Brand Ambassadors</label><br>
                                 <button type="button" ng-disabled="ctrl.endMoment._d == null || ctrl.startMoment._d == null"
-                                        ng-click="ctrl.getOverlappingJobs()" id="invite-select" class="btn btn-default btn-lg"
+                                        ng-click="ctrl.getOverlappingJobs()" id="invite-select" class="btn teal-blue btn-lg"
                                         style="margin-left: 3rem;" data-toggle="modal" data-target="#myModal">
                                     Invite
                                 </button>
                             </div>
                         </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="eventType">Event type</label>
+                                <select class="form-control md-select" id="eventType" ng-model="ctrl.job.publicEvent" ng-init="ctrl.job.publicEvent = 'false'">
+                                    <option value="false">Private</option>
+                                    <option value="true">Public</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="text-center">
-                        <button ng-click="ctrl.createJob()" class="btn btn-default">Submit</button>
+                        <button ng-click="ctrl.createJob()" class="btn wet-asphalt">Submit</button>
                     </div>
                 </div>
             </div>

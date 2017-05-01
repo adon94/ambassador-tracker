@@ -29,21 +29,20 @@
                         <a class="nav-link" href="#/events">Events</a>
                     </li>
                 </ul>
-                <div angucomplete-alt id="search"
-                     style="color: white"
-                     maxlength="20"
+                <div angucomplete-alt id="userSelect"
                      placeholder="Search"
+                     maxlength="20"
                      pause="10"
-                     selected-object="ctrl.onCompanySelect"
-                     local-data="ctrl.clients"
+                     selected-object="nctrl.onUserSelect"
+                     local-data="nctrl.allUsers"
                      search-fields="name"
                      title-field="name"
                      image-field="imageUrl"
                      minlength="1"
                      input-class="input-md"
                      match-class="highlight"
-                     input-changed="ctrl.onCompanyChange"
-                ></div>
+                     clear-selected="true">
+                </div>
                 <ul class="navbar-nav nav-flex-icons">
                     <li class="nav-item" ng-if="currentUser == null">
                         <a class="nav-link" href="#/login">Sign in/Sign up</a>

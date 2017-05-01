@@ -5,14 +5,14 @@
             <div class="row" style="height: 100%">
                 <div class="col-3" style="height: 100%; padding-left: 5px; padding-right: 5px; overflow: auto; border-right: solid 1px gainsboro;">
                     <div class="form-group">
-                        <div angucomplete-alt id="userSelect"
+                        <div angucomplete-alt id="chatUserSelect"
                              placeholder="Search or start a new chat"
                              maxlength="20"
                              pause="10"
                              selected-object="ctrl.onUserSelect"
                              local-data="ctrl.allUsers"
-                             search-fields="firstName,lastName"
-                             title-field="firstName,lastName"
+                             search-fields="name"
+                             title-field="name"
                              image-field="imageUrl"
                              minlength="1"
                              input-class="input-md"
@@ -34,7 +34,8 @@
                                 <div class="col-9">
                                     <h5>{{participant.firstName}} {{participant.lastName}}</h5>
                                     <footer class="blockquote-footer" ng-init="$filter('orderBy')(chat.messages, 'timestamp', true)">
-                                        <span>{{chat.messages[chat.messages.length - 1].text}}</span>
+                                        <span>
+                                            {{chat.messages[chat.messages.length - 1].text | limitTo:25}}{{chat.messages[chat.messages.length - 1].text.length > 25 ? '...' : ''}}</span>
                                     </footer>
                                 </div>
                             </div>
@@ -88,7 +89,10 @@
                             </div>
                         </div>
                     </div>
-                    <div id="chatWindow" scroll-glue class="scrollspy" ng-style="ctrl.currentChat == null && {'background-color':'white'}">
+                    <div id="chatWindow" scroll-glue class="scrollspy"
+                         ng-style="ctrl.currentChat == null && {'background-color':'white',
+                          'backgroundImage':'url(/static/resources/PembleChat.png)',
+                          'backgroundSize':'50%', 'backgroundPosition':'center', 'background-repeat':'no-repeat'}">
                         <div ng-repeat="message in ctrl.currentChat.messages | orderBy:'id'" class="chip-block" id="anchor{{message.id}}">
                             <div class="left-chip" ng-if="message.sender.id != currentUser.id">
                                 <b>{{message.sender.firstName}} {{message.sender.lastName}} </b><br>{{message.text}}

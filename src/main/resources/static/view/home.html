@@ -7,9 +7,10 @@
                     <li><span class="gCal"></span> Google Calendar Event</li>
                     <li><span class="upc"></span> Upcoming Event</li>
                     <li><span class="past"></span> Past Event</li>
-                    <li><span class="pending"></span> Pending Event</li>
+                    <li ng-if="!currentUser.manager"><span class="pending"></span> Pending Event</li>
                 </ul>
-                <a ng-click="ctrl.connectGCal()" style="float: right">Connect to Google Calendar</a>
+                <a ng-if="!ctrl.gConnected" ng-click="ctrl.connectGCal()" style="float: right">Connect to Google Calendar</a>
+                <a ng-if="ctrl.gConnected" ng-click="ctrl.signOut()" style="float: right">Disconnect Google Calendar</a>
             </div>
             <div class="card-block">
                 <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" calendar="myCalendar"></div>
